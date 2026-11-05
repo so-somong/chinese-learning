@@ -2,12 +2,12 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light">
   <title>봄쌤 중국어 -쏘몽</title>
   <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <!-- FontAwesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <!-- Google Fonts: Noto Sans KR & Noto Sans SC -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -131,6 +131,8 @@
     }
   </style>
 <style>
+  :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+  html{scroll-padding-top:env(safe-area-inset-top,0px)}
   .is-speaking:not(button){box-shadow:0 0 0 3px #f97316}
   .restart-btn{width:28px;height:28px;flex-shrink:0;border-radius:9999px;background:#fff;color:#374151;border:2px solid #111;display:inline-flex;align-items:center;justify-content:center;font-size:11px;transition:.15s}
   .restart-btn:hover{background:#f3f4f6}.restart-btn:active{transform:scale(.9)}
@@ -246,6 +248,12 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
       <div class="flex items-center justify-between mb-3 px-1">
         <h2 class="text-xs font-black text-gray-800 tracking-wider">강의 목록 (0~10과)</h2>
         <span class="text-[11px] bg-mint-100 text-mint-700 font-extrabold px-2 py-0.5 rounded-md comic-badge" id="completedCountBadge">0개 완료</span>
+      </div>
+
+      <div id="syncBox" class="mb-2 p-2.5 bg-white rounded-xl comic-border-sm text-[11px] font-bold">
+        <p class="font-black text-gray-900 text-xs">☁️ 내 계정 저장</p>
+        <p id="syncMsg" class="text-gray-600 leading-snug mt-0.5">확인 중…</p>
+        <button id="syncNowBtn" type="button" class="hidden mt-1.5 bg-gray-100 hover:bg-gray-200 text-gray-800 px-2.5 py-1 rounded-lg comic-border-sm comic-btn">지금 동기화</button>
       </div>
 
       <button id="openTestHubBtn" type="button" class="w-full text-left px-3 py-2.5 rounded-xl mb-2 flex items-center gap-2 font-black text-xs sm:text-sm comic-btn comic-border-sm bg-amber-300 text-gray-900">
@@ -3055,10 +3063,132 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
       }
     };
 
+    /* ==========================================================================
+       마지막 위치 저장 / 이어서 시작
+       ========================================================================== */
+    const LAST_KEY = 'toon_chinese_last_v1';
+    let lastPos = { view: 'lesson', lessonId: 0, tab: 'vocab', testId: null };
+    try { Object.assign(lastPos, JSON.parse(localStorage.getItem(LAST_KEY) || '{}')); } catch (e) {}
+    const activeTab = () => { const b = document.querySelector('.nav-tab.active-tab'); return b ? b.dataset.tab : 'vocab'; };
+    function saveLast(patch) {
+      Object.assign(lastPos, patch || {});
+      lastPos.view = viewMode; lastPos.lessonId = currentLessonId; lastPos.tab = activeTab();
+      try { localStorage.setItem(LAST_KEY, JSON.stringify(lastPos)); } catch (e) {}
+    }
+    const _selectLesson = selectLesson;
+    selectLesson = function (id) { _selectLesson(id); saveLast({ testId: null }); };
+    const _renderTestHub = renderTestHub;
+    renderTestHub = function () { _renderTestHub(); saveLast({ testId: null }); };
+    const _runTest = runTest;
+    runTest = function (def) { _runTest(def); saveLast({ testId: def.id }); };
+    document.querySelectorAll('.nav-tab').forEach(b => b.addEventListener('click', () => setTimeout(() => saveLast(), 0)));
+
+    function restoreLast(L) {
+      const id = lessonsData.some(l => l.id === L.lessonId) ? L.lessonId : 0;
+      selectLesson(id);
+      const tb = document.querySelector(`.nav-tab[data-tab="${L.tab}"]`);
+      if (tb && L.tab !== activeTab()) tb.click();
+      if (L.view === 'tests') {
+        setView('tests');
+        const def = L.testId && buildTests().find(t => t.id === L.testId);
+        if (def && testSessions[def.id]) runTest(def); else renderTestHub();
+      }
+      saveLast();
+    }
+
+    /* ==========================================================================
+       계정 동기화 (claude.ai 로그인 계정에 저장 → 어느 기기에서든 동일하게)
+       ========================================================================== */
+    const T_KEY = 'toon_chinese_sync_t';
+    const SYNC_KEYS = [STORAGE_KEY, TEST_KEY, LAST_KEY];
+    const _lsSet = Storage.prototype.setItem, _lsDel = Storage.prototype.removeItem;
+    let applying = false, saveTimer = null, cloud = null;
+    const syncMsg = t => { const el = document.getElementById('syncMsg'); if (el) el.textContent = t; };
+    const hhmm = () => new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
+    function touch() {
+      if (applying) return;
+      try { _lsSet.call(localStorage, T_KEY, String(Date.now())); } catch (e) {}
+      if (cloud) { clearTimeout(saveTimer); saveTimer = setTimeout(pushCloud, 1500); syncMsg('☁️ 저장 중…'); }
+    }
+    Storage.prototype.setItem = function (k, v) { _lsSet.call(this, k, v); if (this === localStorage && (SYNC_KEYS.includes(k) || k === SESS_KEY)) touch(); };
+    Storage.prototype.removeItem = function (k) { _lsDel.call(this, k); if (this === localStorage && (SYNC_KEYS.includes(k) || k === SESS_KEY)) touch(); };
+    const localT = () => +(localStorage.getItem(T_KEY) || 0);
+    const withTimeout = (p, ms) => Promise.race([p, new Promise((_, rej) => setTimeout(() => rej({ code: 'timeout' }), ms))]);
+
+    async function pushCloud() {
+      if (!cloud) return;
+      try {
+        const t = localT() || Date.now();
+        const ops = [];
+        const state = { progress: localStorage.getItem(STORAGE_KEY) || '[]', records: localStorage.getItem(TEST_KEY) || '{}', last: localStorage.getItem(LAST_KEY) || '{}', t };
+        const sig = JSON.stringify(state);
+        if (cloud.sig.state !== sig) { await cloud.col.doc('state').set(state); cloud.sig.state = sig; }
+        for (const id of Object.keys(testSessions)) {
+          const v = JSON.stringify(testSessions[id]);
+          if (cloud.sig['sess_' + id] !== v) { await cloud.col.doc('sess_' + id).set({ v, t }); cloud.sig['sess_' + id] = v; }
+        }
+        for (const k of Object.keys(cloud.sig)) {
+          if (k.startsWith('sess_') && !testSessions[k.slice(5)]) { await cloud.col.doc(k).delete(); delete cloud.sig[k]; }
+        }
+        syncMsg(`☁️ ${cloud.name}님 계정에 저장됨 · ${hhmm()}`);
+      } catch (e) {
+        if (e && e.code === 'invalid_argument') syncMsg('👀 보기 전용 권한이라 계정 저장은 안 돼요. (이 기기에만 저장)');
+        else syncMsg('⚠️ 계정 저장 실패 · 잠시 후 다시 시도돼요 (이 기기에는 저장됨)');
+      }
+    }
+
+    function applyCloud(data) {
+      applying = true;
+      try {
+        _lsSet.call(localStorage, STORAGE_KEY, data.state.progress);
+        _lsSet.call(localStorage, TEST_KEY, data.state.records);
+        _lsSet.call(localStorage, LAST_KEY, data.state.last);
+        _lsSet.call(localStorage, SESS_KEY, JSON.stringify(data.sess));
+        _lsSet.call(localStorage, T_KEY, String(data.state.t));
+      } catch (e) {}
+      applying = false;
+      try { completedLessons = JSON.parse(data.state.progress); } catch (e) {}
+      try { testRecords = JSON.parse(data.state.records); } catch (e) {}
+      testSessions = data.sess;
+      try { Object.assign(lastPos, JSON.parse(data.state.last)); } catch (e) {}
+      renderSidebar();
+      restoreLast({ ...lastPos });
+    }
+
+    async function initCloud() {
+      const rt = window.claude;
+      if (!rt || !rt.use) { syncMsg('💾 이 기기(브라우저)에만 저장돼요. claude.ai 게시 링크로 열고 로그인하면 어디서든 이어서 볼 수 있어요.'); return; }
+      try {
+        const [db, user] = await Promise.all([rt.use('db'), rt.use('user')]);
+        const uid = user ? await user.id() : null;
+        if (!db || !user || !uid) { syncMsg('🔒 claude.ai에 로그인한 뒤 이 링크로 열면 진행 상황이 계정에 저장돼요. (지금은 이 기기에만 저장)'); return; }
+        let name = '내';
+        try { const me = await user.me(); if (me && me.name) name = me.name; } catch (e) {}
+        const col = db.collection('data/users/' + uid);
+        const snap = await withTimeout(col.get(), 10000);
+        const sig = {}, sess = {}; let state = null;
+        snap.docs.forEach(d => {
+          const x = d.data(); if (!x) return;
+          if (d.id === 'state') { state = x; sig.state = JSON.stringify(x); }
+          else if (d.id.startsWith('sess_')) { try { sess[d.id.slice(5)] = JSON.parse(x.v); sig[d.id] = x.v; } catch (e) {} }
+        });
+        cloud = { col, name, sig };
+        const nowBtn = document.getElementById('syncNowBtn');
+        nowBtn.classList.remove('hidden');
+        nowBtn.onclick = async () => { syncMsg('☁️ 동기화 중…'); await pushCloud(); showToast('계정에 저장했어요.'); };
+        if (state && state.t > localT()) { applyCloud({ state, sess }); syncMsg(`☁️ ${name}님 계정의 진행 상황을 불러왔어요 · ${hhmm()}`); }
+        else { await pushCloud(); }
+      } catch (e) {
+        cloud = null;
+        syncMsg('💾 계정 연결을 못 했어요. 이 기기에만 저장 중이에요.');
+      }
+    }
+
     /* INITIAL BOOTSTRAP */
     window.addEventListener('DOMContentLoaded', () => {
       renderSidebar();
-      selectLesson(0);
+      restoreLast({ ...lastPos });
+      initCloud();
     });
   </script>
 </body>
