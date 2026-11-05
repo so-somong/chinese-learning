@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>툰으로 배우는 중국어회화 1권 - 스마트 러닝 허브</title>
+  <title>봄쌤 중국어 -쏘몽</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- FontAwesome Icons -->
@@ -130,6 +130,39 @@
       transform: rotateY(180deg);
     }
   </style>
+<style>
+  .is-speaking:not(button){box-shadow:0 0 0 3px #f97316}
+  .restart-btn{width:28px;height:28px;flex-shrink:0;border-radius:9999px;background:#fff;color:#374151;border:2px solid #111;display:inline-flex;align-items:center;justify-content:center;font-size:11px;transition:.15s}
+  .restart-btn:hover{background:#f3f4f6}.restart-btn:active{transform:scale(.9)}
+</style>
+<style>
+i.fa-solid{display:inline-block;width:1em;height:1em;vertical-align:-0.125em;font-family:inherit;font-style:normal}
+i.fa-solid::before{content:""!important;display:block;width:100%;height:100%;background:currentColor;-webkit-mask:var(--ic) center/contain no-repeat;mask:var(--ic) center/contain no-repeat}
+i.fa-volume-high{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M3%209v6h4l5%204V5L7%209z%22%20fill%3D%22black%22%2F%3E%3Cpath%20d%3D%22M16%208.5a5%205%200%200%201%200%207M18.8%206a9%209%200%200%201%200%2012%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-volume-xmark{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M3%209v6h4l5%204V5L7%209z%22%20fill%3D%22black%22%2F%3E%3Cpath%20d%3D%22M16%209l6%206M22%209l-6%206%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-play{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M7%204v16l13-8z%22%20fill%3D%22black%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-pause{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Crect%20x%3D%226%22%20y%3D%224%22%20width%3D%224.5%22%20height%3D%2216%22%20rx%3D%221%22%20fill%3D%22black%22%2F%3E%3Crect%20x%3D%2213.5%22%20y%3D%224%22%20width%3D%224.5%22%20height%3D%2216%22%20rx%3D%221%22%20fill%3D%22black%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-check{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M4%2012.5l5%205L20%206.5%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-xmark{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M5%205l14%2014M19%205L5%2019%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-circle-check{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%229.5%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3Cpath%20d%3D%22M7.5%2012.5l3%203%206-6.5%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-circle-xmark{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%229.5%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3Cpath%20d%3D%22M8.5%208.5l7%207M15.5%208.5l-7%207%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-repeat{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M17%202l4%204-4%204M3%2011V9a3%203%200%200%201%203-3h15M7%2022l-4-4%204-4M21%2013v2a3%203%200%200%201-3%203H3%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-arrows-rotate{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M20%2011A8%208%200%200%200%205.6%207M4%204v4h4M4%2013a8%208%200%200%200%2014.4%204M20%2020v-4h-4%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-rotate-left{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M3%2012a9%209%200%201%200%203-6.7M3%203v6h6%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-music{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M9%2018V5l11-2v13%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3Ccircle%20cx%3D%226.5%22%20cy%3D%2218%22%20r%3D%223%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%2217.5%22%20cy%3D%2216%22%20r%3D%223%22%20fill%3D%22black%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-trophy{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M7%204h10v6a5%205%200%200%201-10%200zM7%206H3v2a4%204%200%200%200%204%204M17%206h4v2a4%204%200%200%201-4%204M12%2015v4M8%2021h8%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-star{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M12%202l3%206.5%207%20.8-5.200%204.800%201.500%207L12%2017.500%205.700%2021l1.500-7L2%209.300l7-.8z%22%20fill%3D%22black%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-pen-nib{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M4%2020l1-5L16%204l4%204L9%2019zM14%206l4%204M4%2020l5-5%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-medal{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2215%22%20r%3D%226%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3Cpath%20d%3D%22M8%203l4%207%204-7%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-lightbulb{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M9%2018h6M10%2021h4M12%203a6%206%200%200%200-4%2010.500c.7.700%201%201.500%201%202.500h6c0-1%20.3-1.800%201-2.500A6%206%200%200%200%2012%203z%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-headphones-simple{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M4%2015v-3a8%208%200%200%201%2016%200v3%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3Crect%20x%3D%223%22%20y%3D%2214%22%20width%3D%224.500%22%20height%3D%227%22%20rx%3D%221.500%22%20fill%3D%22black%22%2F%3E%3Crect%20x%3D%2216.500%22%20y%3D%2214%22%20width%3D%224.500%22%20height%3D%227%22%20rx%3D%221.500%22%20fill%3D%22black%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-comment-dots{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M4%204h16v13H9l-5%204z%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3Ccircle%20cx%3D%228.500%22%20cy%3D%2210.500%22%20r%3D%221.300%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2210.500%22%20r%3D%221.300%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%2215.500%22%20cy%3D%2210.500%22%20r%3D%221.300%22%20fill%3D%22black%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-clipboard-question{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M8%204H5v17h14V4h-3%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3Crect%20x%3D%228%22%20y%3D%222%22%20width%3D%228%22%20height%3D%224%22%20rx%3D%221%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3Cpath%20d%3D%22M10%2011a2%202%200%201%201%203%201.700c-.7.500-1%201-1%201.800M12%2018v.1%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-bullhorn{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M3%2010v4h4l9%205V5L7%2010zM19%209a4%204%200%200%201%200%206%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-book-bookmark{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M5%203h14v18H5zM5%2017h14M14%203v7l-2-1.500L10%2010V3%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-bars-staggered{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M3%206h14M3%2012h18M3%2018h10%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M4%2020L14%2010M12%208l4%204%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3Cpath%20d%3D%22M18%203v4M16%205h4M20%2012v3M18.500%2013.500h3%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E")}
+</style>
 </head>
 
 <body class="bg-[#faf6ee] text-gray-800 antialiased min-h-screen flex flex-col font-sans selection:bg-brand-200">
@@ -149,7 +182,7 @@
           </div>
           <div>
             <h1 class="text-sm sm:text-base font-extrabold text-gray-900 tracking-tight flex items-center gap-1.5">
-              <span>봄쌤의 툰 중국어</span>
+              <span>봄쌤 중국어 -쏘몽</span>
               <span class="text-[11px] bg-brand-500 text-white font-bold px-2 py-0.5 rounded-md comic-badge">회화 1권</span>
             </h1>
             <p class="text-[11px] text-gray-600 font-cute font-bold hidden sm:block">만화로 재밌게! 소리내어 말하는 스마트 공부방</p>
@@ -215,9 +248,26 @@
         <span class="text-[11px] bg-mint-100 text-mint-700 font-extrabold px-2 py-0.5 rounded-md comic-badge" id="completedCountBadge">0개 완료</span>
       </div>
 
+      <button id="openTestHubBtn" type="button" class="w-full text-left px-3 py-2.5 rounded-xl mb-2 flex items-center gap-2 font-black text-xs sm:text-sm comic-btn comic-border-sm bg-amber-300 text-gray-900">
+        <i class="fa-solid fa-trophy"></i><span>전체 테스트 · 점수판</span>
+      </button>
+
       <!-- Lesson List -->
       <div id="lessonListContainer" class="flex-1 overflow-y-auto space-y-2 pr-1 text-sm">
         <!-- Lessons generated via JS -->
+      </div>
+
+      <!-- 전체 자동 릴레이 -->
+      <div id="relayBox" class="mt-3 p-3 bg-white rounded-xl comic-border-sm space-y-2 flex-shrink-0">
+        <p class="text-xs font-black text-gray-900">🎧 전체 자동 릴레이 (1~10과)</p>
+        <div class="flex items-center">
+          <button id="relayDlgBtn" type="button" class="bg-brand-500 hover:bg-brand-600 text-white text-xs font-black px-3 py-2 rounded-xl comic-border-sm comic-btn flex items-center"><i class="fa-solid fa-play mr-1"></i> 전체 대화 연속 듣기</button>
+        </div>
+        <div class="flex items-center">
+          <button id="relayVocabBtn" type="button" class="bg-amber-300 hover:bg-amber-400 text-gray-900 text-xs font-black px-3 py-2 rounded-xl comic-border-sm comic-btn flex items-center"><i class="fa-solid fa-play mr-1"></i> 전체 단어장 연속 듣기</button>
+        </div>
+        <label class="flex items-center gap-1.5 text-[11px] font-bold text-gray-700 cursor-pointer"><input type="checkbox" id="relayLoop" checked> 끝나면 처음부터 계속 반복</label>
+        <p id="relayNow" class="hidden text-[11px] text-brand-600 font-black leading-snug break-words"></p>
       </div>
 
       <!-- Quick Tips Box -->
@@ -237,8 +287,10 @@
     <!-- MAIN LEARNING PANEL -->
     <main class="flex-1 min-w-0 flex flex-col space-y-5">
       
+      <section id="testHub" class="hidden"><div id="testHubBody" class="space-y-5"></div></section>
+
       <!-- CURRENT LESSON HERO CARD -->
-      <div class="bg-white rounded-2xl p-5 sm:p-6 comic-border relative overflow-hidden">
+      <div id="lessonHero" class="bg-white rounded-2xl p-5 sm:p-6 comic-border relative overflow-hidden">
         <!-- Background Accents -->
         <div class="absolute right-6 -bottom-6 text-9xl font-cn text-orange-100 select-none pointer-events-none font-black opacity-40" id="heroHanziBg">
           学
@@ -276,7 +328,8 @@
         </div>
 
         <!-- SUB-NAVIGATION TABS -->
-        <div class="flex items-center border-b-2 border-gray-200 mt-6 -mb-1 space-x-1 sm:space-x-3 overflow-x-auto text-sm">
+        <div id="subTabBar" class="flex items-center border-b-2 border-gray-200 mt-6 -mb-1 space-x-1 sm:space-x-3 overflow-x-auto text-sm" style="scrollbar-width:thin;-webkit-overflow-scrolling:touch">
+          <button id="tabPrev" type="button" class="hidden sticky left-0 z-10 shrink-0 self-center w-7 h-7 rounded-full bg-white border-2 border-gray-900 font-black text-gray-900 leading-none">‹</button>
           <button class="nav-tab active-tab pb-3 px-3 sm:px-4 font-black border-b-4 border-brand-500 text-brand-600 flex items-center gap-1.5 whitespace-nowrap" data-tab="vocab">
             <i class="fa-solid fa-book-bookmark text-xs"></i>
             <span>단어장</span>
@@ -294,10 +347,15 @@
             <span>직접 문제 풀기</span>
             <span class="bg-amber-400 text-gray-900 text-[10px] font-black px-1.5 py-0.2 rounded-md comic-badge">퀴즈</span>
           </button>
+          <button class="nav-tab pb-3 px-3 sm:px-4 font-bold text-gray-500 hover:text-gray-800 border-b-4 border-transparent flex items-center gap-1.5 whitespace-nowrap" data-tab="vocabquiz">
+            <i class="fa-solid fa-lightbulb text-xs"></i>
+            <span>단어문제</span>
+          </button>
           <button class="nav-tab pb-3 px-3 sm:px-4 font-bold text-gray-500 hover:text-gray-800 border-b-4 border-transparent flex items-center gap-1.5 whitespace-nowrap" data-tab="today">
             <i class="fa-solid fa-medal text-xs"></i>
             <span>오늘의 문장 (암기 카드)</span>
           </button>
+          <button id="tabNext" type="button" class="hidden sticky right-0 z-10 shrink-0 self-center w-7 h-7 rounded-full bg-white border-2 border-gray-900 font-black text-gray-900 leading-none">›</button>
         </div>
       </div>
 
@@ -374,6 +432,24 @@
         <div id="practiceContainer" class="space-y-5">
           <!-- Dynamically populated practice items -->
         </div>
+      </section>
+
+      <!-- 4-2. VOCAB QUIZ TAB -->
+      <section id="tab-vocabquiz" class="tab-pane hidden space-y-6">
+        <div class="bg-white p-4 sm:p-5 rounded-2xl comic-border flex items-center justify-between gap-3">
+          <div>
+            <h3 class="text-base sm:text-lg font-black text-gray-900 flex items-center gap-2">
+              <i class="fa-solid fa-lightbulb text-brand-500"></i>
+              <span>단어장 퀴즈</span>
+            </h3>
+            <p class="text-xs sm:text-sm text-gray-600 mt-0.5 font-medium">이번 과 단어로 만든 문제예요. 뜻 맞추기, 한자 고르기, 듣고 맞추기가 섞여 있어요!</p>
+            <p class="text-xs font-black text-brand-600 mt-1">점수: <span id="vocabQuizScore">0 / 0</span></p>
+          </div>
+          <button id="resetVocabQuizBtn" class="text-xs bg-gray-100 hover:bg-gray-200 text-gray-800 px-3 py-1.5 rounded-xl comic-border-sm comic-btn font-bold flex-shrink-0">
+            <i class="fa-solid fa-arrows-rotate mr-1"></i> 다시 풀기
+          </button>
+        </div>
+        <div id="vocabQuizContainer" class="space-y-5"></div>
       </section>
 
       <!-- 5. TODAY'S SENTENCES (FLASHCARDS) TAB -->
@@ -1725,6 +1801,7 @@
     let currentLessonId = 0;
     let completedLessons = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
     let showPinyin = true;
+    let viewMode = 'lesson';
 
     /* Web Speech Synthesis */
     const synth = window.speechSynthesis;
@@ -1741,30 +1818,158 @@
     }
     initVoices();
 
-    function speakChinese(text, callback) {
+    let cur = null, speakId = 0, chainKey = null, chainId = 0, chainPaused = false, chainPending = null;
+
+    function stateOf(k) {
+      if (k === chainKey) return chainPaused ? 'paused' : 'playing';
+      if (cur && cur.key === k) return cur.state;
+      return 'idle';
+    }
+    function updateSpeakUI() {
+      const rn = document.getElementById('relayNow');
+      if (rn && !(chainKey && chainKey.startsWith('chain:relay'))) rn.classList.add('hidden');
+      document.querySelectorAll('[data-speak-key]').forEach(el => {
+        const st = stateOf(el.dataset.speakKey);
+        el.classList.toggle('is-speaking', st !== 'idle');
+        if (el.tagName !== 'BUTTON') return;
+        if (el._orig === undefined) el._orig = el.innerHTML;
+        if (st === 'idle') { el.innerHTML = el._orig; return; }
+        const icon = st === 'playing' ? 'fa-pause' : 'fa-play';
+        const hasText = el._orig.replace(/<[^>]*>/g, '').trim() !== '';
+        el.innerHTML = hasText
+          ? `<i class="fa-solid ${icon} text-[10px] mr-1"></i><span>${st === 'playing' ? '정지' : '이어듣기'}</span>`
+          : `<i class="fa-solid ${icon} text-xs"></i>`;
+      });
+    }
+
+    function launch(c) {
+      const id = ++speakId;
+      c.state = 'playing';
+      const base = c.offset;
+      c.base = base; c.t0 = performance.now(); c.elapsed = 0; c.gotB = false;
+      const u = new SpeechSynthesisUtterance(c.clean.slice(base));
+      u.lang = 'zh-CN';
+      if (chineseVoice) u.voice = chineseVoice;
+      u.rate = parseFloat(document.getElementById('speedSelect').value || "1.0");
+      u.onboundary = e => {
+        if (id === speakId && typeof e.charIndex === 'number') { c.offset = base + e.charIndex; c.gotB = true; }
+      };
+      const done = () => {
+        if (id !== speakId) return;
+        if (c.state === 'paused') return;   // 일시정지 중 발생한 종료/취소 이벤트는 무시
+        if (cur === c) cur = null;
+        updateSpeakUI();
+        if (c.cb) c.cb();
+      };
+      u.onend = done;
+      u.onerror = done;
+      if (synth.paused) synth.resume();
+      synth.cancel();
+      synth.speak(u);
+      updateSpeakUI();
+    }
+    function pauseCur() {
+      if (!cur || cur.state !== 'playing') return;
+      const c = cur;
+      // 경과 시간으로 위치 추정 (음성 엔진이 위치 정보를 주지 않을 때 대비)
+      c.elapsed += performance.now() - c.t0;
+      const rate = parseFloat(document.getElementById('speedSelect').value || "1.0") || 1;
+      const remainLen = Math.max(1, c.clean.length - c.base);
+      const ratio = Math.min(0.95, c.elapsed / (remainLen * 260 / rate));
+      c.estOffset = c.base + Math.floor(remainLen * ratio);
+      c.state = 'paused';
+      synth.pause();               // 브라우저 기본 일시정지 (멈춘 위치 그대로 보존)
+      updateSpeakUI();
+    }
+    function resumeCur() {
+      if (!cur || cur.state !== 'paused') return;
+      const c = cur;
+      c.state = 'playing';
+      c.t0 = performance.now();
+      synth.resume();
+      updateSpeakUI();
+      // 일시정지를 지원하지 않는 브라우저(일부 모바일): 멈춘 위치부터 다시 읽기
+      setTimeout(() => {
+        if (cur === c && c.state === 'playing' && !synth.speaking) {
+          c.offset = c.gotB ? c.offset : c.estOffset;
+          if (c.offset >= c.clean.length) c.offset = 0;
+          launch(c);
+        }
+      }, 350);
+    }
+    function stopSpeaking() {
+      speakId++; chainId++;
+      cur = null; chainKey = null; chainPaused = false; chainPending = null;
+      if (synth) { if (synth.paused) synth.resume(); synth.cancel(); }
+      updateSpeakUI();
+    }
+
+    /* 연속 재생: 같은 버튼 → 정지 / 이어듣기, ↺ → 처음부터 */
+    function toggleChain(key, startFn) {
+      if (chainKey === key) {
+        if (chainPaused) {
+          chainPaused = false;
+          if (cur && cur.state === 'paused') resumeCur();
+          else if (chainPending) { const f = chainPending; chainPending = null; f(); }
+        } else {
+          chainPaused = true;
+          pauseCur();
+        }
+        updateSpeakUI();
+        return;
+      }
+      restartChain(key, startFn);
+    }
+    function restartChain(key, startFn) {
+      stopSpeaking();
+      chainKey = key;
+      const cid = ++chainId;
+      updateSpeakUI();
+      startFn(cid);
+    }
+    function endChain(cid) {
+      if (cid === chainId) { chainKey = null; updateSpeakUI(); }
+    }
+    function chainGate(cid, next) {   // 대기 중 일시정지 처리
+      if (cid !== chainId) return false;
+      if (chainPaused) { chainPending = next; return false; }
+      return true;
+    }
+
+    /* ↺ 처음부터 버튼 붙이기 */
+    function addRestart(btn, fn) {
+      btn._restartFn = fn;
+      if (btn.dataset.hasRestart) return;
+      btn.dataset.hasRestart = '1';
+      const wrap = document.createElement('span');
+      wrap.className = 'inline-flex items-center gap-1.5 flex-shrink-0';
+      btn.replaceWith(wrap);
+      const rb = document.createElement('button');
+      rb.type = 'button';
+      rb.className = 'restart-btn';
+      rb.title = '처음부터 다시';
+      rb.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 3v6h6"/></svg>';
+      rb.onclick = e => { e.stopPropagation(); btn._restartFn(); };
+      wrap.append(btn, rb);
+    }
+
+    function speakChinese(text, callback, key, opts) {
+      opts = opts || {};
       if (!synth) {
         showToast("브라우저 음성 지원이 불가능합니다.");
         if (callback) callback();
         return;
       }
-      synth.cancel();
-
-      const cleanText = text.replace(/[\(\)\[\]·]/g, '').trim();
-      const utterance = new SpeechSynthesisUtterance(cleanText);
-      utterance.lang = 'zh-CN';
-      if (chineseVoice) utterance.voice = chineseVoice;
-
-      const speed = parseFloat(document.getElementById('speedSelect').value || "1.0");
-      utterance.rate = speed;
-
-      utterance.onend = () => {
-        if (callback) callback();
-      };
-      utterance.onerror = () => {
-        if (callback) callback();
-      };
-
-      synth.speak(utterance);
+      if (!opts.chain) {
+        if (chainKey) stopSpeaking();
+        // 같은 버튼: 재생 중 → 정지, 정지 중 → 멈춘 곳부터 이어듣기
+        if (key && !opts.restart && cur && cur.key === key) {
+          cur.state === 'playing' ? pauseCur() : resumeCur();
+          return;
+        }
+      }
+      cur = { key: key || null, clean: text.replace(/[\(\)\[\]·]/g, '').trim(), cb: callback, offset: 0, state: 'playing' };
+      launch(cur);
     }
 
     function showToast(msg) {
@@ -1785,10 +1990,12 @@
     function renderSidebar() {
       const container = document.getElementById('lessonListContainer');
       container.innerHTML = '';
+      const tb = document.getElementById('openTestHubBtn');
+      if (tb) ['ring-4', 'ring-brand-500'].forEach(c => tb.classList.toggle(c, viewMode === 'tests'));
 
       lessonsData.forEach(lesson => {
         const isCompleted = completedLessons.includes(lesson.id);
-        const isActive = lesson.id === currentLessonId;
+        const isActive = lesson.id === currentLessonId && viewMode === 'lesson';
 
         const btn = document.createElement('button');
         btn.className = `w-full text-left px-3 py-2.5 rounded-xl transition flex items-center justify-between group comic-btn ${
@@ -1853,7 +2060,9 @@
        RENDER CURRENT LESSON DATA
        ========================================================================== */
     function selectLesson(id) {
+      stopSpeaking();
       currentLessonId = id;
+      setView('lesson');
       const lesson = lessonsData.find(l => l.id === id);
       if (!lesson) return;
 
@@ -1864,12 +2073,15 @@
       document.getElementById('heroHanziBg').textContent = lesson.keySentence.hanzi.charAt(0) || '中';
 
       const heroPlayBtn = document.getElementById('heroPlayKeySentence');
+      heroPlayBtn.dataset.speakKey = 'hero';
+      addRestart(heroPlayBtn, () => speakChinese(lesson.keySentence.hanzi, null, 'hero', { restart: true }));
       heroPlayBtn.onclick = () => {
-        speakChinese(lesson.keySentence.hanzi);
+        speakChinese(lesson.keySentence.hanzi, null, 'hero');
         showToast(`대표 문장: "${lesson.keySentence.hanzi}"`);
       };
 
       renderVocab(lesson.vocab);
+      renderVocabQuiz(lesson.vocab);
       renderDialogue(lesson.dialogue);
       renderGrammar(lesson.grammarPoints);
       renderPractice(lesson.practice);
@@ -1884,7 +2096,7 @@
       document.getElementById('vocabCountBadge').textContent = `${vocabList.length} 단어`;
       grid.innerHTML = '';
 
-      vocabList.forEach(v => {
+      vocabList.forEach((v, vi) => {
         const card = document.createElement('div');
         card.className = "bg-white p-3.5 rounded-xl comic-border-sm hover:bg-orange-50/50 transition flex items-center justify-between group cursor-pointer";
         card.innerHTML = `
@@ -1901,30 +2113,37 @@
           </button>
         `;
 
-        card.querySelector('button').onclick = (e) => {
+        const vKey = 'v:' + vi;
+        card.dataset.speakKey = vKey;
+        const vBtn = card.querySelector('button');
+        vBtn.dataset.speakKey = vKey;
+        vBtn.onclick = (e) => {
           e.stopPropagation();
-          speakChinese(v.hanzi);
+          speakChinese(v.hanzi, null, vKey);
         };
-        card.onclick = () => speakChinese(v.hanzi);
+        card.onclick = () => speakChinese(v.hanzi, null, vKey);
 
         grid.appendChild(card);
+        addRestart(vBtn, () => speakChinese(v.hanzi, null, vKey, { restart: true }));
       });
 
-      document.getElementById('playAllVocabBtn').onclick = () => {
+      const allV = document.getElementById('playAllVocabBtn');
+      allV.dataset.speakKey = 'chain:vocab';
+      const runVocab = (cid) => {
         let idx = 0;
         function playNext() {
-          if (idx >= vocabList.length) {
-            showToast("단어 전체 재생 완료!");
-            return;
-          }
+          if (!chainGate(cid, playNext)) return;
+          if (idx >= vocabList.length) { endChain(cid); showToast("단어 전체 재생 완료!"); return; }
           speakChinese(vocabList[idx].hanzi, () => {
             idx++;
             setTimeout(playNext, 600);
-          });
+          }, 'v:' + idx, { chain: true });
         }
         playNext();
         showToast("단어들을 차례대로 읽어드립니다.");
       };
+      addRestart(allV, () => restartChain('chain:vocab', runVocab));
+      allV.onclick = () => toggleChain('chain:vocab', runVocab);
     }
 
     /* 2. DIALOGUE */
@@ -1936,6 +2155,7 @@
         const row = document.createElement('div');
         row.className = "flex items-start gap-3 p-3.5 rounded-2xl bg-white comic-border-sm hover:bg-orange-50/30 transition";
         row.id = `dialogue-row-${idx}`;
+        row.dataset.speakKey = 'd:' + idx;
 
         row.innerHTML = `
           <div class="w-11 h-11 rounded-2xl bg-amber-100 border-2 border-gray-900 flex items-center justify-center text-xl flex-shrink-0 shadow-2xs">
@@ -1944,7 +2164,7 @@
           <div class="flex-1 min-w-0">
             <div class="flex items-center justify-between mb-1">
               <span class="text-xs font-black text-gray-700 bg-gray-100 px-2 py-0.5 rounded-md">${d.speaker}</span>
-              <button class="play-btn text-gray-900 bg-amber-300 hover:bg-amber-400 px-2.5 py-1 rounded-lg text-xs font-black flex items-center gap-1 transition comic-border-sm comic-btn">
+              <button data-speak-key="d:${idx}" class="play-btn text-gray-900 bg-amber-300 hover:bg-amber-400 px-2.5 py-1 rounded-lg text-xs font-black flex items-center gap-1 transition comic-border-sm comic-btn">
                 <i class="fa-solid fa-volume-high text-[10px]"></i>
                 <span>듣기</span>
               </button>
@@ -1957,31 +2177,29 @@
           </div>
         `;
 
-        row.querySelector('.play-btn').onclick = () => {
-          speakChinese(d.hanzi);
-        };
+        const pb = row.querySelector('.play-btn');
+        pb.onclick = () => speakChinese(d.hanzi, null, 'd:' + idx);
         container.appendChild(row);
+        addRestart(pb, () => speakChinese(d.hanzi, null, 'd:' + idx, { restart: true }));
       });
 
-      document.getElementById('playAllDialogueBtn').onclick = () => {
+      const allD = document.getElementById('playAllDialogueBtn');
+      allD.dataset.speakKey = 'chain:dialogue';
+      const runDlg = (cid) => {
         let i = 0;
         function playStep() {
-          if (i >= dialogues.length) {
-            showToast("대화문 연속 듣기 완료!");
-            return;
-          }
-          document.querySelectorAll('#dialogueContainer > div').forEach(el => el.classList.remove('ring-4', 'ring-brand-500'));
-          const target = document.getElementById(`dialogue-row-${i}`);
-          if (target) target.classList.add('ring-4', 'ring-brand-500');
-
+          if (!chainGate(cid, playStep)) return;
+          if (i >= dialogues.length) { endChain(cid); showToast("대화문 연속 듣기 완료!"); return; }
           speakChinese(dialogues[i].hanzi, () => {
             i++;
             setTimeout(playStep, 800);
-          });
+          }, 'd:' + i, { chain: true });
         }
         playStep();
         showToast("대화문을 릴레이 재생합니다.");
       };
+      addRestart(allD, () => restartChain('chain:dialogue', runDlg));
+      allD.onclick = () => toggleChain('chain:dialogue', runDlg);
     }
 
     document.getElementById('togglePinyinBtn').onclick = () => {
@@ -1993,11 +2211,43 @@
     };
 
     /* 3. GRAMMAR */
+    /* 문법별 예문 [한자, 병음, 뜻] — 키: "과-번호" */
+    const GRAMMAR_EX = {
+      "0-0":[["妈妈在家。","Māma zài jiā.","엄마는 집에 있어요."],["哥哥很高。","Gēge hěn gāo.","형은 키가 커요."]],
+      "0-1":[["你好！","Nǐ hǎo!","안녕! (3성+3성 → 2성+3성으로 발음)"],["我不是老师。","Wǒ bú shì lǎoshī.","나는 선생님이 아니에요. (不+4성 → bú)"]],
+      "1-0":[["好久不见，你好吗？","Hǎojiǔ bú jiàn, nǐ hǎo ma?","오랜만이야, 잘 지내?"],["好久不见，我很想你！","Hǎojiǔ bú jiàn, wǒ hěn xiǎng nǐ!","오랜만이야, 정말 보고 싶었어!"]],
+      "1-1":[["老师好！","Lǎoshī hǎo!","선생님 안녕하세요!"],["同学们好！","Tóngxuémen hǎo!","학우 여러분 안녕!"]],
+      "1-2":[["你吃了吗？","Nǐ chī le ma?","너 밥 먹었어?"],["我吃了，你呢？","Wǒ chī le, nǐ ne?","나는 먹었어, 너는?"]],
+      "2-0":[["我很忙。","Wǒ hěn máng.","나는 바빠."],["今天很冷。","Jīntiān hěn lěng.","오늘은 추워."]],
+      "2-1":[["你忙不忙？","Nǐ máng bu máng?","너 바빠 안 바빠?"],["他累不累？","Tā lèi bu lèi?","그는 피곤해 안 피곤해?"]],
+      "2-2":[["我不太忙。","Wǒ bú tài máng.","나는 그다지 안 바빠."],["这个不太贵。","Zhège bú tài guì.","이건 그다지 비싸지 않아."]],
+      "3-0":[["很高兴认识你！","Hěn gāoxìng rènshi nǐ!","만나서 반가워요!"],["我也很高兴认识你！","Wǒ yě hěn gāoxìng rènshi nǐ!","저도 만나서 반가워요!"]],
+      "3-1":[["你是哪国人？","Nǐ shì nǎ guó rén?","어느 나라 사람이에요?"],["你喝哪个？","Nǐ hē nǎge?","어느 것을 마실래?"]],
+      "3-2":[["你是中国人吧！","Nǐ shì Zhōngguórén ba!","중국인이죠!"],["他是老师吧？","Tā shì lǎoshī ba?","그분은 선생님이죠?"]],
+      "4-0":[["我没有哥哥。","Wǒ méiyǒu gēge.","나는 형이 없어."],["他没有手机。","Tā méiyǒu shǒujī.","그는 휴대폰이 없어."]],
+      "4-1":[["你有没有妹妹？","Nǐ yǒu méiyǒu mèimei?","너 여동생 있어 없어?"],["你有没有时间？","Nǐ yǒu méiyǒu shíjiān?","너 시간 있어 없어?"]],
+      "4-2":[["我只有一个弟弟。","Wǒ zhǐ yǒu yí ge dìdi.","나는 남동생 한 명뿐이야."],["他只喝水。","Tā zhǐ hē shuǐ.","그는 물만 마셔."]],
+      "5-0":[["这是书。","Zhè shì shū.","이건 책이야."],["那是什么？","Nà shì shénme?","저건 뭐야?"]],
+      "5-1":[["你尝一下。","Nǐ cháng yíxià.","한번 맛봐."],["请等一下。","Qǐng děng yíxià.","잠깐 기다려 주세요."]],
+      "6-0":[["今天星期五。","Jīntiān xīngqīwǔ.","오늘은 금요일이야."],["明天星期六。","Míngtiān xīngqīliù.","내일은 토요일이야."]],
+      "6-1":[["我们一起去吧。","Wǒmen yìqǐ qù ba.","우리 같이 가자."],["我们一起看电影吧。","Wǒmen yìqǐ kàn diànyǐng ba.","우리 같이 영화 보자."]],
+      "7-0":[["现在两点。","Xiànzài liǎng diǎn.","지금 2시야."],["我两点上课。","Wǒ liǎng diǎn shàngkè.","나는 2시에 수업해."]],
+      "7-1":[["现在三点半。","Xiànzài sān diǎn bàn.","지금 3시 반이야."],["现在五点一刻。","Xiànzài wǔ diǎn yí kè.","지금 5시 15분이야."]],
+      "8-0":[["今天几月几号？","Jīntiān jǐ yuè jǐ hào?","오늘 몇 월 며칠이야?"],["明天十二月二十五号。","Míngtiān shí'èr yuè èrshíwǔ hào.","내일은 12월 25일이야."]],
+      "8-1":[["怎么办？","Zěnme bàn?","어떡하지?"],["你怎么了？","Nǐ zěnme le?","너 무슨 일이야?"]],
+      "9-0":[["我在家。","Wǒ zài jiā.","나는 집에 있어."],["你在哪儿？","Nǐ zài nǎr?","너 어디야?"]],
+      "9-1":[["我已经吃了。","Wǒ yǐjīng chī le.","나는 벌써 먹었어."],["他已经到了。","Tā yǐjīng dào le.","그는 이미 도착했어."]],
+      "10-0":[["我想喝咖啡。","Wǒ xiǎng hē kāfēi.","나는 커피를 마시고 싶어."],["你想去哪儿？","Nǐ xiǎng qù nǎr?","너 어디 가고 싶어?"]],
+      "10-1":[["今天我请客！","Jīntiān wǒ qǐngkè!","오늘 내가 쏠게!"],["下次你请客吧。","Xiàcì nǐ qǐngkè ba.","다음엔 네가 쏴."]],
+      "10-2":[["你随便吃。","Nǐ suíbiàn chī.","마음대로 먹어."],["我随便，都可以。","Wǒ suíbiàn, dōu kěyǐ.","나는 아무거나 괜찮아."]]
+    };
+
     function renderGrammar(points) {
       const container = document.getElementById('grammarContent');
       container.innerHTML = '';
 
-      points.forEach(p => {
+      points.forEach((p, pi) => {
+        const examples = GRAMMAR_EX[currentLessonId + '-' + pi] || [];
         const box = document.createElement('div');
         box.className = "bg-white p-5 rounded-2xl comic-border space-y-2";
         box.innerHTML = `
@@ -2008,8 +2258,29 @@
           <div class="text-gray-800 leading-relaxed text-sm pt-1">
             ${p.content}
           </div>
+          ${examples.length ? `
+          <div class="bg-orange-50 rounded-xl p-3 comic-border-sm space-y-2 mt-2">
+            <p class="text-xs font-black text-brand-600">✏️ 예문 (눌러서 듣기)</p>
+            ${examples.map((e, ei) => `
+              <div class="flex items-center gap-3 bg-white rounded-lg p-2.5 border border-gray-300">
+                <button data-speak-key="g:${pi}:${ei}" class="w-9 h-9 rounded-full bg-orange-100 text-brand-600 hover:bg-brand-500 hover:text-white flex items-center justify-center transition border border-gray-900 flex-shrink-0 active:scale-90" title="발음 듣기">
+                  <i class="fa-solid fa-volume-high text-xs"></i>
+                </button>
+                <div class="min-w-0">
+                  <p class="font-cn text-base sm:text-lg font-black text-gray-900">${e[0]}</p>
+                  <p class="text-xs font-bold text-brand-600 pinyin-text">${e[1]}</p>
+                  <p class="text-xs text-gray-700 font-medium">${e[2]}</p>
+                </div>
+              </div>`).join('')}
+          </div>` : ''}
         `;
         container.appendChild(box);
+        examples.forEach((e, ei) => {
+          const k = 'g:' + pi + ':' + ei;
+          const b = box.querySelector(`[data-speak-key="${k}"]`);
+          b.onclick = () => speakChinese(e[0], null, k);
+          addRestart(b, () => speakChinese(e[0], null, k, { restart: true }));
+        });
       });
     }
 
@@ -2125,50 +2396,15 @@
           const clearBtn = item.querySelector('.clear-order-btn');
           const orderFeedback = item.querySelector('.order-feedback');
 
-          function updateDropBox() {
-            if (currentOrder.length === 0) {
-              dropBox.innerHTML = '<span class="text-xs text-gray-500 font-cute text-sm select-none placeholder-text">아래 글자를 순서대로 콕콕 눌러보세요!</span>';
-            } else {
-              dropBox.innerHTML = '';
-              currentOrder.forEach((tok, cIdx) => {
-                const b = document.createElement('button');
-                b.className = "px-3.5 py-1.5 bg-brand-500 text-white font-cn font-black rounded-xl text-base flex items-center gap-1.5 comic-border-sm comic-btn";
-                b.innerHTML = `${tok} <i class="fa-solid fa-xmark text-xs opacity-80"></i>`;
-                b.onclick = () => {
-                  playSound('pop');
-                  const found = tokensPool.querySelector(`[data-tok="${tok}"][disabled]`);
-                  if (found) found.removeAttribute('disabled');
-                  currentOrder.splice(cIdx, 1);
-                  updateDropBox();
-                };
-                dropBox.appendChild(b);
-              });
-            }
-          }
-
-          tokensPool.querySelectorAll('.token-btn').forEach(btn => {
-            btn.onclick = () => {
-              playSound('pop');
-              currentOrder.push(btn.dataset.tok);
-              btn.setAttribute('disabled', 'true');
-              btn.classList.add('opacity-40');
-              updateDropBox();
-            };
-          });
-
+          const ob = mountOrderBuilder(dropBox, tokensPool);
           clearBtn.onclick = () => {
             playSound('pop');
-            currentOrder = [];
-            tokensPool.querySelectorAll('.token-btn').forEach(b => {
-              b.removeAttribute('disabled');
-              b.classList.remove('opacity-40');
-            });
-            updateDropBox();
+            ob.clear();
             orderFeedback.classList.add('hidden');
           };
 
           checkBtn.onclick = () => {
-            const userStr = currentOrder.join('');
+            const userStr = ob.get().join('');
             const targetStr = q.actualTokens.join('');
 
             if (userStr === targetStr) {
@@ -2198,12 +2434,106 @@
         }
 
         container.appendChild(item);
+
+        // 🔊 문제 문장 듣기 (빈칸 문제는 빈칸을 뺀 문장을 읽어줌)
+        const qText = (q.chineseSentence || (q.sentenceDisplay ? q.sentenceDisplay.replace(/\[\s*_+\s*\]/g, '') : '')).trim();
+        if (/[\u4e00-\u9fff]/.test(qText)) {
+          const qKey = 'q:' + idx;
+          const bar = document.createElement('div');
+          bar.innerHTML = `<button data-speak-key="${qKey}" class="text-xs font-black text-gray-900 bg-amber-300 hover:bg-amber-400 px-3 py-1.5 rounded-xl comic-border-sm comic-btn flex items-center gap-1.5"><i class="fa-solid fa-volume-high text-[10px]"></i><span>문장 듣기</span></button>`;
+          const qb = bar.firstElementChild;
+          qb.onclick = () => speakChinese(qText, null, qKey);
+          item.insertBefore(bar, item.children[1] || null);
+          addRestart(qb, () => speakChinese(qText, null, qKey, { restart: true }));
+        }
       });
 
       document.getElementById('resetQuizBtn').onclick = () => {
         playSound('pop');
         renderPractice(practiceList);
         showToast("연습문제를 새로고침했습니다.");
+      };
+    }
+
+    /* 4-2. VOCAB QUIZ (단어장 → 문제) */
+    function renderVocabQuiz(vocabList) {
+      const box = document.getElementById('vocabQuizContainer');
+      const scoreEl = document.getElementById('vocabQuizScore');
+      box.innerHTML = '';
+      const shuffle = a => { a = [...a]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+      const pool = lessonsData.flatMap(l => l.vocab);
+      const items = shuffle(vocabList);
+      let score = 0, answered = 0;
+      const refresh = () => { scoreEl.textContent = `${score} / ${items.length}  (푼 문제 ${answered})`; };
+      refresh();
+
+      items.forEach((v, i) => {
+        const mode = i % 3;   // 0: 한자→뜻, 1: 뜻→한자, 2: 듣고 고르기
+        const text = w => mode === 0 ? w.korean : (mode === 1 ? `${w.hanzi} [${w.pinyin}]` : w.hanzi);
+        const correctText = text(v);
+        const opts = [v];
+        const seen = new Set([correctText]);
+        for (const w of shuffle(pool)) {
+          if (opts.length >= 4) break;
+          const t = text(w);
+          if (!seen.has(t)) { seen.add(t); opts.push(w); }
+        }
+        const choices = shuffle(opts);
+        const key = 'vq:' + i;
+        const listenBtn = `<button data-speak-key="${key}" class="w-9 h-9 rounded-full bg-orange-100 text-brand-600 hover:bg-brand-500 hover:text-white flex items-center justify-center transition border border-gray-900 flex-shrink-0 active:scale-90" title="발음 듣기"><i class="fa-solid fa-volume-high text-xs"></i></button>`;
+        const head = mode === 0
+          ? `<p class="font-black text-gray-900 text-sm sm:text-base">다음 단어의 뜻은?</p>
+             <div class="flex items-center gap-3"><span class="font-cn text-2xl font-black text-gray-900">${v.hanzi}</span><span class="text-xs font-bold text-brand-600 pinyin-text">[${v.pinyin}]</span>${listenBtn}</div>`
+          : mode === 1
+          ? `<p class="font-black text-gray-900 text-sm sm:text-base">'${v.korean}'에 해당하는 중국어는?</p>`
+          : `<p class="font-black text-gray-900 text-sm sm:text-base">소리를 듣고 알맞은 단어를 고르세요</p>
+             <div class="flex items-center gap-2">${listenBtn}<span class="text-xs text-gray-500 font-bold">버튼을 눌러 들어보세요</span></div>`;
+
+        const item = document.createElement('div');
+        item.className = "bg-white p-5 rounded-2xl comic-border space-y-3";
+        item.innerHTML = `
+          <span class="text-xs font-black text-gray-900 bg-amber-300 px-2.5 py-0.5 rounded-md comic-border-sm">문제 ${i + 1}</span>
+          ${head}
+          <div class="grid grid-cols-2 gap-2 sm:gap-3">
+            ${choices.map((w, ci) => `<button data-ci="${ci}" class="vq-opt p-3 rounded-xl border-2 border-gray-800 text-left font-bold text-xs sm:text-sm hover:bg-orange-100 transition comic-btn bg-white ${mode !== 0 ? 'font-cn' : ''}">${text(w)}</button>`).join('')}
+          </div>
+          <div class="vq-feedback hidden p-3 rounded-xl text-xs sm:text-sm leading-relaxed comic-border-sm"></div>
+        `;
+        box.appendChild(item);
+
+        const lb = item.querySelector(`[data-speak-key="${key}"]`);
+        if (lb) {
+          lb.onclick = () => speakChinese(v.hanzi, null, key);
+          addRestart(lb, () => speakChinese(v.hanzi, null, key, { restart: true }));
+        }
+
+        const btns = item.querySelectorAll('.vq-opt');
+        const fb = item.querySelector('.vq-feedback');
+        btns.forEach(b => {
+          b.onclick = () => {
+            const picked = choices[+b.dataset.ci];
+            const ok = picked === v;
+            btns.forEach(x => {
+              x.disabled = true;
+              if (choices[+x.dataset.ci] === v) x.classList.add('bg-green-100', 'text-green-900');
+            });
+            if (!ok) b.classList.add('bg-red-100', 'text-red-900');
+            answered++; if (ok) score++;
+            refresh();
+            playSound(ok ? 'correct' : 'wrong');
+            fb.className = `vq-feedback p-3 rounded-xl text-xs sm:text-sm leading-relaxed comic-border-sm ${ok ? 'bg-green-50 text-green-900' : 'bg-red-50 text-red-900'}`;
+            fb.innerHTML = `<strong>${ok ? '정답! 🎉' : '아쉬워요!'}</strong> <span class="font-cn font-black">${v.hanzi}</span> [${v.pinyin}] = ${v.korean}`;
+            if (ok) speakChinese(v.hanzi);
+            if (answered === items.length) showToast(`단어문제 완료! ${score}/${items.length}점`);
+          };
+        });
+      });
+
+      document.getElementById('resetVocabQuizBtn').onclick = () => {
+        playSound('pop');
+        stopSpeaking();
+        renderVocabQuiz(vocabList);
+        showToast("단어문제를 새로 섞었어요.");
       };
     }
 
@@ -2260,14 +2590,412 @@
         };
 
         const speakerBtn = cardWrapper.querySelector('.speaker-btn');
+        const fKey = 'fc:' + idx;
+        speakerBtn.dataset.speakKey = fKey;
         speakerBtn.onclick = (e) => {
           e.stopPropagation();
-          speakChinese(s.hanzi);
+          speakChinese(s.hanzi, null, fKey);
         };
 
         grid.appendChild(cardWrapper);
+        addRestart(speakerBtn, () => speakChinese(s.hanzi, null, fKey, { restart: true }));
       });
     }
+
+    /* ==========================================================================
+       ORDER BUILDER: 눌러서 담기 / 담긴 글자를 눌러 자리 옮기기 / 드래그(PC)
+       ========================================================================== */
+    function mountOrderBuilder(dropBox, pool, cb) {
+      let order = [], sel = -1, drag = null, ready = false;
+      const lock = (b, on) => { b.disabled = on; b.classList.toggle('opacity-40', on); };
+      const PH = '<span class="text-xs text-gray-500 font-cute text-sm select-none">글자를 눌러 담고, 담긴 글자를 눌러 자리를 옮겨보세요! (PC는 드래그도 가능)</span>';
+      const put = (item, at) => { order.splice(Math.min(at, order.length), 0, item); lock(item.btn, true); };
+      const move = (from, to) => { if (from === to) return; const [m] = order.splice(from, 1); order.splice(to, 0, m); };
+      function dropAt(i) {
+        if (!drag) return;
+        if (drag.t === 'chip') move(drag.i, i);
+        else if (!drag.btn.disabled) put({ tok: drag.btn.dataset.tok, btn: drag.btn }, i);
+        drag = null; sel = -1; render();
+      }
+      function render() { draw(); if (ready && cb) cb(order.map(o => o.tok)); }
+      function draw() {
+        dropBox.innerHTML = '';
+        if (!order.length) { dropBox.innerHTML = PH; return; }
+        order.forEach((o, i) => {
+          const c = document.createElement('div');
+          c.draggable = true;
+          c.className = 'px-3 py-1.5 font-cn font-black rounded-xl text-base flex items-center gap-1.5 comic-border-sm cursor-pointer select-none ' +
+            (i === sel ? 'bg-amber-300 text-gray-900 ring-4 ring-brand-500' : 'bg-brand-500 text-white');
+          c.innerHTML = `<span>${o.tok}</span><span class="rm text-xs opacity-80 px-1" title="빼기">✕</span>`;
+          c.onclick = e => {
+            playSound('pop');
+            if (e.target.classList.contains('rm')) { lock(o.btn, false); order.splice(i, 1); sel = -1; }
+            else if (sel < 0) sel = i;
+            else if (sel === i) sel = -1;
+            else { move(sel, i); sel = -1; }
+            render();
+          };
+          c.ondragstart = e => { drag = { t: 'chip', i }; e.dataTransfer.effectAllowed = 'move'; e.dataTransfer.setData('text/plain', o.tok); };
+          c.ondragover = e => e.preventDefault();
+          c.ondrop = e => { e.preventDefault(); e.stopPropagation(); dropAt(i); };
+          dropBox.appendChild(c);
+        });
+      }
+      dropBox.ondragover = e => e.preventDefault();
+      dropBox.ondrop = e => { e.preventDefault(); dropAt(order.length); };
+      pool.querySelectorAll('.token-btn').forEach(b => {
+        b.draggable = true;
+        b.ondragstart = e => { drag = { t: 'pool', btn: b }; e.dataTransfer.setData('text/plain', b.dataset.tok); };
+        b.onclick = () => {
+          if (b.disabled) return;
+          playSound('pop');
+          put({ tok: b.dataset.tok, btn: b }, sel >= 0 ? sel + 1 : order.length);
+          sel = -1; render();
+        };
+      });
+      render(); ready = true;
+      return {
+        set(list) {
+          list.forEach(t => {
+            const b = [...pool.querySelectorAll('.token-btn')].find(x => !x.disabled && x.dataset.tok === t);
+            if (b) put({ tok: t, btn: b }, order.length);
+          });
+          sel = -1; render();
+        },
+        get: () => order.map(o => o.tok),
+        clear() { order.forEach(o => lock(o.btn, false)); order = []; sel = -1; render(); },
+        freeze() { dropBox.style.pointerEvents = 'none'; pool.style.pointerEvents = 'none'; }
+      };
+    }
+
+    /* ==========================================================================
+       뷰 전환 (강의 ↔ 전체 테스트)
+       ========================================================================== */
+    function setView(v) {
+      viewMode = v;
+      document.getElementById('lessonHero').classList.toggle('hidden', v === 'tests');
+      document.getElementById('testHub').classList.toggle('hidden', v !== 'tests');
+      const act = (document.querySelector('.nav-tab.active-tab') || { dataset: { tab: 'vocab' } }).dataset.tab;
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.toggle('hidden', v === 'tests' || p.id !== 'tab-' + act));
+      renderSidebar();
+    }
+
+    /* ==========================================================================
+       전체 테스트 · 점수판
+       ========================================================================== */
+    const TEST_KEY = 'toon_chinese_tests_v1';
+    const SESS_KEY = 'toon_chinese_test_sessions_v1';
+    let testSessions = {};
+    try { testSessions = JSON.parse(localStorage.getItem(SESS_KEY) || '{}'); } catch (e) { testSessions = {}; }
+    function saveSessions() { try { localStorage.setItem(SESS_KEY, JSON.stringify(testSessions)); } catch (e) {} }
+    function sessStats(sess) { let s = 0, a = 0; sess.qs.forEach((q, k) => { const x = sess.ans[k]; if (x && x.checked) { a++; if (x.ok) s++; } }); return { s, a }; }
+    function confirmTap(btn, label, fn) {
+      const orig = btn.textContent; let armed = false, t;
+      btn.onclick = e => {
+        if (e) e.stopPropagation();
+        if (!armed) { armed = true; btn.textContent = label; btn.classList.add('bg-red-100'); t = setTimeout(() => { armed = false; btn.textContent = orig; btn.classList.remove('bg-red-100'); }, 3000); }
+        else { clearTimeout(t); fn(); }
+      };
+    }
+    let testRecords = {};
+    try { testRecords = JSON.parse(localStorage.getItem(TEST_KEY) || '{}'); } catch (e) { testRecords = {}; }
+    const shuf = a => { a = [...a]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+    const hasCN = t => /[\u4e00-\u9fff]/.test(t || '');
+    const stripBlank = t => (t || '').replace(/\[\s*_+\s*\]/g, '');
+
+    function allVocab() {
+      const m = new Map();
+      lessonsData.forEach(l => l.vocab.forEach(v => { const k = v.hanzi + '|' + v.korean; if (!m.has(k)) m.set(k, v); }));
+      return [...m.values()];
+    }
+    function vocabQ(v, mode, pool) {
+      const text = w => mode === 0 ? w.korean : (mode === 1 ? `${w.hanzi} [${w.pinyin}]` : w.hanzi);
+      const opts = [v], seen = new Set([text(v)]);
+      for (const w of shuf(pool)) { if (opts.length >= 4) break; const t = text(w); if (!seen.has(t)) { seen.add(t); opts.push(w); } }
+      const ch = shuf(opts);
+      const head = mode === 0
+        ? `<p class="font-black text-sm sm:text-base">다음 단어의 뜻은?</p><p class="font-cn text-2xl font-black">${v.hanzi} <span class="text-xs text-brand-600 font-sans pinyin-text">[${v.pinyin}]</span></p>`
+        : mode === 1 ? `<p class="font-black text-sm sm:text-base">'${v.korean}'에 해당하는 중국어는?</p>`
+        : `<p class="font-black text-sm sm:text-base">소리를 듣고 알맞은 단어를 고르세요</p>`;
+      return { kind: 'choice', tag: '단어', head, speak: mode === 1 ? null : v.hanzi, options: ch.map(text), correct: ch.indexOf(v), cn: mode !== 0,
+        review: `${v.hanzi} [${v.pinyin}] = ${v.korean}`, explain: `<span class="font-cn font-black">${v.hanzi}</span> [${v.pinyin}] = ${v.korean}` };
+    }
+    function practiceQ(q) {
+      const sd = q.sentenceDisplay ? `<div class="p-3 bg-sand-50 rounded-xl font-cn text-base sm:text-lg text-gray-900 comic-border-sm font-bold">${q.sentenceDisplay}</div>` : '';
+      const head = `<p class="font-black text-gray-900 text-sm sm:text-base">${q.question}</p>${sd}`;
+      if (q.type === 'order') {
+        return { kind: 'order', tag: '문장 배열', head, speak: q.chineseSentence, tokens: q.actualTokens, answer: q.actualTokens.join(''),
+          review: `${q.chineseSentence} (${q.translation})`, explain: `<span class="font-cn text-lg font-black">${q.chineseSentence}</span><br>${q.translation}` };
+      }
+      const correct = q.type === 'blank' ? q.options.indexOf(q.correct) : q.correct;
+      const sp = stripBlank(q.sentenceDisplay);
+      return { kind: 'choice', tag: q.type === 'blank' ? '빈칸 채우기' : '문장 선택', head, speak: hasCN(sp) ? sp : null, options: q.options, correct, cn: false,
+        review: `${q.question} → ${q.options[correct]}`, explain: q.explanation || `정답: ${q.options[correct]}` };
+    }
+    function buildTests() {
+      const pool = allVocab();
+      const vq = arr => shuf(arr).map((v, i) => vocabQ(v, i % 3, pool));
+      const pq = l => l.practice.map(practiceQ);
+      const T = [
+        { id: 'vocab-all', group: '종합', title: '단어 전체 테스트', desc: '0~10과 모든 단어 (뜻 · 한자 · 듣기 혼합)', build: () => vq(pool) },
+        { id: 'sent-all', group: '종합', title: '문장 전체 테스트', desc: '모든 과의 단어 배열 · 빈칸 · 선택 문제', build: () => shuf(lessonsData.flatMap(pq)) },
+        { id: 'vocab-20', group: '종합', title: '단어 랜덤 20문제', desc: '전체 단어 중 무작위 20개 (연습용)', build: () => vq(shuf(pool).slice(0, 20)) }
+      ];
+      lessonsData.forEach(l => T.push({ id: 'L' + l.id, group: '과별', title: `${l.id}과 테스트`, desc: l.title.replace(/^\d+과\s*/, ''),
+        build: () => shuf([...vq(l.vocab), ...pq(l)]) }));
+      return T;
+    }
+    function saveRec(id, score, total) {
+      const r = testRecords[id] || { best: 0, total, plays: 0 };
+      r.plays++; r.last = score; r.total = total;
+      if (score / total >= r.best / (r.total || total) || !r.best) r.best = Math.max(r.best, score);
+      testRecords[id] = r;
+      try { localStorage.setItem(TEST_KEY, JSON.stringify(testRecords)); } catch (e) {}
+    }
+    const pct = (a, b) => b ? Math.round(a / b * 100) : 0;
+
+    function renderTestHub() {
+      stopSpeaking();
+      const body = document.getElementById('testHubBody');
+      const tests = buildTests();
+      const counts = {}; tests.forEach(t => counts[t.id] = t.build().length);
+      const v = testRecords['vocab-all'], st = testRecords['sent-all'];
+      const vTot = counts['vocab-all'], sTot = counts['sent-all'];
+      const got = (v ? v.best : 0) + (st ? st.best : 0);
+      const total = pct(got, vTot + sTot);
+      const row = t => {
+        const r = testRecords[t.id], se = testSessions[t.id];
+        const n = se ? se.qs.length : counts[t.id];
+        let status = '미응시', btn = '시작';
+        if (se) { const x = sessStats(se); status = se.done ? `완료 · ${x.s}/${n}` : `진행 중 · ${x.a}/${n} 풀이 (${x.s}점)`; btn = se.done ? '결과 보기' : '이어서 풀기'; }
+        return `<div class="flex items-center justify-between gap-3 bg-white p-3.5 rounded-xl comic-border-sm">
+          <div class="min-w-0">
+            <p class="font-black text-gray-900 text-sm">${t.title} <span class="text-[11px] text-gray-500 font-bold">· ${n}문제</span></p>
+            <p class="text-xs text-gray-600 font-medium truncate">${t.desc}</p>
+            <p class="text-[11px] font-black mt-0.5 ${se ? 'text-brand-600' : 'text-gray-400'}">${status}${r ? ` · 최고 ${r.best}/${r.total} (${pct(r.best, r.total)}점)` : ''}</p>
+          </div>
+          <div class="flex items-center gap-1.5 flex-shrink-0">
+            ${se ? `<button data-reset="${t.id}" class="reset-test bg-white hover:bg-gray-100 text-gray-800 text-xs font-bold px-2.5 py-2 rounded-xl comic-border-sm comic-btn">리셋</button>` : ''}
+            <button data-test="${t.id}" class="start-test bg-brand-500 hover:bg-brand-600 text-white text-xs font-black px-3 py-2 rounded-xl comic-border-sm comic-btn">${btn}</button>
+          </div>
+        </div>`;
+      };
+      const grp = g => tests.filter(t => t.group === g).map(row).join('');
+      body.innerHTML = `
+        <div class="bg-white p-5 sm:p-6 rounded-2xl comic-border">
+          <h2 class="text-xl font-black text-gray-900 flex items-center gap-2"><i class="fa-solid fa-trophy text-brand-500"></i> 전체 테스트 · 점수판</h2>
+          <div class="grid grid-cols-3 gap-2 sm:gap-3 mt-4 text-center">
+            <div class="bg-orange-50 rounded-xl p-3 comic-border-sm"><p class="text-[11px] font-black text-gray-600">단어 전체</p><p class="text-lg font-black text-gray-900">${v ? v.best + '/' + vTot : '-'}</p></div>
+            <div class="bg-orange-50 rounded-xl p-3 comic-border-sm"><p class="text-[11px] font-black text-gray-600">문장 전체</p><p class="text-lg font-black text-gray-900">${st ? st.best + '/' + sTot : '-'}</p></div>
+            <div class="bg-amber-300 rounded-xl p-3 comic-border-sm"><p class="text-[11px] font-black text-gray-800">종합 점수</p><p class="text-2xl font-black text-gray-900">${v || st ? total : '-'}<span class="text-xs">점</span></p></div>
+          </div>
+          <p class="text-[11px] text-gray-500 font-bold mt-2">종합 점수 = 단어 전체 + 문장 전체 최고 기록의 합산 정답률(100점 만점). 아직 보지 않은 테스트는 0점으로 계산돼요.</p>
+          <button id="resetRecordsBtn" class="mt-2 text-[11px] font-bold text-gray-500 underline">점수·진행 상황 모두 초기화</button>
+        </div>
+        <div class="space-y-2"><h3 class="text-sm font-black text-gray-900">📚 종합 테스트</h3>${grp('종합')}</div>
+        <div class="space-y-2"><h3 class="text-sm font-black text-gray-900">📖 과별 테스트</h3>${grp('과별')}</div>`;
+      body.querySelectorAll('.start-test').forEach(b => b.onclick = () => { playSound('pop'); runTest(tests.find(t => t.id === b.dataset.test)); });
+      body.querySelectorAll('.reset-test').forEach(b => confirmTap(b, '정말? 한 번 더', () => { delete testSessions[b.dataset.reset]; saveSessions(); renderTestHub(); }));
+      confirmTap(document.getElementById('resetRecordsBtn'), '정말 전부 초기화? (한 번 더)', () => {
+        testRecords = {}; testSessions = {};
+        try { localStorage.removeItem(TEST_KEY); localStorage.removeItem(SESS_KEY); } catch (e) {}
+        renderTestHub();
+      });
+    }
+
+    function runTest(def) {
+      let sess = testSessions[def.id];
+      if (!sess) { sess = { qs: def.build(), i: 0, ans: {}, saved: false, done: false }; testSessions[def.id] = sess; saveSessions(); }
+      const qs = sess.qs, body = document.getElementById('testHubBody');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      function show() {
+        if (sess.done) return finish();
+        stopSpeaking();
+        sess.i = Math.max(0, Math.min(sess.i, qs.length - 1));
+        const i = sess.i, q = qs[i], key = 't:' + i;
+        const st = sess.ans[i] || (sess.ans[i] = { checked: false });
+        const sc0 = sessStats(sess);
+        body.innerHTML = `
+          <div class="bg-white p-4 rounded-2xl comic-border">
+            <div class="flex items-center justify-between gap-2">
+              <button id="tBack" class="text-xs font-bold text-gray-700 bg-gray-100 hover:bg-gray-200 px-3 py-1.5 rounded-xl comic-border-sm comic-btn">← 목록</button>
+              <span class="text-sm font-black text-gray-900 truncate">${def.title}</span>
+              <button id="tReset" class="text-xs font-bold text-gray-700 bg-white hover:bg-gray-100 px-3 py-1.5 rounded-xl comic-border-sm comic-btn">리셋</button>
+            </div>
+            <div class="flex items-center justify-between mt-2 text-xs font-black text-brand-600"><span>${i + 1} / ${qs.length}</span><span id="tScore">${sc0.s}점 (${sc0.a}문제 풀이)</span></div>
+            <div class="h-2 bg-gray-200 rounded-full mt-2 overflow-hidden"><div class="h-full bg-brand-500" style="width:${(sc0.a / qs.length) * 100}%"></div></div>
+          </div>
+          <div class="bg-white p-5 rounded-2xl comic-border space-y-4">
+            <span class="inline-block text-xs font-black text-gray-900 bg-amber-300 px-2.5 py-0.5 rounded-md comic-border-sm">${q.tag}</span>
+            ${q.head}
+            ${q.speak ? `<div><button data-speak-key="${key}" class="text-xs font-black text-gray-900 bg-amber-300 hover:bg-amber-400 px-3 py-1.5 rounded-xl comic-border-sm comic-btn flex items-center gap-1.5"><i class="fa-solid fa-volume-high text-[10px]"></i><span>듣기</span></button></div>` : ''}
+            <div id="tAns"></div>
+            <div id="tFb" class="hidden p-3 rounded-xl text-xs sm:text-sm leading-relaxed comic-border-sm"></div>
+            <div class="flex items-center gap-2">
+              ${i > 0 ? '<button id="tPrev" class="bg-white hover:bg-gray-100 text-gray-800 text-sm font-bold px-4 py-2.5 rounded-xl comic-border-sm comic-btn">← 이전</button>' : ''}
+              <button id="tNext" class="hidden bg-brand-500 hover:bg-brand-600 text-white text-sm font-black px-5 py-2.5 rounded-xl comic-border-sm comic-btn">${i === qs.length - 1 ? '결과 보기' : '다음 문제 →'}</button>
+            </div>
+          </div>`;
+        document.getElementById('tBack').onclick = () => { stopSpeaking(); renderTestHub(); };   // 진행 상황은 자동 저장됨
+        confirmTap(document.getElementById('tReset'), '정말 리셋? (한 번 더)', () => { delete testSessions[def.id]; saveSessions(); runTest(def); });
+        const pv = document.getElementById('tPrev');
+        if (pv) pv.onclick = () => { sess.i--; saveSessions(); show(); };
+        const nx = document.getElementById('tNext');
+        nx.onclick = () => { if (i >= qs.length - 1) { sess.done = true; saveSessions(); finish(); } else { sess.i++; saveSessions(); show(); } };
+        const lb = body.querySelector(`[data-speak-key="${key}"]`);
+        if (lb) { lb.onclick = () => speakChinese(q.speak, null, key); addRestart(lb, () => speakChinese(q.speak, null, key, { restart: true })); }
+
+        const fb = document.getElementById('tFb'), ans = document.getElementById('tAns');
+        const showFb = ok => {
+          fb.className = `p-3 rounded-xl text-xs sm:text-sm leading-relaxed comic-border-sm ${ok ? 'bg-green-50 text-green-900' : 'bg-red-50 text-red-900'}`;
+          fb.innerHTML = `<strong>${ok ? '정답! 🎉' : '아쉬워요!'}</strong> ${q.explain}`;
+          nx.classList.remove('hidden');
+        };
+        const commit = ok => {
+          st.checked = true; st.ok = ok; saveSessions();
+          playSound(ok ? 'correct' : 'wrong');
+          const x = sessStats(sess);
+          document.getElementById('tScore').textContent = `${x.s}점 (${x.a}문제 풀이)`;
+          showFb(ok);
+        };
+
+        if (q.kind === 'choice') {
+          ans.className = 'grid grid-cols-2 gap-2 sm:gap-3';
+          ans.innerHTML = q.options.map((o, oi) => `<button data-oi="${oi}" class="t-opt p-3 rounded-xl border-2 border-gray-800 text-left font-bold text-xs sm:text-sm hover:bg-orange-100 transition comic-btn bg-white ${q.cn ? 'font-cn' : ''}">${o}</button>`).join('');
+          const btns = ans.querySelectorAll('.t-opt');
+          const mark = oi => {
+            btns.forEach(x => { x.disabled = true; if (+x.dataset.oi === q.correct) x.classList.add('bg-green-100', 'text-green-900'); });
+            if (oi !== q.correct) btns[oi].classList.add('bg-red-100', 'text-red-900');
+          };
+          if (st.checked) { mark(st.sel); showFb(st.ok); }
+          btns.forEach(b => b.onclick = () => {
+            if (st.checked) return;
+            const oi = +b.dataset.oi; st.sel = oi; mark(oi); commit(oi === q.correct);
+          });
+        } else {
+          if (!q.scr) { q.scr = shuf(q.tokens); saveSessions(); }
+          ans.className = 'space-y-3';
+          ans.innerHTML = `
+            <div class="min-h-[56px] p-2.5 bg-sand-50 border-2 border-dashed border-gray-600 rounded-xl flex flex-wrap gap-2 items-center t-drop"></div>
+            <div class="flex flex-wrap gap-2 t-pool">${q.scr.map(t => `<button class="token-btn px-3.5 py-1.5 bg-white comic-border-sm rounded-xl font-cn font-black text-gray-900 hover:bg-orange-100 comic-btn transition text-base" data-tok="${t}">${t}</button>`).join('')}</div>
+            <div class="flex items-center gap-2">
+              <button class="t-check bg-brand-500 hover:bg-brand-600 text-white text-xs font-black px-4 py-2 rounded-xl comic-border-sm comic-btn">정답 확인</button>
+              <button class="t-clear bg-white hover:bg-gray-100 text-gray-800 text-xs font-bold px-3 py-2 rounded-xl comic-border-sm comic-btn">다시 담기</button>
+            </div>`;
+          const ob = mountOrderBuilder(ans.querySelector('.t-drop'), ans.querySelector('.t-pool'), list => { if (!st.checked) { st.order = list; saveSessions(); } });
+          const chk = ans.querySelector('.t-check'), clr = ans.querySelector('.t-clear');
+          if (st.order && st.order.length) ob.set(st.order);
+          const lockUI = () => { ob.freeze(); chk.disabled = true; clr.disabled = true; };
+          if (st.checked) { lockUI(); showFb(st.ok); }
+          clr.onclick = () => { playSound('pop'); ob.clear(); };
+          chk.onclick = () => {
+            if (st.checked) return;
+            if (!ob.get().length) { showToast('글자를 먼저 담아주세요!'); return; }
+            st.order = ob.get(); lockUI();
+            commit(st.order.join('') === q.answer);
+          };
+        }
+      }
+
+      function finish() {
+        stopSpeaking();
+        const { s: score } = sessStats(sess);
+        if (!sess.saved) { saveRec(def.id, score, qs.length); sess.saved = true; saveSessions(); }
+        const wrong = qs.filter((q, k) => sess.ans[k] && sess.ans[k].checked && !sess.ans[k].ok).map(q => q.review);
+        const skipped = qs.length - sessStats(sess).a;
+        const p = pct(score, qs.length);
+        const msg = p >= 90 ? '완벽해요! 🏆' : p >= 70 ? '아주 잘했어요! 👍' : p >= 50 ? '좋아요, 조금만 더! 💪' : '복습하고 다시 도전해 봐요! 🌱';
+        body.innerHTML = `
+          <div class="bg-white p-6 rounded-2xl comic-border text-center space-y-2">
+            <p class="text-sm font-black text-gray-600">${def.title} 결과</p>
+            <p class="text-5xl font-black text-brand-600">${p}<span class="text-xl text-gray-900">점</span></p>
+            <p class="text-sm font-black text-gray-900">${score} / ${qs.length} 정답 · ${msg}</p>
+            ${skipped ? `<p class="text-xs text-gray-500 font-bold">풀지 않은 문제 ${skipped}개</p>` : ''}
+            <div class="flex flex-wrap justify-center gap-2 pt-2">
+              <button id="tReview" class="bg-brand-500 hover:bg-brand-600 text-white text-xs font-black px-4 py-2 rounded-xl comic-border-sm comic-btn">내 답 다시 보기</button>
+              <button id="tReset2" class="bg-white hover:bg-gray-100 text-gray-800 text-xs font-bold px-4 py-2 rounded-xl comic-border-sm comic-btn">리셋 (새로 풀기)</button>
+              <button id="tList" class="bg-white hover:bg-gray-100 text-gray-800 text-xs font-bold px-4 py-2 rounded-xl comic-border-sm comic-btn">점수판 · 목록</button>
+            </div>
+          </div>
+          ${wrong.length ? `<div class="bg-white p-5 rounded-2xl comic-border space-y-2"><h3 class="text-sm font-black text-gray-900">❌ 틀린 문제 복습 (${wrong.length})</h3>
+            <ul class="list-disc pl-5 space-y-1 text-xs sm:text-sm text-gray-800 font-medium">${wrong.map(w => `<li>${w}</li>`).join('')}</ul></div>` : ''}`;
+        document.getElementById('tReview').onclick = () => { sess.done = false; sess.i = 0; saveSessions(); show(); };
+        confirmTap(document.getElementById('tReset2'), '정말 리셋? (한 번 더)', () => { delete testSessions[def.id]; saveSessions(); runTest(def); });
+        document.getElementById('tList').onclick = renderTestHub;
+      }
+      show();
+    }
+
+    /* ===== 전체 자동 릴레이 (1~10과 이어서 계속 재생, 0과 제외) ===== */
+    function runRelay(kind) {
+      return cid => {
+        const items = [];
+        lessonsData.filter(l => l.id !== 0).forEach(l => {
+          if (kind === 'dlg') l.dialogue.forEach(d => items.push({ t: d.hanzi, n: `${l.id}과 · ${d.speaker}: ${d.hanzi}` }));
+          else l.vocab.forEach(v => items.push({ t: v.hanzi, n: `${l.id}과 · ${v.hanzi} (${v.korean})` }));
+        });
+        const now = document.getElementById('relayNow');
+        let i = 0;
+        function step() {
+          if (!chainGate(cid, step)) return;
+          if (i >= items.length) {
+            if (document.getElementById('relayLoop').checked) i = 0;
+            else { endChain(cid); showToast('전체 릴레이 재생 완료!'); return; }
+          }
+          const it = items[i];
+          now.textContent = '▶ ' + it.n;
+          now.classList.remove('hidden');
+          speakChinese(it.t, () => { i++; setTimeout(step, kind === 'dlg' ? 800 : 600); }, null, { chain: true });
+        }
+        step();
+        showToast(kind === 'dlg' ? '1~10과 전체 대화를 이어서 들려드려요.' : '1~10과 전체 단어를 이어서 들려드려요.');
+      };
+    }
+    [['relayDlgBtn', 'chain:relay-dlg', 'dlg'], ['relayVocabBtn', 'chain:relay-vocab', 'vocab']].forEach(([id, key, kind]) => {
+      const b = document.getElementById(id), run = runRelay(kind);
+      b.dataset.speakKey = key;
+      addRestart(b, () => restartChain(key, run));
+      b.onclick = () => toggleChain(key, run);
+    });
+
+    document.getElementById('openTestHubBtn').onclick = () => {
+      playSound('pop');
+      setView('tests');
+      renderTestHub();
+      closeMobileSidebar();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    /* ==========================================================================
+       탭 슬라이드바: 화살표 · 마우스 휠 · 드래그 · 선택 탭 자동 중앙 이동
+       ========================================================================== */
+    (function () {
+      const bar = document.getElementById('subTabBar');
+      const prev = document.getElementById('tabPrev'), next = document.getElementById('tabNext');
+      const upd = () => {
+        const max = bar.scrollWidth - bar.clientWidth;
+        prev.classList.toggle('hidden', bar.scrollLeft < 4);
+        next.classList.toggle('hidden', bar.scrollLeft > max - 4);
+      };
+      prev.onclick = () => bar.scrollBy({ left: -180, behavior: 'smooth' });
+      next.onclick = () => bar.scrollBy({ left: 180, behavior: 'smooth' });
+      bar.addEventListener('scroll', upd);
+      window.addEventListener('resize', upd);
+      bar.addEventListener('wheel', e => {
+        if (bar.scrollWidth <= bar.clientWidth) return;
+        if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) { e.preventDefault(); bar.scrollLeft += e.deltaY; }
+      }, { passive: false });
+      let down = false, sx = 0, sl = 0, moved = false;
+      bar.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') return; down = true; moved = false; sx = e.clientX; sl = bar.scrollLeft; });
+      window.addEventListener('pointermove', e => { if (!down) return; const dx = e.clientX - sx; if (Math.abs(dx) > 5) moved = true; if (moved) bar.scrollLeft = sl - dx; });
+      window.addEventListener('pointerup', () => { down = false; });
+      bar.addEventListener('click', e => { if (moved) { e.stopPropagation(); e.preventDefault(); moved = false; } }, true);
+      document.querySelectorAll('.nav-tab').forEach(b => b.addEventListener('click', () => {
+        setTimeout(() => { b.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' }); upd(); }, 30);
+      }));
+      setTimeout(upd, 100); setTimeout(upd, 800);
+    })();
 
     /* ==========================================================================
        TAB SWITCHING
