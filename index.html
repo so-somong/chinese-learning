@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" class="locked">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -3285,7 +3285,7 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
 
     async function onUser(u) {
       user = u; loaded = false; setUI(u);
-      if (!u) { lock(); return; }
+      if (!u) return;
       try {
         const cloud = await bridge().loadCloud(u.uid);
         const m = merge(cloud);
@@ -3309,7 +3309,7 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
     let tries = 0;
     const wait = setInterval(() => {
       if (bridge()) { clearInterval(wait); bridge().onAuthStateChanged(onUser); }
-      else if (++tries > 100) { clearInterval(wait); console.warn('Firebase 로드 실패'); toast('로그인 서버에 연결하지 못했어요. 인터넷 연결을 확인하고 새로고침해 주세요.'); }
+      else if (++tries > 100) { clearInterval(wait); console.warn('Firebase 로드 실패'); }
     }, 150);
   })();
   </script>
