@@ -113,6 +113,7 @@
   </script>
 
   <style>
+    html{font-size:17px}
     /* 로그인 전에는 앱 전체를 가림 */
     #authModal{z-index:100}
     #toast{z-index:120 !important}
@@ -250,9 +251,9 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
           <div>
             <h1 class="text-sm sm:text-base font-extrabold text-gray-900 tracking-tight flex items-center gap-1.5">
               <span>봄쌤 중국어 -쏘몽</span>
-              <span class="text-[11px] bg-brand-500 text-white font-bold px-2 py-0.5 rounded-md comic-badge">회화 1권</span>
+              <span class="text-sm bg-brand-500 text-white font-bold px-2 py-0.5 rounded-md comic-badge">회화 1권</span>
             </h1>
-            <p class="text-[11px] text-gray-600 font-cute font-bold hidden sm:block">만화로 재밌게! 소리내어 말하는 스마트 공부방</p>
+            <p class="text-sm sm:text-base text-gray-700 font-sans font-bold hidden sm:block">만화로 재밌게! 소리내어 말하는 스마트 공부방</p>
           </div>
         </div>
       </div>
@@ -260,7 +261,7 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
       <!-- Audio Speed & Progress Summary -->
       <div class="flex items-center space-x-2 sm:space-x-3">
         <!-- Voice Speed Selector -->
-        <div class="flex items-center bg-white comic-border-sm rounded-xl px-2.5 py-1 text-xs">
+        <div class="flex items-center bg-white comic-border-sm rounded-xl px-2.5 py-1 text-sm">
           <i class="fa-solid fa-headphones-simple text-brand-600 mr-1.5 hidden sm:inline"></i>
           <span class="text-gray-700 mr-1 font-bold">음성:</span>
           <select id="speedSelect" class="bg-transparent font-extrabold text-brand-600 focus:outline-none cursor-pointer">
@@ -273,7 +274,7 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
         <!-- Global Progress Bar -->
         <div class="hidden md:flex items-center space-x-2 bg-white comic-border-sm rounded-xl px-3 py-1">
           <i class="fa-solid fa-trophy text-amber-500"></i>
-          <div class="text-xs">
+          <div class="text-sm">
             <span class="text-gray-600 font-bold">달성:</span>
             <span id="globalProgressTxt" class="font-extrabold text-brand-600">0/11강 (0%)</span>
           </div>
@@ -283,16 +284,16 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
         </div>
 
         <!-- Sound FX toggle -->
-        <button id="soundFxBtn" title="효과음 켜기/끄기" class="bg-white comic-border-sm text-gray-700 hover:text-brand-600 p-2 rounded-xl text-xs comic-btn">
+        <button id="soundFxBtn" title="효과음 켜기/끄기" class="bg-white comic-border-sm text-gray-700 hover:text-brand-600 p-2 rounded-xl text-sm comic-btn">
           <i class="fa-solid fa-music"></i>
         </button>
 
         <!-- Reset Button -->
-        <button id="resetStorageBtn" title="학습 진도 초기화" class="bg-white comic-border-sm text-gray-500 hover:text-red-500 p-2 rounded-xl text-xs hover:bg-red-50 comic-btn">
+        <button id="resetStorageBtn" title="학습 진도 초기화" class="bg-white comic-border-sm text-gray-500 hover:text-red-500 p-2 rounded-xl text-sm hover:bg-red-50 comic-btn">
           <i class="fa-solid fa-rotate-left"></i>
         </button>
 
-        <button id="authBtn" class="bg-brand-500 hover:bg-brand-600 text-white comic-border-sm px-3 py-1.5 rounded-xl text-xs font-black comic-btn flex items-center gap-1.5 transition">
+        <button id="authBtn" class="bg-brand-500 hover:bg-brand-600 text-white comic-border-sm px-3 py-1.5 rounded-xl text-sm font-black comic-btn flex items-center gap-1.5 transition">
           <i class="fa-solid fa-user"></i>
           <span id="authBtnLabel">로그인</span>
         </button>
@@ -302,7 +303,7 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
   </header>
 
   <!-- CLOUD SYNC STATUS BAR -->
-  <div id="cloudStatusBar" class="hidden bg-amber-100 border-b border-amber-300 px-4 py-1 text-center text-xs font-bold text-amber-900 flex items-center justify-center gap-2">
+  <div id="cloudStatusBar" class="hidden bg-amber-100 border-b border-amber-300 px-4 py-1 text-center text-sm font-bold text-amber-900 flex items-center justify-center gap-2">
     <i class="fa-solid fa-cloud text-brand-600"></i>
     <span id="cloudStatusMsg">클라우드 계정과 자동 저장 동기화 중입니다.</span>
   </div>
@@ -320,13 +321,13 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
         </div>
         <div>
           <h3 class="font-black text-gray-900 text-lg" id="userNameLabel">학습자님</h3>
-          <p class="text-xs text-gray-500" id="userEmailLabel">user@example.com</p>
+          <p class="text-sm text-gray-500" id="userEmailLabel">user@example.com</p>
         </div>
-        <div class="p-3 bg-mint-50 rounded-xl comic-border-sm text-xs font-bold text-mint-800 text-left space-y-1">
+        <div class="p-3 bg-mint-50 rounded-xl comic-border-sm text-sm font-bold text-mint-800 text-left space-y-1">
           <p>☁️ <strong>자동 저장 상태:</strong> 활성화</p>
-          <p class="text-[11px] text-gray-600">진도율, 퀴즈 정답, 테스트 점수가 어디서든 실시간 저장됩니다.</p>
+          <p class="text-sm text-gray-600">진도율, 퀴즈 정답, 테스트 점수가 어디서든 실시간 저장됩니다.</p>
         </div>
-        <button id="doSignOutBtn" class="w-full bg-white hover:bg-gray-100 text-red-600 text-xs font-black py-2.5 rounded-xl comic-border-sm comic-btn border border-red-300">
+        <button id="doSignOutBtn" class="w-full bg-white hover:bg-gray-100 text-red-600 text-sm font-black py-2.5 rounded-xl comic-border-sm comic-btn border border-red-300">
           로그아웃
         </button>
       </div>
@@ -334,30 +335,31 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
       <div id="authLoggedOutView" class="space-y-4">
         <div class="text-center">
           <h3 class="text-lg font-black text-gray-900">로그인 & 진도 동기화</h3>
-          <p class="text-xs text-gray-600 mt-1">부여받은 아이디와 비밀번호로 로그인하세요!</p>
+          <p class="text-sm text-gray-600 mt-1">부여받은 아이디와 비밀번호로 로그인하세요!</p>
         </div>
 
         <form id="emailAuthForm" class="space-y-3">
           <div>
-            <label class="block text-[11px] font-black text-gray-700 mb-1">아이디</label>
-            <input id="authEmail" type="text" required autocomplete="username" placeholder="부여받은 아이디" class="w-full px-3 py-2 rounded-xl text-xs border border-gray-300 focus:outline-none focus:border-brand-500">
+            <label class="block text-sm font-black text-gray-700 mb-1">아이디</label>
+            <input id="authEmail" type="text" required autocomplete="username" placeholder="부여받은 아이디" class="w-full px-3 py-2 rounded-xl text-sm border border-gray-300 focus:outline-none focus:border-brand-500">
           </div>
           <div>
-            <label class="block text-[11px] font-black text-gray-700 mb-1">비밀번호</label>
-            <input id="authPw" type="password" required minlength="6" placeholder="6자리 이상" class="w-full px-3 py-2 rounded-xl text-xs border border-gray-300 focus:outline-none focus:border-brand-500">
+            <label class="block text-sm font-black text-gray-700 mb-1">비밀번호</label>
+            <input id="authPw" type="password" required minlength="6" placeholder="6자리 이상" class="w-full px-3 py-2 rounded-xl text-sm border border-gray-300 focus:outline-none focus:border-brand-500">
           </div>
 
-          <label class="flex items-center gap-2 text-xs font-bold text-gray-700 cursor-pointer select-none">
+          <label class="flex items-center gap-2 text-sm font-bold text-gray-700 cursor-pointer select-none">
             <input id="autoLoginChk" type="checkbox" class="w-4 h-4 accent-orange-500">
-            자동 로그인 <span class="text-[11px] font-medium text-gray-500">(이 기기에서 로그인 유지)</span>
+            자동 로그인 <span class="text-sm font-medium text-gray-500">(이 기기에서 로그인 유지)</span>
           </label>
 
           <div class="flex gap-2 pt-1">
-            <button id="emailLoginSubmit" type="button" class="flex-1 bg-brand-500 hover:bg-brand-600 text-white font-black py-2.5 rounded-xl comic-border-sm text-xs comic-btn">
+            <button id="emailLoginSubmit" type="button" class="flex-1 bg-brand-500 hover:bg-brand-600 text-white font-black py-2.5 rounded-xl comic-border-sm text-sm comic-btn">
               로그인
             </button>
           </div>
         </form>
+        <p class="text-center text-xs text-gray-400 font-sans">v2026.11.07-c</p>
       </div>
     </div>
   </div>
@@ -378,11 +380,11 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
       </div>
 
       <div class="flex items-center justify-between mb-3 px-1">
-        <h2 class="text-xs font-black text-gray-800 tracking-wider">강의 목록 (0~10과)</h2>
-        <span class="text-[11px] bg-mint-100 text-mint-700 font-extrabold px-2 py-0.5 rounded-md comic-badge" id="completedCountBadge">0개 완료</span>
+        <h2 class="text-sm font-black text-gray-800 tracking-wider">강의 목록 (0~10과)</h2>
+        <span class="text-sm bg-mint-100 text-mint-700 font-extrabold px-2 py-0.5 rounded-md comic-badge" id="completedCountBadge">0개 완료</span>
       </div>
 
-      <button id="openTestHubBtn" type="button" class="w-full text-left px-3 py-2.5 rounded-xl mb-2 flex items-center gap-2 font-black text-xs sm:text-sm comic-btn comic-border-sm bg-amber-300 text-gray-900">
+      <button id="openTestHubBtn" type="button" class="w-full text-left px-3 py-2.5 rounded-xl mb-2 flex items-center gap-2 font-black text-sm sm:text-sm comic-btn comic-border-sm bg-amber-300 text-gray-900">
         <i class="fa-solid fa-trophy"></i><span>전체 테스트 · 점수판</span>
       </button>
 
@@ -393,23 +395,23 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
 
       <!-- 전체 자동 릴레이 -->
       <div id="relayBox" class="mt-3 p-3 bg-white rounded-xl comic-border-sm space-y-2 flex-shrink-0">
-        <p class="text-xs font-black text-gray-900">🎧 전체 자동 릴레이 (1~10과)</p>
+        <p class="text-sm font-black text-gray-900">🎧 전체 자동 릴레이 (1~10과)</p>
         <div class="flex items-center">
-          <button id="relayDlgBtn" type="button" class="bg-brand-500 hover:bg-brand-600 text-white text-xs font-black px-3 py-2 rounded-xl comic-border-sm comic-btn flex items-center"><i class="fa-solid fa-play mr-1"></i> 전체 대화 연속 듣기</button>
+          <button id="relayDlgBtn" type="button" class="bg-brand-500 hover:bg-brand-600 text-white text-sm font-black px-3 py-2 rounded-xl comic-border-sm comic-btn flex items-center"><i class="fa-solid fa-play mr-1"></i> 전체 대화 연속 듣기</button>
         </div>
         <div class="flex items-center">
-          <button id="relayVocabBtn" type="button" class="bg-amber-300 hover:bg-amber-400 text-gray-900 text-xs font-black px-3 py-2 rounded-xl comic-border-sm comic-btn flex items-center"><i class="fa-solid fa-play mr-1"></i> 전체 단어장 연속 듣기</button>
+          <button id="relayVocabBtn" type="button" class="bg-amber-300 hover:bg-amber-400 text-gray-900 text-sm font-black px-3 py-2 rounded-xl comic-border-sm comic-btn flex items-center"><i class="fa-solid fa-play mr-1"></i> 전체 단어장 연속 듣기</button>
         </div>
-        <label class="flex items-center gap-1.5 text-[11px] font-bold text-gray-700 cursor-pointer"><input type="checkbox" id="relayLoop" checked> 끝나면 처음부터 계속 반복</label>
-        <p id="relayNow" class="hidden text-[11px] text-brand-600 font-black leading-snug break-words"></p>
+        <label class="flex items-center gap-1.5 text-sm font-bold text-gray-700 cursor-pointer"><input type="checkbox" id="relayLoop" checked> 끝나면 처음부터 계속 반복</label>
+        <p id="relayNow" class="hidden text-sm text-brand-600 font-black leading-snug break-words"></p>
       </div>
 
       <!-- Quick Tips Box -->
-      <div class="mt-4 p-3 bg-amber-50 rounded-xl comic-border-sm text-xs">
+      <div class="mt-4 p-3 bg-amber-50 rounded-xl comic-border-sm text-sm">
         <div class="flex items-center text-amber-800 font-black mb-1">
           <i class="fa-solid fa-lightbulb text-amber-500 mr-1.5"></i> 공부 꿀팁!
         </div>
-        <p class="text-gray-700 leading-relaxed text-[11px]">
+        <p class="text-gray-700 leading-relaxed text-sm">
           귀로 듣고 입으로 3번 소리 내어 따라 읽는 <strong>'쉐도잉'</strong>이 중국어 귀를 트이게 하는 가장 빠른 지름길이에요!
         </p>
       </div>
@@ -433,13 +435,13 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
         <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <div class="flex items-center gap-2 mb-2 flex-wrap">
-              <span id="currentLessonBadge" class="bg-brand-500 text-white font-black text-xs px-2.5 py-0.5 rounded-full comic-badge">
+              <span id="currentLessonBadge" class="bg-brand-500 text-white font-black text-sm px-2.5 py-0.5 rounded-full comic-badge">
                 0과
               </span>
-              <span id="currentLessonSubtitle" class="text-xs text-gray-700 font-bold bg-amber-100 px-2 py-0.5 rounded-md">
+              <span id="currentLessonSubtitle" class="text-sm text-gray-700 font-bold bg-amber-100 px-2 py-0.5 rounded-md">
                 중국어의 첫걸음
               </span>
-              <label class="cursor-pointer inline-flex items-center gap-1.5 text-xs bg-gray-100 hover:bg-green-50 px-2.5 py-1 rounded-full border border-gray-400 transition">
+              <label class="cursor-pointer inline-flex items-center gap-1.5 text-sm bg-gray-100 hover:bg-green-50 px-2.5 py-1 rounded-full border border-gray-400 transition">
                 <input type="checkbox" id="lessonCompleteCheckbox" class="rounded text-green-600 focus:ring-green-400">
                 <span class="text-gray-800 font-bold" id="completeCheckLabel">완료 표시하기</span>
               </label>
@@ -447,14 +449,14 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
             <h2 id="currentLessonTitle" class="text-xl sm:text-2xl font-black text-gray-900 tracking-tight">
               0과 발음: 성조 & 운모 & 성모
             </h2>
-            <p id="currentLessonSummary" class="text-xs sm:text-sm text-gray-600 mt-1 font-medium">
+            <p id="currentLessonSummary" class="text-sm sm:text-sm text-gray-600 mt-1 font-medium">
               중국어의 4개 성조와 경성, 한어병음의 기본 원리를 마스터해 보세요.
             </p>
           </div>
 
           <!-- Quick Action Audio & Shadowing -->
           <div class="flex items-center gap-2">
-            <button id="heroPlayKeySentence" class="flex items-center gap-2 bg-brand-500 hover:bg-brand-600 text-white px-4 py-2.5 rounded-xl font-black comic-border-sm comic-btn transition text-xs sm:text-sm">
+            <button id="heroPlayKeySentence" class="flex items-center gap-2 bg-brand-500 hover:bg-brand-600 text-white px-4 py-2.5 rounded-xl font-black comic-border-sm comic-btn transition text-sm sm:text-sm">
               <i class="fa-solid fa-volume-high"></i>
               <span>핵심 표현 듣기</span>
             </button>
@@ -465,28 +467,28 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
         <div id="subTabBar" class="flex items-center border-b-2 border-gray-200 mt-6 -mb-1 space-x-1 sm:space-x-3 overflow-x-auto text-sm" style="scrollbar-width:thin;-webkit-overflow-scrolling:touch">
           <button id="tabPrev" type="button" class="hidden sticky left-0 z-10 shrink-0 self-center w-7 h-7 rounded-full bg-white border-2 border-gray-900 font-black text-gray-900 leading-none">‹</button>
           <button class="nav-tab active-tab pb-3 px-3 sm:px-4 font-black border-b-4 border-brand-500 text-brand-600 flex items-center gap-1.5 whitespace-nowrap" data-tab="vocab">
-            <i class="fa-solid fa-book-bookmark text-xs"></i>
+            <i class="fa-solid fa-book-bookmark text-sm"></i>
             <span>단어장</span>
           </button>
           <button class="nav-tab pb-3 px-3 sm:px-4 font-bold text-gray-500 hover:text-gray-800 border-b-4 border-transparent flex items-center gap-1.5 whitespace-nowrap" data-tab="dialogue">
-            <i class="fa-solid fa-comment-dots text-xs"></i>
+            <i class="fa-solid fa-comment-dots text-sm"></i>
             <span>웹툰 대화문 & 쉐도잉</span>
           </button>
           <button class="nav-tab pb-3 px-3 sm:px-4 font-bold text-gray-500 hover:text-gray-800 border-b-4 border-transparent flex items-center gap-1.5 whitespace-nowrap" data-tab="grammar">
-            <i class="fa-solid fa-wand-magic-sparkles text-xs"></i>
+            <i class="fa-solid fa-wand-magic-sparkles text-sm"></i>
             <span>핵심 문법/꿀팁</span>
           </button>
           <button class="nav-tab pb-3 px-3 sm:px-4 font-bold text-gray-500 hover:text-gray-800 border-b-4 border-transparent flex items-center gap-1.5 whitespace-nowrap" data-tab="practice">
-            <i class="fa-solid fa-pen-nib text-xs"></i>
+            <i class="fa-solid fa-pen-nib text-sm"></i>
             <span>직접 문제 풀기</span>
-            <span class="bg-amber-400 text-gray-900 text-[10px] font-black px-1.5 py-0.2 rounded-md comic-badge">퀴즈</span>
+            <span class="bg-amber-400 text-gray-900 text-xs font-black px-1.5 py-0.2 rounded-md comic-badge">퀴즈</span>
           </button>
           <button class="nav-tab pb-3 px-3 sm:px-4 font-bold text-gray-500 hover:text-gray-800 border-b-4 border-transparent flex items-center gap-1.5 whitespace-nowrap" data-tab="vocabquiz">
-            <i class="fa-solid fa-lightbulb text-xs"></i>
+            <i class="fa-solid fa-lightbulb text-sm"></i>
             <span>단어문제</span>
           </button>
           <button class="nav-tab pb-3 px-3 sm:px-4 font-bold text-gray-500 hover:text-gray-800 border-b-4 border-transparent flex items-center gap-1.5 whitespace-nowrap" data-tab="today">
-            <i class="fa-solid fa-medal text-xs"></i>
+            <i class="fa-solid fa-medal text-sm"></i>
             <span>오늘의 문장 (암기 카드)</span>
           </button>
           <button id="tabNext" type="button" class="hidden sticky right-0 z-10 shrink-0 self-center w-7 h-7 rounded-full bg-white border-2 border-gray-900 font-black text-gray-900 leading-none">›</button>
@@ -500,9 +502,9 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2">
             <h3 class="text-base font-black text-gray-900">단어 완전정복</h3>
-            <span class="text-xs text-gray-500 font-bold bg-white px-2 py-0.5 rounded-md comic-border-sm" id="vocabCountBadge">0 단어</span>
+            <span class="text-sm text-gray-500 font-bold bg-white px-2 py-0.5 rounded-md comic-border-sm" id="vocabCountBadge">0 단어</span>
           </div>
-          <button id="playAllVocabBtn" class="text-xs font-black text-gray-900 bg-amber-300 hover:bg-amber-400 px-3 py-1.5 rounded-xl comic-border-sm comic-btn transition">
+          <button id="playAllVocabBtn" class="text-sm font-black text-gray-900 bg-amber-300 hover:bg-amber-400 px-3 py-1.5 rounded-xl comic-border-sm comic-btn transition">
             <i class="fa-solid fa-play mr-1"></i> 전체 단어 연속 듣기
           </button>
         </div>
@@ -518,15 +520,15 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
           <div>
             <h3 class="text-base font-black text-gray-900 flex items-center gap-2">
               <span>웹툰 캐릭터 실전 대화</span>
-              <span class="text-xs font-normal text-gray-500 font-cute text-sm">(또또, 미미, 팡팡의 토크)</span>
+              <span class="text-sm font-normal text-gray-500 font-cute text-sm">(또또, 미미, 팡팡의 토크)</span>
             </h3>
-            <p class="text-xs text-gray-600 font-medium">문장별로 눌러 듣고 쉐도잉 해보세요! 병음을 껐다 켜며 테스트할 수 있습니다.</p>
+            <p class="text-sm text-gray-600 font-medium">문장별로 눌러 듣고 쉐도잉 해보세요! 병음을 껐다 켜며 테스트할 수 있습니다.</p>
           </div>
           <div class="flex items-center gap-2">
-            <button id="playAllDialogueBtn" class="bg-brand-500 hover:bg-brand-600 text-white text-xs font-black px-3 py-2 rounded-xl comic-border-sm comic-btn transition">
+            <button id="playAllDialogueBtn" class="bg-brand-500 hover:bg-brand-600 text-white text-sm font-black px-3 py-2 rounded-xl comic-border-sm comic-btn transition">
               <i class="fa-solid fa-play mr-1"></i> 전체 대화 자동 릴레이
             </button>
-            <button id="togglePinyinBtn" class="bg-white hover:bg-gray-100 text-gray-800 text-xs font-bold px-3 py-2 rounded-xl comic-border-sm comic-btn transition">
+            <button id="togglePinyinBtn" class="bg-white hover:bg-gray-100 text-gray-800 text-sm font-bold px-3 py-2 rounded-xl comic-border-sm comic-btn transition">
               병음 On/Off
             </button>
           </div>
@@ -553,11 +555,11 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
               <i class="fa-solid fa-clipboard-question text-brand-500"></i>
               <span>자가진단 실전 연습문제</span>
             </h3>
-            <p class="text-xs sm:text-sm text-gray-600 mt-0.5 font-medium">
+            <p class="text-sm sm:text-sm text-gray-600 mt-0.5 font-medium">
               단어 순서 맞추기와 빈칸 채우기를 직접 풀어보며 내 실력을 체크하세요!
             </p>
           </div>
-          <button id="resetQuizBtn" class="text-xs bg-gray-100 hover:bg-gray-200 text-gray-800 px-3 py-1.5 rounded-xl comic-border-sm comic-btn font-bold">
+          <button id="resetQuizBtn" class="text-sm bg-gray-100 hover:bg-gray-200 text-gray-800 px-3 py-1.5 rounded-xl comic-border-sm comic-btn font-bold">
             <i class="fa-solid fa-arrows-rotate mr-1"></i> 다시 풀기
           </button>
         </div>
@@ -576,10 +578,10 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
               <i class="fa-solid fa-lightbulb text-brand-500"></i>
               <span>단어장 퀴즈</span>
             </h3>
-            <p class="text-xs sm:text-sm text-gray-600 mt-0.5 font-medium">이번 과 단어로 만든 문제예요. 뜻 맞추기, 한자 고르기, 듣고 맞추기가 섞여 있어요!</p>
-            <p class="text-xs font-black text-brand-600 mt-1">점수: <span id="vocabQuizScore">0 / 0</span></p>
+            <p class="text-sm sm:text-sm text-gray-600 mt-0.5 font-medium">이번 과 단어로 만든 문제예요. 뜻 맞추기, 한자 고르기, 듣고 맞추기가 섞여 있어요!</p>
+            <p class="text-sm font-black text-brand-600 mt-1">점수: <span id="vocabQuizScore">0 / 0</span></p>
           </div>
-          <button id="resetVocabQuizBtn" class="text-xs bg-gray-100 hover:bg-gray-200 text-gray-800 px-3 py-1.5 rounded-xl comic-border-sm comic-btn font-bold flex-shrink-0">
+          <button id="resetVocabQuizBtn" class="text-sm bg-gray-100 hover:bg-gray-200 text-gray-800 px-3 py-1.5 rounded-xl comic-border-sm comic-btn font-bold flex-shrink-0">
             <i class="fa-solid fa-arrows-rotate mr-1"></i> 다시 풀기
           </button>
         </div>
@@ -591,9 +593,9 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
         <div class="flex items-center justify-between">
           <div>
             <h3 class="text-base font-black text-gray-900">오늘의 문장 (한국어만 보고 중국어로 말하기)</h3>
-            <p class="text-xs text-gray-600 font-medium">암기왕 콘테스트 필수 문장! 카드를 탭하여 뜻과 발음을 확인하세요.</p>
+            <p class="text-sm text-gray-600 font-medium">암기왕 콘테스트 필수 문장! 카드를 탭하여 뜻과 발음을 확인하세요.</p>
           </div>
-          <span class="text-xs text-gray-900 bg-amber-300 px-2.5 py-1 rounded-md comic-border-sm font-black">카드 탭하기</span>
+          <span class="text-sm text-gray-900 bg-amber-300 px-2.5 py-1 rounded-md comic-border-sm font-black">카드 탭하기</span>
         </div>
 
         <div id="flashcardsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -606,7 +608,7 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
   </div>
 
   <!-- TOAST NOTIFICATION -->
-  <div id="toast" class="fixed bottom-6 right-6 z-50 bg-gray-900 text-white px-4 py-2.5 rounded-xl comic-border text-xs sm:text-sm flex items-center gap-2.5 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+  <div id="toast" class="fixed bottom-6 right-6 z-50 bg-gray-900 text-white px-4 py-2.5 rounded-xl comic-border text-sm sm:text-sm flex items-center gap-2.5 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
     <i class="fa-solid fa-bullhorn text-amber-400"></i>
     <span id="toastMsg" class="font-bold">알림 메시지</span>
   </div>
@@ -684,11 +686,11 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
               <div class="space-y-2 text-sm text-gray-700">
                 <div class="p-3 bg-orange-50 rounded-xl border border-orange-200">
                   <span class="font-bold text-brand-600">성조 표기 우선순위:</span> a > o, e > i, u, ü (입이 가장 큰 모음 위에 표기!)<br>
-                  <span class="text-xs text-gray-500">* 단, iu나 ui처럼 i와 u가 함께 있을 때는 맨 뒤 글자에 표기 (예: zuì, xiu)</span>
+                  <span class="text-sm text-gray-500">* 단, iu나 ui처럼 i와 u가 함께 있을 때는 맨 뒤 글자에 표기 (예: zuì, xiu)</span>
                 </div>
                 <div class="p-3 bg-amber-50 rounded-xl border border-amber-200">
                   <span class="font-bold text-amber-700">필수 성조 변화 3가지:</span>
-                  <ul class="list-disc pl-4 text-xs mt-1 space-y-1">
+                  <ul class="list-disc pl-4 text-sm mt-1 space-y-1">
                     <li><strong>3성 + 3성</strong> ➔ 말할 때만 <strong>2성 + 3성</strong> (예: 你好 nǐhǎo ➔ 실제 발음 [níhǎo])</li>
                     <li><strong>不(bù, 4성)</strong> 뒤에 4성이 오면 ➔ <strong>2성 (bú)</strong>으로 변경 (예: 不饿 bú è, 不是 bú shì)</li>
                     <li><strong>一(yī, 1성)</strong> 뒤에 4성 오면 2성(yí), 1/2/3성 앞에서는 4성(yì)으로 변화</li>
@@ -800,7 +802,7 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
           {
             title: "2. [대상/시간] + 好 (만났을 때 인사)",
             content: `
-              <div class="grid grid-cols-2 gap-2 text-xs sm:text-sm">
+              <div class="grid grid-cols-2 gap-2 text-sm sm:text-sm">
                 <div class="bg-orange-50 p-2.5 rounded-lg border border-orange-100">
                   <span class="font-bold text-brand-600">만났을 때 (好)</span>
                   <p class="mt-1">你好 (안녕)<br>您好 (안녕하세요 - 존칭)<br>大家好 (여러분 안녕)<br>早上好 (좋은 아침)</p>
@@ -1281,7 +1283,7 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
           {
             title: "1. 지시대명사 3종 세트 (这 / 那 / 哪)",
             content: `
-              <div class="grid grid-cols-3 gap-2 text-xs sm:text-sm">
+              <div class="grid grid-cols-3 gap-2 text-sm sm:text-sm">
                 <div class="bg-orange-50 p-2.5 rounded-lg border border-orange-200">
                   <strong class="text-brand-600">这 (zhè)</strong>
                   <p class="mt-1">이것 (가까움)<br>这里/这儿 (여기)</p>
@@ -1404,7 +1406,7 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
           {
             title: "1. 요일 말하기 (월~일)",
             content: `
-              <div class="space-y-1.5 text-xs sm:text-sm text-gray-700">
+              <div class="space-y-1.5 text-sm sm:text-sm text-gray-700">
                 <p>중국은 한 주의 시작을 월요일(1)로 생각합니다!</p>
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 font-mono">
                   <span class="bg-white p-1.5 rounded border">星期一 (월)</span>
@@ -1633,7 +1635,7 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
           {
             title: "2. 怎么办 vs 怎么了 뉘앙스 차이",
             content: `
-              <div class="grid grid-cols-2 gap-2 text-xs sm:text-sm">
+              <div class="grid grid-cols-2 gap-2 text-sm sm:text-sm">
                 <div class="bg-red-50 p-2.5 rounded-lg border border-red-200">
                   <strong class="text-red-700">怎么办？(zěnmebàn)</strong>
                   <p class="mt-1">어떡하지? 어쩌면 좋지?<br>(해결책이 막막할 때)</p>
@@ -1971,8 +1973,8 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
         const icon = st === 'playing' ? 'fa-pause' : 'fa-play';
         const hasText = el._orig.replace(/<[^>]*>/g, '').trim() !== '';
         el.innerHTML = hasText
-          ? `<i class="fa-solid ${icon} text-[10px] mr-1"></i><span>${st === 'playing' ? '정지' : '이어듣기'}</span>`
-          : `<i class="fa-solid ${icon} text-xs"></i>`;
+          ? `<i class="fa-solid ${icon} text-xs mr-1"></i><span>${st === 'playing' ? '정지' : '이어듣기'}</span>`
+          : `<i class="fa-solid ${icon} text-sm"></i>`;
       });
     }
 
@@ -2140,14 +2142,14 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
         
         btn.innerHTML = `
           <div class="flex items-center space-x-2.5 min-w-0">
-            <span class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-black ${
+            <span class="w-6 h-6 rounded-full flex items-center justify-center text-sm font-black ${
               isActive ? 'bg-white text-brand-600' : (isCompleted ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700')
             }">
-              ${isCompleted ? '<i class="fa-solid fa-check text-[10px]"></i>' : lesson.id}
+              ${isCompleted ? '<i class="fa-solid fa-check text-xs"></i>' : lesson.id}
             </span>
-            <span class="truncate text-xs sm:text-sm tracking-tight">${lesson.title}</span>
+            <span class="truncate text-sm sm:text-sm tracking-tight">${lesson.title}</span>
           </div>
-          ${isCompleted && !isActive ? '<i class="fa-solid fa-circle-check text-green-600 text-xs"></i>' : ''}
+          ${isCompleted && !isActive ? '<i class="fa-solid fa-circle-check text-green-600 text-sm"></i>' : ''}
         `;
 
         btn.onclick = () => {
@@ -2237,13 +2239,13 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
           <div class="space-y-0.5">
             <div class="flex items-baseline gap-2">
               <span class="font-cn text-xl font-black text-gray-900">${v.hanzi}</span>
-              <span class="text-xs font-bold text-brand-600 font-sans pinyin-text">[${v.pinyin}]</span>
+              <span class="text-sm font-bold text-brand-600 font-sans pinyin-text">[${v.pinyin}]</span>
             </div>
-            <p class="text-xs text-gray-800 font-bold">${v.korean}</p>
+            <p class="text-sm text-gray-800 font-bold">${v.korean}</p>
             ${v.desc ? `<p class="text-sm sm:text-base text-gray-600 font-sans font-bold mt-0.5">${v.desc}</p>` : ''}
           </div>
           <button class="w-8 h-8 rounded-full bg-orange-100 text-brand-600 hover:bg-brand-500 hover:text-white flex items-center justify-center transition border border-gray-900 shadow-2xs active:scale-90" title="발음 듣기">
-            <i class="fa-solid fa-volume-high text-xs"></i>
+            <i class="fa-solid fa-volume-high text-sm"></i>
           </button>
         `;
 
@@ -2297,16 +2299,16 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
           </div>
           <div class="flex-1 min-w-0">
             <div class="flex items-center justify-between mb-1">
-              <span class="text-xs font-black text-gray-700 bg-gray-100 px-2 py-0.5 rounded-md">${d.speaker}</span>
-              <button data-speak-key="d:${idx}" class="play-btn text-gray-900 bg-amber-300 hover:bg-amber-400 px-2.5 py-1 rounded-lg text-xs font-black flex items-center gap-1 transition comic-border-sm comic-btn">
-                <i class="fa-solid fa-volume-high text-[10px]"></i>
+              <span class="text-sm font-black text-gray-700 bg-gray-100 px-2 py-0.5 rounded-md">${d.speaker}</span>
+              <button data-speak-key="d:${idx}" class="play-btn text-gray-900 bg-amber-300 hover:bg-amber-400 px-2.5 py-1 rounded-lg text-sm font-black flex items-center gap-1 transition comic-border-sm comic-btn">
+                <i class="fa-solid fa-volume-high text-xs"></i>
                 <span>듣기</span>
               </button>
             </div>
             <div class="bg-gray-50 speech-bubble p-3 rounded-xl mt-1.5">
               <p class="font-cn text-lg sm:text-xl font-black text-gray-900 tracking-wide">${d.hanzi}</p>
-              <p class="pinyin-label text-xs sm:text-sm text-brand-600 font-extrabold pinyin-text mt-0.5 ${showPinyin ? '' : 'hidden'}">${d.pinyin}</p>
-              <p class="text-xs sm:text-sm text-gray-700 font-medium mt-1">${d.korean}</p>
+              <p class="pinyin-label text-sm sm:text-sm text-brand-600 font-extrabold pinyin-text mt-0.5 ${showPinyin ? '' : 'hidden'}">${d.pinyin}</p>
+              <p class="text-sm sm:text-sm text-gray-700 font-medium mt-1">${d.korean}</p>
             </div>
           </div>
         `;
@@ -2394,16 +2396,16 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
           </div>
           ${examples.length ? `
           <div class="bg-orange-50 rounded-xl p-3 comic-border-sm space-y-2 mt-2">
-            <p class="text-xs font-black text-brand-600">✏️ 예문 (눌러서 듣기)</p>
+            <p class="text-sm font-black text-brand-600">✏️ 예문 (눌러서 듣기)</p>
             ${examples.map((e, ei) => `
               <div class="flex items-center gap-3 bg-white rounded-lg p-2.5 border border-gray-300">
                 <button data-speak-key="g:${pi}:${ei}" class="w-9 h-9 rounded-full bg-orange-100 text-brand-600 hover:bg-brand-500 hover:text-white flex items-center justify-center transition border border-gray-900 flex-shrink-0 active:scale-90" title="발음 듣기">
-                  <i class="fa-solid fa-volume-high text-xs"></i>
+                  <i class="fa-solid fa-volume-high text-sm"></i>
                 </button>
                 <div class="min-w-0">
                   <p class="font-cn text-base sm:text-lg font-black text-gray-900">${e[0]}</p>
-                  <p class="text-xs font-bold text-brand-600 pinyin-text">${e[1]}</p>
-                  <p class="text-xs text-gray-700 font-medium">${e[2]}</p>
+                  <p class="text-sm font-bold text-brand-600 pinyin-text">${e[1]}</p>
+                  <p class="text-sm text-gray-700 font-medium">${e[2]}</p>
                 </div>
               </div>`).join('')}
           </div>` : ''}
@@ -2431,21 +2433,21 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
         if (q.type === 'choice' || q.type === 'blank') {
           item.innerHTML = `
             <div class="flex items-start justify-between gap-2">
-              <span class="text-xs font-black text-gray-900 bg-amber-300 px-2.5 py-0.5 rounded-md comic-border-sm">문제 ${idx + 1}</span>
+              <span class="text-sm font-black text-gray-900 bg-amber-300 px-2.5 py-0.5 rounded-md comic-border-sm">문제 ${idx + 1}</span>
             </div>
             <p class="font-black text-gray-900 text-sm sm:text-base">${q.question}</p>
             ${q.sentenceDisplay ? `<div class="p-3 bg-sand-50 rounded-xl font-cn text-base sm:text-lg text-gray-900 comic-border-sm font-bold">${q.sentenceDisplay}</div>` : ''}
             
             <div class="grid grid-cols-2 gap-2 sm:gap-3 options-container">
               ${q.options.map((opt, oIdx) => `
-                <button class="choice-opt-btn p-3 rounded-xl border-2 border-gray-800 text-left font-bold text-xs sm:text-sm hover:bg-orange-100 transition flex items-center justify-between comic-btn bg-white" data-val="${opt}" data-idx="${oIdx}">
+                <button class="choice-opt-btn p-3 rounded-xl border-2 border-gray-800 text-left font-bold text-sm sm:text-sm hover:bg-orange-100 transition flex items-center justify-between comic-btn bg-white" data-val="${opt}" data-idx="${oIdx}">
                   <span>${opt}</span>
-                  <span class="circle-check w-4 h-4 rounded-full border-2 border-gray-800 flex items-center justify-center text-[10px]"></span>
+                  <span class="circle-check w-4 h-4 rounded-full border-2 border-gray-800 flex items-center justify-center text-xs"></span>
                 </button>
               `).join('')}
             </div>
 
-            <div class="quiz-feedback hidden p-3 rounded-xl text-xs sm:text-sm leading-relaxed comic-border-sm"></div>
+            <div class="quiz-feedback hidden p-3 rounded-xl text-sm sm:text-sm leading-relaxed comic-border-sm"></div>
           `;
 
           const buttons = item.querySelectorAll('.choice-opt-btn');
@@ -2464,7 +2466,7 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
               if (isCorrect) {
                 playSound('correct');
                 btn.classList.add('bg-green-100', 'text-green-900');
-                feedback.className = "quiz-feedback p-3 rounded-xl text-xs sm:text-sm leading-relaxed bg-green-50 border-2 border-green-700 text-green-900 flex items-start gap-2";
+                feedback.className = "quiz-feedback p-3 rounded-xl text-sm sm:text-sm leading-relaxed bg-green-50 border-2 border-green-700 text-green-900 flex items-start gap-2";
                 feedback.innerHTML = `
                   <i class="fa-solid fa-circle-check text-green-600 text-base mt-0.5"></i>
                   <div>
@@ -2475,7 +2477,7 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
               } else {
                 playSound('wrong');
                 btn.classList.add('bg-red-100', 'text-red-900');
-                feedback.className = "quiz-feedback p-3 rounded-xl text-xs sm:text-sm leading-relaxed bg-red-50 border-2 border-red-700 text-red-900 flex items-start gap-2";
+                feedback.className = "quiz-feedback p-3 rounded-xl text-sm sm:text-sm leading-relaxed bg-red-50 border-2 border-red-700 text-red-900 flex items-start gap-2";
                 feedback.innerHTML = `
                   <i class="fa-solid fa-circle-xmark text-red-600 text-base mt-0.5"></i>
                   <div>
@@ -2494,13 +2496,13 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
 
           item.innerHTML = `
             <div class="flex items-start justify-between gap-2">
-              <span class="text-xs font-black text-gray-900 bg-brand-200 px-2.5 py-0.5 rounded-md comic-border-sm">단어 순서 맞추기 ${idx + 1}</span>
+              <span class="text-sm font-black text-gray-900 bg-brand-200 px-2.5 py-0.5 rounded-md comic-border-sm">단어 순서 맞추기 ${idx + 1}</span>
             </div>
             <p class="font-black text-gray-900 text-sm sm:text-base">${q.question}</p>
             
             <!-- Target Slot Box -->
             <div class="min-h-[56px] p-2.5 bg-sand-50 border-2 border-dashed border-gray-600 rounded-xl flex flex-wrap gap-2 items-center target-drop-box">
-              <span class="text-xs text-gray-500 font-cute text-sm select-none placeholder-text">아래 글자를 순서대로 콕콕 눌러보세요!</span>
+              <span class="text-sm text-gray-500 font-cute text-sm select-none placeholder-text">아래 글자를 순서대로 콕콕 눌러보세요!</span>
             </div>
 
             <!-- Scrambled Tokens -->
@@ -2513,15 +2515,15 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
             </div>
 
             <div class="flex items-center gap-2">
-              <button class="check-order-btn bg-brand-500 hover:bg-brand-600 text-white text-xs font-black px-4 py-2 rounded-xl comic-border-sm comic-btn transition">
+              <button class="check-order-btn bg-brand-500 hover:bg-brand-600 text-white text-sm font-black px-4 py-2 rounded-xl comic-border-sm comic-btn transition">
                 정답 확인
               </button>
-              <button class="clear-order-btn bg-white hover:bg-gray-100 text-gray-800 text-xs font-bold px-3 py-2 rounded-xl comic-border-sm comic-btn transition">
+              <button class="clear-order-btn bg-white hover:bg-gray-100 text-gray-800 text-sm font-bold px-3 py-2 rounded-xl comic-border-sm comic-btn transition">
                 다시 담기
               </button>
             </div>
 
-            <div class="order-feedback hidden p-3 rounded-xl text-xs sm:text-sm leading-relaxed comic-border-sm"></div>
+            <div class="order-feedback hidden p-3 rounded-xl text-sm sm:text-sm leading-relaxed comic-border-sm"></div>
           `;
 
           const dropBox = item.querySelector('.target-drop-box');
@@ -2543,7 +2545,7 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
 
             if (userStr === targetStr) {
               playSound('correct');
-              orderFeedback.className = "order-feedback p-3 rounded-xl text-xs sm:text-sm leading-relaxed bg-green-50 border-2 border-green-700 text-green-900 flex items-start gap-2";
+              orderFeedback.className = "order-feedback p-3 rounded-xl text-sm sm:text-sm leading-relaxed bg-green-50 border-2 border-green-700 text-green-900 flex items-start gap-2";
               orderFeedback.innerHTML = `
                 <i class="fa-solid fa-circle-check text-green-600 text-base mt-0.5"></i>
                 <div>
@@ -2555,7 +2557,7 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
               speakChinese(q.chineseSentence);
             } else {
               playSound('wrong');
-              orderFeedback.className = "order-feedback p-3 rounded-xl text-xs sm:text-sm leading-relaxed bg-red-50 border-2 border-red-700 text-red-900 flex items-start gap-2";
+              orderFeedback.className = "order-feedback p-3 rounded-xl text-sm sm:text-sm leading-relaxed bg-red-50 border-2 border-red-700 text-red-900 flex items-start gap-2";
               orderFeedback.innerHTML = `
                 <i class="fa-solid fa-circle-xmark text-red-600 text-base mt-0.5"></i>
                 <div>
@@ -2574,7 +2576,7 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
         if (/[\u4e00-\u9fff]/.test(qText)) {
           const qKey = 'q:' + idx;
           const bar = document.createElement('div');
-          bar.innerHTML = `<button data-speak-key="${qKey}" class="text-xs font-black text-gray-900 bg-amber-300 hover:bg-amber-400 px-3 py-1.5 rounded-xl comic-border-sm comic-btn flex items-center gap-1.5"><i class="fa-solid fa-volume-high text-[10px]"></i><span>문장 듣기</span></button>`;
+          bar.innerHTML = `<button data-speak-key="${qKey}" class="text-sm font-black text-gray-900 bg-amber-300 hover:bg-amber-400 px-3 py-1.5 rounded-xl comic-border-sm comic-btn flex items-center gap-1.5"><i class="fa-solid fa-volume-high text-xs"></i><span>문장 듣기</span></button>`;
           const qb = bar.firstElementChild;
           qb.onclick = () => speakChinese(qText, null, qKey);
           item.insertBefore(bar, item.children[1] || null);
@@ -2614,24 +2616,24 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
         }
         const choices = shuffle(opts);
         const key = 'vq:' + i;
-        const listenBtn = `<button data-speak-key="${key}" class="w-9 h-9 rounded-full bg-orange-100 text-brand-600 hover:bg-brand-500 hover:text-white flex items-center justify-center transition border border-gray-900 flex-shrink-0 active:scale-90" title="발음 듣기"><i class="fa-solid fa-volume-high text-xs"></i></button>`;
+        const listenBtn = `<button data-speak-key="${key}" class="w-9 h-9 rounded-full bg-orange-100 text-brand-600 hover:bg-brand-500 hover:text-white flex items-center justify-center transition border border-gray-900 flex-shrink-0 active:scale-90" title="발음 듣기"><i class="fa-solid fa-volume-high text-sm"></i></button>`;
         const head = mode === 0
           ? `<p class="font-black text-gray-900 text-sm sm:text-base">다음 단어의 뜻은?</p>
-             <div class="flex items-center gap-3"><span class="font-cn text-2xl font-black text-gray-900">${v.hanzi}</span><span class="text-xs font-bold text-brand-600 pinyin-text">[${v.pinyin}]</span>${listenBtn}</div>`
+             <div class="flex items-center gap-3"><span class="font-cn text-2xl font-black text-gray-900">${v.hanzi}</span><span class="text-sm font-bold text-brand-600 pinyin-text">[${v.pinyin}]</span>${listenBtn}</div>`
           : mode === 1
           ? `<p class="font-black text-gray-900 text-sm sm:text-base">'${v.korean}'에 해당하는 중국어는?</p>`
           : `<p class="font-black text-gray-900 text-sm sm:text-base">소리를 듣고 알맞은 단어를 고르세요</p>
-             <div class="flex items-center gap-2">${listenBtn}<span class="text-xs text-gray-500 font-bold">버튼을 눌러 들어보세요</span></div>`;
+             <div class="flex items-center gap-2">${listenBtn}<span class="text-sm text-gray-500 font-bold">버튼을 눌러 들어보세요</span></div>`;
 
         const item = document.createElement('div');
         item.className = "bg-white p-5 rounded-2xl comic-border space-y-3";
         item.innerHTML = `
-          <span class="text-xs font-black text-gray-900 bg-amber-300 px-2.5 py-0.5 rounded-md comic-border-sm">문제 ${i + 1}</span>
+          <span class="text-sm font-black text-gray-900 bg-amber-300 px-2.5 py-0.5 rounded-md comic-border-sm">문제 ${i + 1}</span>
           ${head}
           <div class="grid grid-cols-2 gap-2 sm:gap-3">
-            ${choices.map((w, ci) => `<button data-ci="${ci}" class="vq-opt p-3 rounded-xl border-2 border-gray-800 text-left font-bold text-xs sm:text-sm hover:bg-orange-100 transition comic-btn bg-white ${mode !== 0 ? 'font-cn' : ''}">${text(w)}</button>`).join('')}
+            ${choices.map((w, ci) => `<button data-ci="${ci}" class="vq-opt p-3 rounded-xl border-2 border-gray-800 text-left font-bold text-sm sm:text-sm hover:bg-orange-100 transition comic-btn bg-white ${mode !== 0 ? 'font-cn' : ''}">${text(w)}</button>`).join('')}
           </div>
-          <div class="vq-feedback hidden p-3 rounded-xl text-xs sm:text-sm leading-relaxed comic-border-sm"></div>
+          <div class="vq-feedback hidden p-3 rounded-xl text-sm sm:text-sm leading-relaxed comic-border-sm"></div>
         `;
         box.appendChild(item);
 
@@ -2655,7 +2657,7 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
             answered++; if (ok) score++;
             refresh();
             playSound(ok ? 'correct' : 'wrong');
-            fb.className = `vq-feedback p-3 rounded-xl text-xs sm:text-sm leading-relaxed comic-border-sm ${ok ? 'bg-green-50 text-green-900' : 'bg-red-50 text-red-900'}`;
+            fb.className = `vq-feedback p-3 rounded-xl text-sm sm:text-sm leading-relaxed comic-border-sm ${ok ? 'bg-green-50 text-green-900' : 'bg-red-50 text-red-900'}`;
             fb.innerHTML = `<strong>${ok ? '정답! 🎉' : '아쉬워요!'}</strong> <span class="font-cn font-black">${v.hanzi}</span> [${v.pinyin}] = ${v.korean}`;
             if (ok) speakChinese(v.hanzi);
             if (answered === items.length) showToast(`단어문제 완료! ${score}/${items.length}점`);
@@ -2686,16 +2688,16 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
             <!-- FRONT: Hanzi & Pinyin -->
             <div class="card-front absolute inset-0 w-full h-full p-4 flex flex-col justify-between rounded-2xl bg-sand-50">
               <div class="flex items-center justify-between">
-                <span class="text-[11px] font-black text-gray-900 bg-amber-300 px-2 py-0.5 rounded-md comic-border-sm">문장 ${idx + 1}</span>
+                <span class="text-sm font-black text-gray-900 bg-amber-300 px-2 py-0.5 rounded-md comic-border-sm">문장 ${idx + 1}</span>
                 <button class="speaker-btn w-8 h-8 rounded-full bg-white text-brand-600 comic-border-sm hover:bg-brand-500 hover:text-white flex items-center justify-center transition" title="발음 듣기">
-                  <i class="fa-solid fa-volume-high text-xs"></i>
+                  <i class="fa-solid fa-volume-high text-sm"></i>
                 </button>
               </div>
               <div class="text-center my-auto px-2">
                 <p class="font-cn text-2xl font-black text-gray-900 tracking-wide">${s.hanzi}</p>
-                <p class="text-xs sm:text-sm font-bold text-brand-600 pinyin-text mt-1.5">[${s.pinyin}]</p>
+                <p class="text-sm sm:text-sm font-bold text-brand-600 pinyin-text mt-1.5">[${s.pinyin}]</p>
               </div>
-              <div class="text-center text-[11px] text-gray-500 font-cute font-bold">
+              <div class="text-center text-sm text-gray-500 font-cute font-bold">
                 <i class="fa-solid fa-repeat mr-1"></i> 카드를 누르면 한국어 뜻이 보여요!
               </div>
             </div>
@@ -2703,14 +2705,14 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
             <!-- BACK: Korean Translation -->
             <div class="card-back absolute inset-0 w-full h-full p-4 flex flex-col justify-between rounded-2xl bg-brand-500 text-white">
               <div class="flex items-center justify-between">
-                <span class="text-[11px] font-black bg-white text-brand-600 px-2 py-0.5 rounded-md comic-border-sm">한국어 뜻</span>
-                <i class="fa-solid fa-star text-xs text-amber-300"></i>
+                <span class="text-sm font-black bg-white text-brand-600 px-2 py-0.5 rounded-md comic-border-sm">한국어 뜻</span>
+                <i class="fa-solid fa-star text-sm text-amber-300"></i>
               </div>
               <div class="text-center my-auto px-2">
                 <p class="text-base sm:text-lg font-black">${s.korean}</p>
-                <p class="text-xs text-orange-100 mt-2 font-cn font-bold">${s.hanzi}</p>
+                <p class="text-sm text-orange-100 mt-2 font-cn font-bold">${s.hanzi}</p>
               </div>
-              <div class="text-center text-[11px] text-orange-100 font-cute font-bold">
+              <div class="text-center text-sm text-orange-100 font-cute font-bold">
                 <i class="fa-solid fa-repeat mr-1"></i> 다시 누르면 중국어로 돌아가요
               </div>
             </div>
@@ -2742,7 +2744,7 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
     function mountOrderBuilder(dropBox, pool, cb) {
       let order = [], sel = -1, drag = null, ready = false;
       const lock = (b, on) => { b.disabled = on; b.classList.toggle('opacity-40', on); };
-      const PH = '<span class="text-xs text-gray-500 font-cute text-sm select-none">글자를 눌러 담고, 담긴 글자를 눌러 자리를 옮겨보세요! (PC는 드래그도 가능)</span>';
+      const PH = '<span class="text-sm text-gray-500 font-cute text-sm select-none">글자를 눌러 담고, 담긴 글자를 눌러 자리를 옮겨보세요! (PC는 드래그도 가능)</span>';
       const put = (item, at) => { order.splice(Math.min(at, order.length), 0, item); lock(item.btn, true); };
       const move = (from, to) => { if (from === to) return; const [m] = order.splice(from, 1); order.splice(to, 0, m); };
       function dropAt(i) {
@@ -2760,7 +2762,7 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
           c.draggable = true;
           c.className = 'px-3 py-1.5 font-cn font-black rounded-xl text-base flex items-center gap-1.5 comic-border-sm cursor-pointer select-none ' +
             (i === sel ? 'bg-amber-300 text-gray-900 ring-4 ring-brand-500' : 'bg-brand-500 text-white');
-          c.innerHTML = `<span>${o.tok}</span><span class="rm text-xs opacity-80 px-1" title="빼기">✕</span>`;
+          c.innerHTML = `<span>${o.tok}</span><span class="rm text-sm opacity-80 px-1" title="빼기">✕</span>`;
           c.onclick = e => {
             playSound('pop');
             if (e.target.classList.contains('rm')) { lock(o.btn, false); order.splice(i, 1); sel = -1; }
@@ -2848,7 +2850,7 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
       for (const w of shuf(pool)) { if (opts.length >= 4) break; const t = text(w); if (!seen.has(t)) { seen.add(t); opts.push(w); } }
       const ch = shuf(opts);
       const head = mode === 0
-        ? `<p class="font-black text-sm sm:text-base">다음 단어의 뜻은?</p><p class="font-cn text-2xl font-black">${v.hanzi} <span class="text-xs text-brand-600 font-sans pinyin-text">[${v.pinyin}]</span></p>`
+        ? `<p class="font-black text-sm sm:text-base">다음 단어의 뜻은?</p><p class="font-cn text-2xl font-black">${v.hanzi} <span class="text-sm text-brand-600 font-sans pinyin-text">[${v.pinyin}]</span></p>`
         : mode === 1 ? `<p class="font-black text-sm sm:text-base">'${v.korean}'에 해당하는 중국어는?</p>`
         : `<p class="font-black text-sm sm:text-base">소리를 듣고 알맞은 단어를 고르세요</p>`;
       return { kind: 'choice', tag: '단어', head, speak: mode === 1 ? null : v.hanzi, options: ch.map(text), correct: ch.indexOf(v), cn: mode !== 0,
@@ -2904,13 +2906,13 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
         if (se) { const x = sessStats(se); status = se.done ? `완료 · ${x.s}/${n}` : `진행 중 · ${x.a}/${n} 풀이 (${x.s}점)`; btn = se.done ? '결과 보기' : '이어서 풀기'; }
         return `<div class="flex items-center justify-between gap-3 bg-white p-3.5 rounded-xl comic-border-sm">
           <div class="min-w-0">
-            <p class="font-black text-gray-900 text-sm">${t.title} <span class="text-[11px] text-gray-500 font-bold">· ${n}문제</span></p>
-            <p class="text-xs text-gray-600 font-medium truncate">${t.desc}</p>
-            <p class="text-[11px] font-black mt-0.5 ${se ? 'text-brand-600' : 'text-gray-400'}">${status}${r ? ` · 최고 ${r.best}/${r.total} (${pct(r.best, r.total)}점)` : ''}</p>
+            <p class="font-black text-gray-900 text-sm">${t.title} <span class="text-sm text-gray-500 font-bold">· ${n}문제</span></p>
+            <p class="text-sm text-gray-600 font-medium truncate">${t.desc}</p>
+            <p class="text-sm font-black mt-0.5 ${se ? 'text-brand-600' : 'text-gray-400'}">${status}${r ? ` · 최고 ${r.best}/${r.total} (${pct(r.best, r.total)}점)` : ''}</p>
           </div>
           <div class="flex items-center gap-1.5 flex-shrink-0">
-            ${se ? `<button data-reset="${t.id}" class="reset-test bg-white hover:bg-gray-100 text-gray-800 text-xs font-bold px-2.5 py-2 rounded-xl comic-border-sm comic-btn">리셋</button>` : ''}
-            <button data-test="${t.id}" class="start-test bg-brand-500 hover:bg-brand-600 text-white text-xs font-black px-3 py-2 rounded-xl comic-border-sm comic-btn">${btn}</button>
+            ${se ? `<button data-reset="${t.id}" class="reset-test bg-white hover:bg-gray-100 text-gray-800 text-sm font-bold px-2.5 py-2 rounded-xl comic-border-sm comic-btn">리셋</button>` : ''}
+            <button data-test="${t.id}" class="start-test bg-brand-500 hover:bg-brand-600 text-white text-sm font-black px-3 py-2 rounded-xl comic-border-sm comic-btn">${btn}</button>
           </div>
         </div>`;
       };
@@ -2919,12 +2921,12 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
         <div class="bg-white p-5 sm:p-6 rounded-2xl comic-border">
           <h2 class="text-xl font-black text-gray-900 flex items-center gap-2"><i class="fa-solid fa-trophy text-brand-500"></i> 전체 테스트 · 점수판</h2>
           <div class="grid grid-cols-3 gap-2 sm:gap-3 mt-4 text-center">
-            <div class="bg-orange-50 rounded-xl p-3 comic-border-sm"><p class="text-[11px] font-black text-gray-600">단어 전체</p><p class="text-lg font-black text-gray-900">${v ? v.best + '/' + vTot : '-'}</p></div>
-            <div class="bg-orange-50 rounded-xl p-3 comic-border-sm"><p class="text-[11px] font-black text-gray-600">문장 전체</p><p class="text-lg font-black text-gray-900">${st ? st.best + '/' + sTot : '-'}</p></div>
-            <div class="bg-amber-300 rounded-xl p-3 comic-border-sm"><p class="text-[11px] font-black text-gray-800">종합 점수</p><p class="text-2xl font-black text-gray-900">${v || st ? total : '-'}<span class="text-xs">점</span></p></div>
+            <div class="bg-orange-50 rounded-xl p-3 comic-border-sm"><p class="text-sm font-black text-gray-600">단어 전체</p><p class="text-lg font-black text-gray-900">${v ? v.best + '/' + vTot : '-'}</p></div>
+            <div class="bg-orange-50 rounded-xl p-3 comic-border-sm"><p class="text-sm font-black text-gray-600">문장 전체</p><p class="text-lg font-black text-gray-900">${st ? st.best + '/' + sTot : '-'}</p></div>
+            <div class="bg-amber-300 rounded-xl p-3 comic-border-sm"><p class="text-sm font-black text-gray-800">종합 점수</p><p class="text-2xl font-black text-gray-900">${v || st ? total : '-'}<span class="text-sm">점</span></p></div>
           </div>
-          <p class="text-[11px] text-gray-500 font-bold mt-2">종합 점수 = 단어 전체 + 문장 전체 최고 기록의 합산 정답률(100점 만점). 아직 보지 않은 테스트는 0점으로 계산돼요.</p>
-          <button id="resetRecordsBtn" class="mt-2 text-[11px] font-bold text-gray-500 underline">점수·진행 상황 모두 초기화</button>
+          <p class="text-sm text-gray-500 font-bold mt-2">종합 점수 = 단어 전체 + 문장 전체 최고 기록의 합산 정답률(100점 만점). 아직 보지 않은 테스트는 0점으로 계산돼요.</p>
+          <button id="resetRecordsBtn" class="mt-2 text-sm font-bold text-gray-500 underline">점수·진행 상황 모두 초기화</button>
         </div>
         <div class="space-y-2"><h3 class="text-sm font-black text-gray-900">📚 종합 테스트</h3>${grp('종합')}</div>
         <div class="space-y-2"><h3 class="text-sm font-black text-gray-900">📖 과별 테스트</h3>${grp('과별')}</div>`;
@@ -2953,19 +2955,19 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
         body.innerHTML = `
           <div class="bg-white p-4 rounded-2xl comic-border">
             <div class="flex items-center justify-between gap-2">
-              <button id="tBack" class="text-xs font-bold text-gray-700 bg-gray-100 hover:bg-gray-200 px-3 py-1.5 rounded-xl comic-border-sm comic-btn">← 목록</button>
+              <button id="tBack" class="text-sm font-bold text-gray-700 bg-gray-100 hover:bg-gray-200 px-3 py-1.5 rounded-xl comic-border-sm comic-btn">← 목록</button>
               <span class="text-sm font-black text-gray-900 truncate">${def.title}</span>
-              <button id="tReset" class="text-xs font-bold text-gray-700 bg-white hover:bg-gray-100 px-3 py-1.5 rounded-xl comic-border-sm comic-btn">리셋</button>
+              <button id="tReset" class="text-sm font-bold text-gray-700 bg-white hover:bg-gray-100 px-3 py-1.5 rounded-xl comic-border-sm comic-btn">리셋</button>
             </div>
-            <div class="flex items-center justify-between mt-2 text-xs font-black text-brand-600"><span>${i + 1} / ${qs.length}</span><span id="tScore">${sc0.s}점 (${sc0.a}문제 풀이)</span></div>
+            <div class="flex items-center justify-between mt-2 text-sm font-black text-brand-600"><span>${i + 1} / ${qs.length}</span><span id="tScore">${sc0.s}점 (${sc0.a}문제 풀이)</span></div>
             <div class="h-2 bg-gray-200 rounded-full mt-2 overflow-hidden"><div class="h-full bg-brand-500" style="width:${(sc0.a / qs.length) * 100}%"></div></div>
           </div>
           <div class="bg-white p-5 rounded-2xl comic-border space-y-4">
-            <span class="inline-block text-xs font-black text-gray-900 bg-amber-300 px-2.5 py-0.5 rounded-md comic-border-sm">${q.tag}</span>
+            <span class="inline-block text-sm font-black text-gray-900 bg-amber-300 px-2.5 py-0.5 rounded-md comic-border-sm">${q.tag}</span>
             ${q.head}
-            ${q.speak ? `<div><button data-speak-key="${key}" class="text-xs font-black text-gray-900 bg-amber-300 hover:bg-amber-400 px-3 py-1.5 rounded-xl comic-border-sm comic-btn flex items-center gap-1.5"><i class="fa-solid fa-volume-high text-[10px]"></i><span>듣기</span></button></div>` : ''}
+            ${q.speak ? `<div><button data-speak-key="${key}" class="text-sm font-black text-gray-900 bg-amber-300 hover:bg-amber-400 px-3 py-1.5 rounded-xl comic-border-sm comic-btn flex items-center gap-1.5"><i class="fa-solid fa-volume-high text-xs"></i><span>듣기</span></button></div>` : ''}
             <div id="tAns"></div>
-            <div id="tFb" class="hidden p-3 rounded-xl text-xs sm:text-sm leading-relaxed comic-border-sm"></div>
+            <div id="tFb" class="hidden p-3 rounded-xl text-sm sm:text-sm leading-relaxed comic-border-sm"></div>
             <div class="flex items-center gap-2">
               ${i > 0 ? '<button id="tPrev" class="bg-white hover:bg-gray-100 text-gray-800 text-sm font-bold px-4 py-2.5 rounded-xl comic-border-sm comic-btn">← 이전</button>' : ''}
               <button id="tNext" class="hidden bg-brand-500 hover:bg-brand-600 text-white text-sm font-black px-5 py-2.5 rounded-xl comic-border-sm comic-btn">${i === qs.length - 1 ? '결과 보기' : '다음 문제 →'}</button>
@@ -2982,7 +2984,7 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
 
         const fb = document.getElementById('tFb'), ans = document.getElementById('tAns');
         const showFb = ok => {
-          fb.className = `p-3 rounded-xl text-xs sm:text-sm leading-relaxed comic-border-sm ${ok ? 'bg-green-50 text-green-900' : 'bg-red-50 text-red-900'}`;
+          fb.className = `p-3 rounded-xl text-sm sm:text-sm leading-relaxed comic-border-sm ${ok ? 'bg-green-50 text-green-900' : 'bg-red-50 text-red-900'}`;
           fb.innerHTML = `<strong>${ok ? '정답! 🎉' : '아쉬워요!'}</strong> ${q.explain}`;
           nx.classList.remove('hidden');
         };
@@ -2996,7 +2998,7 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
 
         if (q.kind === 'choice') {
           ans.className = 'grid grid-cols-2 gap-2 sm:gap-3';
-          ans.innerHTML = q.options.map((o, oi) => `<button data-oi="${oi}" class="t-opt p-3 rounded-xl border-2 border-gray-800 text-left font-bold text-xs sm:text-sm hover:bg-orange-100 transition comic-btn bg-white ${q.cn ? 'font-cn' : ''}">${o}</button>`).join('');
+          ans.innerHTML = q.options.map((o, oi) => `<button data-oi="${oi}" class="t-opt p-3 rounded-xl border-2 border-gray-800 text-left font-bold text-sm sm:text-sm hover:bg-orange-100 transition comic-btn bg-white ${q.cn ? 'font-cn' : ''}">${o}</button>`).join('');
           const btns = ans.querySelectorAll('.t-opt');
           const mark = oi => {
             btns.forEach(x => { x.disabled = true; if (+x.dataset.oi === q.correct) x.classList.add('bg-green-100', 'text-green-900'); });
@@ -3014,8 +3016,8 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
             <div class="min-h-[56px] p-2.5 bg-sand-50 border-2 border-dashed border-gray-600 rounded-xl flex flex-wrap gap-2 items-center t-drop"></div>
             <div class="flex flex-wrap gap-2 t-pool">${q.scr.map(t => `<button class="token-btn px-3.5 py-1.5 bg-white comic-border-sm rounded-xl font-cn font-black text-gray-900 hover:bg-orange-100 comic-btn transition text-base" data-tok="${t}">${t}</button>`).join('')}</div>
             <div class="flex items-center gap-2">
-              <button class="t-check bg-brand-500 hover:bg-brand-600 text-white text-xs font-black px-4 py-2 rounded-xl comic-border-sm comic-btn">정답 확인</button>
-              <button class="t-clear bg-white hover:bg-gray-100 text-gray-800 text-xs font-bold px-3 py-2 rounded-xl comic-border-sm comic-btn">다시 담기</button>
+              <button class="t-check bg-brand-500 hover:bg-brand-600 text-white text-sm font-black px-4 py-2 rounded-xl comic-border-sm comic-btn">정답 확인</button>
+              <button class="t-clear bg-white hover:bg-gray-100 text-gray-800 text-sm font-bold px-3 py-2 rounded-xl comic-border-sm comic-btn">다시 담기</button>
             </div>`;
           const ob = mountOrderBuilder(ans.querySelector('.t-drop'), ans.querySelector('.t-pool'), list => { if (!st.checked) { st.order = list; saveSessions(); } });
           const chk = ans.querySelector('.t-check'), clr = ans.querySelector('.t-clear');
@@ -3045,15 +3047,15 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
             <p class="text-sm font-black text-gray-600">${def.title} 결과</p>
             <p class="text-5xl font-black text-brand-600">${p}<span class="text-xl text-gray-900">점</span></p>
             <p class="text-sm font-black text-gray-900">${score} / ${qs.length} 정답 · ${msg}</p>
-            ${skipped ? `<p class="text-xs text-gray-500 font-bold">풀지 않은 문제 ${skipped}개</p>` : ''}
+            ${skipped ? `<p class="text-sm text-gray-500 font-bold">풀지 않은 문제 ${skipped}개</p>` : ''}
             <div class="flex flex-wrap justify-center gap-2 pt-2">
-              <button id="tReview" class="bg-brand-500 hover:bg-brand-600 text-white text-xs font-black px-4 py-2 rounded-xl comic-border-sm comic-btn">내 답 다시 보기</button>
-              <button id="tReset2" class="bg-white hover:bg-gray-100 text-gray-800 text-xs font-bold px-4 py-2 rounded-xl comic-border-sm comic-btn">리셋 (새로 풀기)</button>
-              <button id="tList" class="bg-white hover:bg-gray-100 text-gray-800 text-xs font-bold px-4 py-2 rounded-xl comic-border-sm comic-btn">점수판 · 목록</button>
+              <button id="tReview" class="bg-brand-500 hover:bg-brand-600 text-white text-sm font-black px-4 py-2 rounded-xl comic-border-sm comic-btn">내 답 다시 보기</button>
+              <button id="tReset2" class="bg-white hover:bg-gray-100 text-gray-800 text-sm font-bold px-4 py-2 rounded-xl comic-border-sm comic-btn">리셋 (새로 풀기)</button>
+              <button id="tList" class="bg-white hover:bg-gray-100 text-gray-800 text-sm font-bold px-4 py-2 rounded-xl comic-border-sm comic-btn">점수판 · 목록</button>
             </div>
           </div>
           ${wrong.length ? `<div class="bg-white p-5 rounded-2xl comic-border space-y-2"><h3 class="text-sm font-black text-gray-900">❌ 틀린 문제 복습 (${wrong.length})</h3>
-            <ul class="list-disc pl-5 space-y-1 text-xs sm:text-sm text-gray-800 font-medium">${wrong.map(w => `<li>${w}</li>`).join('')}</ul></div>` : ''}`;
+            <ul class="list-disc pl-5 space-y-1 text-sm sm:text-sm text-gray-800 font-medium">${wrong.map(w => `<li>${w}</li>`).join('')}</ul></div>` : ''}`;
         document.getElementById('tReview').onclick = () => { sess.done = false; sess.i = 0; saveSessions(); show(); };
         confirmTap(document.getElementById('tReset2'), '정말 리셋? (한 번 더)', () => { delete testSessions[def.id]; saveSessions(); runTest(def); });
         document.getElementById('tList').onclick = renderTestHub;
