@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" class="locked">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +10,7 @@
   <!-- Google Fonts: Noto Sans KR & Noto Sans SC -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Noto+Sans+KR:wght@400;500;700;800&family=Noto+Serif+SC:wght@600;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&family=Noto+Serif+SC:wght@600;900&display=swap" rel="stylesheet">
   <!-- Tone.js for game/quiz audio effects -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
 
@@ -101,7 +101,7 @@
           fontFamily: {
             sans: ['"Noto Sans KR"', 'sans-serif'],
             cn: ['"Noto Serif SC"', '"Noto Sans SC"', 'serif'],
-            cute: ['"Gaegu"', 'cursive', 'sans-serif']
+            cute: ['"Noto Sans KR"', 'sans-serif']
           }
         }
       }
@@ -109,6 +109,12 @@
   </script>
 
   <style>
+    /* 로그인 전에는 앱 전체를 가림 */
+    #authModal{z-index:100}
+    #toast{z-index:120 !important}
+    html.locked #authModal{display:flex !important;background:#faf6ee}
+    html.locked #closeAuthModal{display:none !important}
+    html.locked body > *:not(#authModal):not(#toast):not(script){display:none !important}
     /* Comic-book playful style accents */
     .comic-border {
       border: 2px solid #1f2937;
@@ -2225,7 +2231,7 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
               <span class="text-xs font-bold text-brand-600 font-sans pinyin-text">[${v.pinyin}]</span>
             </div>
             <p class="text-xs text-gray-800 font-bold">${v.korean}</p>
-            ${v.desc ? `<p class="text-[11px] text-gray-500 font-cute font-bold">${v.desc}</p>` : ''}
+            ${v.desc ? `<p class="text-sm sm:text-base text-gray-600 font-sans font-bold mt-0.5">${v.desc}</p>` : ''}
           </div>
           <button class="w-8 h-8 rounded-full bg-orange-100 text-brand-600 hover:bg-brand-500 hover:text-white flex items-center justify-center transition border border-gray-900 shadow-2xs active:scale-90" title="발음 듣기">
             <i class="fa-solid fa-volume-high text-xs"></i>
@@ -3190,11 +3196,15 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
     let user = null, timer = null, loaded = false;
 
     const modal = $('authModal');
+    const root = document.documentElement;
+    const isLocked = () => root.classList.contains('locked');
+    const lock = () => root.classList.add('locked');
+    const unlock = () => { root.classList.remove('locked'); modal.classList.add('hidden'); };
     const open = () => modal.classList.remove('hidden');
     const close = () => modal.classList.add('hidden');
     $('authBtn').onclick = open;
     $('closeAuthModal').onclick = close;
-    modal.addEventListener('click', e => { if (e.target === modal) close(); });
+    modal.addEventListener('click', e => { if (e.target === modal && !isLocked()) close(); });
 
     const toEmail = v => { v = v.trim(); return v.includes('@') ? v : v + '@' + ID_DOMAIN; };
     const errMsg = e => {
@@ -3261,7 +3271,7 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
 
     async function onUser(u) {
       user = u; loaded = false; setUI(u);
-      if (!u) return;
+      if (!u) { lock(); return; }
       try {
         const cloud = await bridge().loadCloud(u.uid);
         const m = merge(cloud);
@@ -3278,14 +3288,14 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
         console.error(e);
         $('cloudStatusMsg').textContent = '클라우드 기록을 불러오지 못했어요.';
         toast('클라우드 기록을 불러오지 못했어요.');
-      }
+      } finally { unlock(); }
     }
 
     // Firebase 모듈이 늦게 로드될 수 있어 준비될 때까지 확인
     let tries = 0;
     const wait = setInterval(() => {
       if (bridge()) { clearInterval(wait); bridge().onAuthStateChanged(onUser); }
-      else if (++tries > 100) { clearInterval(wait); console.warn('Firebase 로드 실패'); }
+      else if (++tries > 100) { clearInterval(wait); console.warn('Firebase 로드 실패'); toast('로그인 서버에 연결하지 못했어요. 인터넷 연결을 확인하고 새로고침해 주세요.'); }
     }, 150);
   })();
   </script>
