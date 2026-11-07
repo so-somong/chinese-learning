@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>봄쌤 중국어 - 쏘몽 (클라우드 동기화)</title>
+  <title>봄쌤 중국어 -쏘몽</title>
   <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <!-- FontAwesome Icons -->
   <!-- Google Fonts: Noto Sans KR & Noto Sans SC -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -32,9 +33,8 @@
       setDoc 
     } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 
-    // 쏘몽님의 Firebase 프로젝트 설정값
     const firebaseConfig = {
-      apiKey: "AIzaSyB94RI5v-P3TuXawKhznktOSxvrDEmEXyo",
+      apiKey: "AIzaSyB94RI5v-P3TuXawKhznktOSxvrDEmeXyo",
       authDomain: "chinese-learning-dd622.firebaseapp.com",
       projectId: "chinese-learning-dd622",
       storageBucket: "chinese-learning-dd622.firebasestorage.app",
@@ -46,9 +46,6 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    // 아이디를 이메일 형식으로 자동 변환 (아이디만 입력해도 로그인 가능)
-    const toEmail = (id) => id.includes('@') ? id.trim() : `${id.trim()}@bomsam.study`;
-
     window.FB_BRIDGE = {
       isReady: true,
       auth,
@@ -58,8 +55,8 @@
         const provider = new GoogleAuthProvider();
         return signInWithPopup(auth, provider);
       },
-      signInEmailOrId: (idOrEmail, pw) => signInWithEmailAndPassword(auth, toEmail(idOrEmail), pw),
-      signUpEmailOrId: (idOrEmail, pw) => createUserWithEmailAndPassword(auth, toEmail(idOrEmail), pw),
+      signInEmail: (email, pw) => signInWithEmailAndPassword(auth, email, pw),
+      signUpEmail: (email, pw) => createUserWithEmailAndPassword(auth, email, pw),
       logOut: () => signOut(auth),
       saveCloud: async (uid, data) => {
         const ref = doc(db, "users", uid);
@@ -79,11 +76,27 @@
         extend: {
           colors: {
             brand: {
-              50: '#fff7ed', 100: '#ffedd5', 200: '#fed7aa', 300: '#fdba74',
-              400: '#fb923c', 500: '#f97316', 600: '#ea580c', 700: '#c2410c',
+              50: '#fff7ed',
+              100: '#ffedd5',
+              200: '#fed7aa',
+              300: '#fdba74',
+              400: '#fb923c',
+              500: '#f97316',
+              600: '#ea580c',
+              700: '#c2410c',
             },
-            mint: { 50: '#f0fdf4', 100: '#dcfce7', 200: '#bbf7d0', 500: '#22c55e', 600: '#16a34a' },
-            sand: { 50: '#fbf9f5', 100: '#f4ede1', 200: '#e7dcc8' }
+            mint: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              200: '#bbf7d0',
+              500: '#22c55e',
+              600: '#16a34a',
+            },
+            sand: {
+              50: '#fbf9f5',
+              100: '#f4ede1',
+              200: '#e7dcc8',
+            }
           },
           fontFamily: {
             sans: ['"Noto Sans KR"', 'sans-serif'],
@@ -96,70 +109,117 @@
   </script>
 
   <style>
-    .comic-border { border: 2px solid #1f2937; box-shadow: 3px 3px 0px #1f2937; }
-    .comic-border-sm { border: 1.5px solid #1f2937; box-shadow: 2px 2px 0px #1f2937; }
-    .comic-btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0px #1f2937; }
-    .comic-badge { border: 1.5px solid #1f2937; }
-    .speech-bubble { position: relative; border: 2px solid #1f2937; box-shadow: 2px 2px 0px #1f2937; }
+    /* Comic-book playful style accents */
+    .comic-border {
+      border: 2px solid #1f2937;
+      box-shadow: 3px 3px 0px #1f2937;
+    }
+    .comic-border-sm {
+      border: 1.5px solid #1f2937;
+      box-shadow: 2px 2px 0px #1f2937;
+    }
+    .comic-btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 1px 1px 0px #1f2937;
+    }
+    .comic-badge {
+      border: 1.5px solid #1f2937;
+    }
+    .speech-bubble {
+      position: relative;
+      border: 2px solid #1f2937;
+      box-shadow: 2px 2px 0px #1f2937;
+    }
     .speech-bubble::before {
-      content: ''; position: absolute; left: -9px; top: 14px;
-      border-width: 6px 8px 6px 0; border-style: solid; border-color: transparent #1f2937 transparent transparent;
-      display: block; width: 0;
+      content: '';
+      position: absolute;
+      left: -9px;
+      top: 14px;
+      border-width: 6px 8px 6px 0;
+      border-style: solid;
+      border-color: transparent #1f2937 transparent transparent;
+      display: block;
+      width: 0;
     }
     .speech-bubble::after {
-      content: ''; position: absolute; left: -6px; top: 15px;
-      border-width: 5px 7px 5px 0; border-style: solid; border-color: transparent #ffffff transparent transparent;
-      display: block; width: 0;
+      content: '';
+      position: absolute;
+      left: -6px;
+      top: 15px;
+      border-width: 5px 7px 5px 0;
+      border-style: solid;
+      border-color: transparent #ffffff transparent transparent;
+      display: block;
+      width: 0;
     }
-    ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: #fdf6ec; }
-    ::-webkit-scrollbar-thumb { background: #fb923c; border-radius: 4px; }
-    .pinyin-text { letter-spacing: 0.04em; }
-    .flashcard { perspective: 1000px; }
-    .flashcard-inner { transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); transform-style: preserve-3d; }
-    .flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
-    .card-front, .card-back { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
-    .card-back { transform: rotateY(180deg); }
-    .is-speaking:not(button){ box-shadow: 0 0 0 3px #f97316; }
-    .restart-btn {
-      width: 28px; height: 28px; flex-shrink: 0; border-radius: 9999px; background: #fff;
-      color: #374151; border: 2px solid #111; display: inline-flex; align-items: center;
-      justify-content: center; font-size: 11px; transition: .15s;
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
     }
-    .restart-btn:hover { background: #f3f4f6; }
-    .restart-btn:active { transform: scale(.9); }
-    i.fa-solid { display: inline-block; width: 1em; height: 1em; vertical-align: -0.125em; font-family: inherit; font-style: normal; }
-    i.fa-solid::before {
-      content: ""!important; display: block; width: 100%; height: 100%; background: currentColor;
-      -webkit-mask: var(--ic) center/contain no-repeat; mask: var(--ic) center/contain no-repeat;
+    ::-webkit-scrollbar-track {
+      background: #fdf6ec;
     }
-    i.fa-volume-high{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 9v6h4l5 4V5L7 9z' fill='black'/%3E%3Cpath d='M16 8.5a5 5 0 0 1 0 7M18.8 6a9 9 0 0 1 0 12' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
-    i.fa-volume-xmark{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 9v6h4l5 4V5L7 9z' fill='black'/%3E%3Cpath d='M16 9l6 6M22 9l-6 6' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
-    i.fa-play{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 4v16l13-8z' fill='black'/%3E%3C/svg%3E")}
-    i.fa-pause{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='6' y='4' width='4.5' height='16' rx='1' fill='black'/%3E%3Crect x='13.5' y='4' width='4.5' height='16' rx='1' fill='black'/%3E%3C/svg%3E")}
-    i.fa-check{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 12.5l5 5L20 6.5' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
-    i.fa-xmark{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 5l14 14M19 5L5 19' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
-    i.fa-circle-check{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='9.5' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M7.5 12.5l3 3 6-6.5' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
-    i.fa-circle-xmark{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='9.5' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M8.5 8.5l7 7M15.5 8.5l-7 7' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
-    i.fa-repeat{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M17 2l4 4-4 4M3 11V9a3 3 0 0 1 3-3h15M7 22l-4-4 4-4M21 13v2a3 3 0 0 1-3 3H3' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
-    i.fa-arrows-rotate{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M20 11A8 8 0 0 0 5.6 7M4 4v4h4M4 13a8 8 0 0 0 14.4 4M20 20v-4h-4' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
-    i.fa-rotate-left{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 12a9 9 0 1 0 3-6.7M3 3v6h6' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
-    i.fa-music{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 18V5l11-2v13' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='6.5' cy='18' r='3' fill='black'/%3E%3Ccircle cx='17.5' cy='16' r='3' fill='black'/%3E%3C/svg%3E")}
-    i.fa-trophy{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 4h10v6a5 5 0 0 1-10 0zM7 6H3v2a4 4 0 0 0 4 4M17 6h4v2a4 4 0 0 1-4 4M12 15v4M8 21h8' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
-    i.fa-star{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2l3 6.5 7 .8-5.2 4.8 1.5 7L12 17.5 5.7 21l1.5-7L2 9.3l7-.8z' fill='black'/%3E%3C/svg%3E")}
-    i.fa-pen-nib{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 20l1-5L16 4l4 4L9 19zM14 6l4 4M4 20l5-5' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
-    i.fa-medal{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='15' r='6' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M8 3l4 7 4-7' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
-    i.fa-lightbulb{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.5 1 2.5h6c0-1 .3-1.8 1-2.5A6 6 0 0 0 12 3z' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
-    i.fa-headphones-simple{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 15v-3a8 8 0 0 1 16 0v3' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3Crect x='3' y='14' width='4.5' height='7' rx='1.5' fill='black'/%3E%3Crect x='16.5' y='14' width='4.5' height='7' rx='1.5' fill='black'/%3E%3C/svg%3E")}
-    i.fa-comment-dots{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 4h16v13H9l-5 4z' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='8.5' cy='10.5' r='1.3' fill='black'/%3E%3Ccircle cx='12' cy='10.5' r='1.3' fill='black'/%3E%3Ccircle cx='15.5' cy='10.5' r='1.3' fill='black'/%3E%3C/svg%3E")}
-    i.fa-clipboard-question{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 4H5v17h14V4h-3' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3Crect x='8' y='2' width='8' height='4' rx='1' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M10 11a2 2 0 1 1 3 1.7c-.7.5-1 1-1 1.8M12 18v.1' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
-    i.fa-bullhorn{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 10v4h4l9 5V5L7 10zM19 9a4 4 0 0 1 0 6' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
-    i.fa-book-bookmark{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 3h14v18H5zM5 17h14M14 3v7l-2-1.5L10 10V3' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
-    i.fa-bars-staggered{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 6h14M3 12h18M3 18h10' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
-    i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 20L14 10M12 8l4 4' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M18 3v4M16 5h4M20 12v3M18.5 13.5h3' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
-    i.fa-user{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5zm0 2c-5.33 0-8 2.67-8 6v1h16v-1c0-3.33-2.67-6-8-6z' fill='black'/%3E%3C/svg%3E")}
-    i.fa-cloud{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M19.35 10.04A7.49 7.49 0 0 0 12 4C9.11 4 6.6 5.64 5.35 8.04A5.994 5.994 0 0 0 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z' fill='black'/%3E%3C/svg%3E")}
+    ::-webkit-scrollbar-thumb {
+      background: #fb923c;
+      border-radius: 4px;
+    }
+    .pinyin-text {
+      letter-spacing: 0.04em;
+    }
+    .flashcard {
+      perspective: 1000px;
+    }
+    .flashcard-inner {
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-style: preserve-3d;
+    }
+    .flashcard.flipped .flashcard-inner {
+      transform: rotateY(180deg);
+    }
+    .card-front, .card-back {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    .card-back {
+      transform: rotateY(180deg);
+    }
   </style>
+<style>
+  .is-speaking:not(button){box-shadow:0 0 0 3px #f97316}
+  .restart-btn{width:28px;height:28px;flex-shrink:0;border-radius:9999px;background:#fff;color:#374151;border:2px solid #111;display:inline-flex;align-items:center;justify-content:center;font-size:11px;transition:.15s}
+  .restart-btn:hover{background:#f3f4f6}.restart-btn:active{transform:scale(.9)}
+</style>
+<style>
+i.fa-solid{display:inline-block;width:1em;height:1em;vertical-align:-0.125em;font-family:inherit;font-style:normal}
+i.fa-solid::before{content:""!important;display:block;width:100%;height:100%;background:currentColor;-webkit-mask:var(--ic) center/contain no-repeat;mask:var(--ic) center/contain no-repeat}
+i.fa-volume-high{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M3%209v6h4l5%204V5L7%209z%22%20fill%3D%22black%22%2F%3E%3Cpath%20d%3D%22M16%208.5a5%205%200%200%201%200%207M18.8%206a9%209%200%200%201%200%2012%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-volume-xmark{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M3%209v6h4l5%204V5L7%209z%22%20fill%3D%22black%22%2F%3E%3Cpath%20d%3D%22M16%209l6%206M22%209l-6%206%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-play{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M7%204v16l13-8z%22%20fill%3D%22black%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-pause{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Crect%20x%3D%226%22%20y%3D%224%22%20width%3D%224.5%22%20height%3D%2216%22%20rx%3D%221%22%20fill%3D%22black%22%2F%3E%3Crect%20x%3D%2213.5%22%20y%3D%224%22%20width%3D%224.5%22%20height%3D%2216%22%20rx%3D%221%22%20fill%3D%22black%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-check{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M4%2012.5l5%205L20%206.5%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-xmark{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M5%205l14%2014M19%205L5%2019%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-circle-check{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%229.5%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3Cpath%20d%3D%22M7.5%2012.5l3%203%206-6.5%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-circle-xmark{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2212%22%20r%3D%229.5%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3Cpath%20d%3D%22M8.5%208.5l7%207M15.5%208.5l-7%207%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-repeat{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M17%202l4%204-4%204M3%2011V9a3%203%200%200%201%203-3h15M7%2022l-4-4%204-4M21%2013v2a3%203%200%200%201-3%203H3%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-arrows-rotate{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M20%2011A8%208%200%200%200%205.6%207M4%204v4h4M4%2013a8%208%200%200%200%2014.4%204M20%2020v-4h-4%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-rotate-left{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M3%2012a9%209%200%201%200%203-6.7M3%203v6h6%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-user{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5zm0 2c-5.33 0-8 2.67-8 6v1h16v-1c0-3.33-2.67-6-8-6z' fill='black'/%3E%3C/svg%3E")}
+i.fa-cloud{--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M19.35 10.04A7.49 7.49 0 0 0 12 4C9.11 4 6.6 5.64 5.35 8.04A5.994 5.994 0 0 0 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z' fill='black'/%3E%3C/svg%3E")}
+i.fa-music{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M9%2018V5l11-2v13%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3Ccircle%20cx%3D%226.5%22%20cy%3D%2218%22%20r%3D%223%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%2217.5%22%20cy%3D%2216%22%20r%3D%223%22%20fill%3D%22black%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-trophy{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M7%204h10v6a5%205%200%200%201-10%200zM7%206H3v2a4%204%200%200%200%204%204M17%206h4v2a4%204%200%200%201-4%204M12%2015v4M8%2021h8%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-star{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M12%202l3%206.5%207%20.8-5.200%204.800%201.500%207L12%2017.500%205.700%2021l1.500-7L2%209.300l7-.8z%22%20fill%3D%22black%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-pen-nib{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M4%2020l1-5L16%204l4%204L9%2019zM14%206l4%204M4%2020l5-5%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-medal{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2215%22%20r%3D%226%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3Cpath%20d%3D%22M8%203l4%207%204-7%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-lightbulb{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M9%2018h6M10%2021h4M12%203a6%206%200%200%200-4%2010.500c.7.700%201%201.500%201%202.500h6c0-1%20.3-1.800%201-2.500A6%206%200%200%200%2012%203z%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-headphones-simple{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M4%2015v-3a8%208%200%200%201%2016%200v3%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3Crect%20x%3D%223%22%20y%3D%2214%22%20width%3D%224.500%22%20height%3D%227%22%20rx%3D%221.500%22%20fill%3D%22black%22%2F%3E%3Crect%20x%3D%2216.500%22%20y%3D%2214%22%20width%3D%224.500%22%20height%3D%227%22%20rx%3D%221.500%22%20fill%3D%22black%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-comment-dots{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M4%204h16v13H9l-5%204z%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3Ccircle%20cx%3D%228.500%22%20cy%3D%2210.500%22%20r%3D%221.300%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%2212%22%20cy%3D%2210.500%22%20r%3D%221.300%22%20fill%3D%22black%22%2F%3E%3Ccircle%20cx%3D%2215.500%22%20cy%3D%2210.500%22%20r%3D%221.300%22%20fill%3D%22black%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-clipboard-question{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M8%204H5v17h14V4h-3%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3Crect%20x%3D%228%22%20y%3D%222%22%20width%3D%228%22%20height%3D%224%22%20rx%3D%221%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3Cpath%20d%3D%22M10%2011a2%202%200%201%201%203%201.700c-.7.500-1%201-1%201.800M12%2018v.1%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-bullhorn{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M3%2010v4h4l9%205V5L7%2010zM19%209a4%204%200%200%201%200%206%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-book-bookmark{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M5%203h14v18H5zM5%2017h14M14%203v7l-2-1.500L10%2010V3%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-bars-staggered{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M3%206h14M3%2012h18M3%2018h10%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E")}
+i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M4%2020L14%2010M12%208l4%204%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3Cpath%20d%3D%22M18%203v4M16%205h4M20%2012v3M18.500%2013.500h3%22%20fill%3D%22none%22%20stroke%3D%22black%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E")}
+</style>
 </head>
 
 <body class="bg-[#faf6ee] text-gray-800 antialiased min-h-screen flex flex-col font-sans selection:bg-brand-200">
@@ -168,6 +228,7 @@
   <header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b-2 border-gray-900 shadow-sm transition-all">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       
+      <!-- Brand & Mobile menu button -->
       <div class="flex items-center space-x-3">
         <button id="mobileMenuBtn" class="lg:hidden p-2 rounded-xl text-gray-800 hover:bg-orange-100 comic-border-sm focus:outline-none">
           <i class="fa-solid fa-bars-staggered text-base"></i>
@@ -178,7 +239,7 @@
           </div>
           <div>
             <h1 class="text-sm sm:text-base font-extrabold text-gray-900 tracking-tight flex items-center gap-1.5">
-              <span>봄쌤 중국어 - 쏘몽</span>
+              <span>봄쌤 중국어 -쏘몽</span>
               <span class="text-[11px] bg-brand-500 text-white font-bold px-2 py-0.5 rounded-md comic-badge">회화 1권</span>
             </h1>
             <p class="text-[11px] text-gray-600 font-cute font-bold hidden sm:block">만화로 재밌게! 소리내어 말하는 스마트 공부방</p>
@@ -186,7 +247,9 @@
         </div>
       </div>
 
+      <!-- Audio Speed & Progress Summary -->
       <div class="flex items-center space-x-2 sm:space-x-3">
+        <!-- Voice Speed Selector -->
         <div class="flex items-center bg-white comic-border-sm rounded-xl px-2.5 py-1 text-xs">
           <i class="fa-solid fa-headphones-simple text-brand-600 mr-1.5 hidden sm:inline"></i>
           <span class="text-gray-700 mr-1 font-bold">음성:</span>
@@ -197,7 +260,8 @@
           </select>
         </div>
 
-        <div class="hidden xl:flex items-center space-x-2 bg-white comic-border-sm rounded-xl px-3 py-1">
+        <!-- Global Progress Bar -->
+        <div class="hidden md:flex items-center space-x-2 bg-white comic-border-sm rounded-xl px-3 py-1">
           <i class="fa-solid fa-trophy text-amber-500"></i>
           <div class="text-xs">
             <span class="text-gray-600 font-bold">달성:</span>
@@ -208,10 +272,12 @@
           </div>
         </div>
 
+        <!-- Sound FX toggle -->
         <button id="soundFxBtn" title="효과음 켜기/끄기" class="bg-white comic-border-sm text-gray-700 hover:text-brand-600 p-2 rounded-xl text-xs comic-btn">
           <i class="fa-solid fa-music"></i>
         </button>
 
+        <!-- Reset Button -->
         <button id="resetStorageBtn" title="학습 진도 초기화" class="bg-white comic-border-sm text-gray-500 hover:text-red-500 p-2 rounded-xl text-xs hover:bg-red-50 comic-btn">
           <i class="fa-solid fa-rotate-left"></i>
         </button>
@@ -238,14 +304,13 @@
         <i class="fa-solid fa-xmark text-lg"></i>
       </button>
 
-      <!-- 로그인 상태 뷰 -->
       <div id="authLoggedInView" class="hidden space-y-4 text-center">
         <div class="w-16 h-16 rounded-full bg-brand-100 text-brand-600 flex items-center justify-center text-2xl font-black mx-auto comic-border-sm" id="userAvatar">
           🌱
         </div>
         <div>
           <h3 class="font-black text-gray-900 text-lg" id="userNameLabel">학습자님</h3>
-          <p class="text-xs text-gray-500 font-mono" id="userEmailLabel">user</p>
+          <p class="text-xs text-gray-500" id="userEmailLabel">user@example.com</p>
         </div>
         <div class="p-3 bg-mint-50 rounded-xl comic-border-sm text-xs font-bold text-mint-800 text-left space-y-1">
           <p>☁️ <strong>자동 저장 상태:</strong> 활성화</p>
@@ -256,11 +321,10 @@
         </button>
       </div>
 
-      <!-- 비로그인 뷰 -->
       <div id="authLoggedOutView" class="space-y-4">
         <div class="text-center">
           <h3 class="text-lg font-black text-gray-900">로그인 & 진도 동기화</h3>
-          <p class="text-xs text-gray-600 mt-1">부여받은 아이디(또는 이메일)로 로그인하세요!</p>
+          <p class="text-xs text-gray-600 mt-1">어디서 접속하든 내 공부 기록을 그대로 이어가세요!</p>
         </div>
 
         <button id="googleLoginBtn" type="button" class="w-full bg-white hover:bg-gray-50 text-gray-800 py-2.5 px-4 rounded-xl comic-border-sm font-bold text-xs flex items-center justify-center gap-2 comic-btn transition">
@@ -276,12 +340,12 @@
 
         <form id="emailAuthForm" class="space-y-3">
           <div>
-            <label class="block text-[11px] font-black text-gray-700 mb-1">아이디 또는 이메일</label>
-            <input id="authEmail" type="text" required placeholder="예: student1 또는 email@domain.com" class="w-full px-3 py-2 rounded-xl text-xs border border-gray-300 focus:outline-none focus:border-brand-500 font-bold">
+            <label class="block text-[11px] font-black text-gray-700 mb-1">아이디 / 이메일</label>
+            <input id="authEmail" type="text" required autocomplete="username" placeholder="아이디 또는 이메일" class="w-full px-3 py-2 rounded-xl text-xs border border-gray-300 focus:outline-none focus:border-brand-500">
           </div>
           <div>
             <label class="block text-[11px] font-black text-gray-700 mb-1">비밀번호</label>
-            <input id="authPw" type="password" required minlength="6" placeholder="비밀번호" class="w-full px-3 py-2 rounded-xl text-xs border border-gray-300 focus:outline-none focus:border-brand-500">
+            <input id="authPw" type="password" required minlength="6" placeholder="6자리 이상" class="w-full px-3 py-2 rounded-xl text-xs border border-gray-300 focus:outline-none focus:border-brand-500">
           </div>
 
           <div class="flex gap-2 pt-1">
@@ -289,7 +353,7 @@
               로그인
             </button>
             <button id="emailSignUpSubmit" type="button" class="flex-1 bg-white hover:bg-orange-50 text-brand-600 font-black py-2.5 rounded-xl comic-border-sm text-xs comic-btn border border-brand-400">
-              계정 등록
+              회원가입
             </button>
           </div>
         </form>
@@ -297,12 +361,14 @@
     </div>
   </div>
 
+
   <!-- MAIN APP CONTAINER -->
   <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-5 flex-1 w-full flex flex-col lg:flex-row gap-6">
 
-    <!-- SIDEBAR -->
+    <!-- SIDEBAR: LESSON SELECTION -->
     <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-72 bg-white shadow-2xl lg:shadow-none lg:static lg:w-64 xl:w-72 lg:block comic-border lg:rounded-2xl p-4 flex-shrink-0 flex flex-col transition-transform duration-300 transform -translate-x-full lg:translate-x-0">
       
+      <!-- Mobile Close Btn -->
       <div class="flex items-center justify-between pb-3 mb-2 border-b-2 border-gray-900 lg:hidden">
         <span class="font-black text-gray-900 text-sm">목차 바로가기</span>
         <button id="closeMobileMenuBtn" class="p-1.5 rounded-lg text-gray-700 hover:bg-gray-100">
@@ -319,7 +385,10 @@
         <i class="fa-solid fa-trophy"></i><span>전체 테스트 · 점수판</span>
       </button>
 
-      <div id="lessonListContainer" class="flex-1 overflow-y-auto space-y-2 pr-1 text-sm"></div>
+      <!-- Lesson List -->
+      <div id="lessonListContainer" class="flex-1 overflow-y-auto space-y-2 pr-1 text-sm">
+        <!-- Lessons generated via JS -->
+      </div>
 
       <!-- 전체 자동 릴레이 -->
       <div id="relayBox" class="mt-3 p-3 bg-white rounded-xl comic-border-sm space-y-2 flex-shrink-0">
@@ -334,6 +403,7 @@
         <p id="relayNow" class="hidden text-[11px] text-brand-600 font-black leading-snug break-words"></p>
       </div>
 
+      <!-- Quick Tips Box -->
       <div class="mt-4 p-3 bg-amber-50 rounded-xl comic-border-sm text-xs">
         <div class="flex items-center text-amber-800 font-black mb-1">
           <i class="fa-solid fa-lightbulb text-amber-500 mr-1.5"></i> 공부 꿀팁!
@@ -344,30 +414,44 @@
       </div>
     </aside>
 
+    <!-- SIDEBAR OVERLAY (FOR MOBILE) -->
     <div id="sidebarOverlay" class="fixed inset-0 bg-black/40 z-40 hidden lg:hidden backdrop-blur-xs"></div>
 
     <!-- MAIN LEARNING PANEL -->
     <main class="flex-1 min-w-0 flex flex-col space-y-5">
+      
       <section id="testHub" class="hidden"><div id="testHubBody" class="space-y-5"></div></section>
 
-      <!-- HERO CARD -->
+      <!-- CURRENT LESSON HERO CARD -->
       <div id="lessonHero" class="bg-white rounded-2xl p-5 sm:p-6 comic-border relative overflow-hidden">
-        <div class="absolute right-6 -bottom-6 text-9xl font-cn text-orange-100 select-none pointer-events-none font-black opacity-40" id="heroHanziBg">学</div>
+        <!-- Background Accents -->
+        <div class="absolute right-6 -bottom-6 text-9xl font-cn text-orange-100 select-none pointer-events-none font-black opacity-40" id="heroHanziBg">
+          学
+        </div>
 
         <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <div class="flex items-center gap-2 mb-2 flex-wrap">
-              <span id="currentLessonBadge" class="bg-brand-500 text-white font-black text-xs px-2.5 py-0.5 rounded-full comic-badge">0과</span>
-              <span id="currentLessonSubtitle" class="text-xs text-gray-700 font-bold bg-amber-100 px-2 py-0.5 rounded-md">중국어의 첫걸음</span>
+              <span id="currentLessonBadge" class="bg-brand-500 text-white font-black text-xs px-2.5 py-0.5 rounded-full comic-badge">
+                0과
+              </span>
+              <span id="currentLessonSubtitle" class="text-xs text-gray-700 font-bold bg-amber-100 px-2 py-0.5 rounded-md">
+                중국어의 첫걸음
+              </span>
               <label class="cursor-pointer inline-flex items-center gap-1.5 text-xs bg-gray-100 hover:bg-green-50 px-2.5 py-1 rounded-full border border-gray-400 transition">
                 <input type="checkbox" id="lessonCompleteCheckbox" class="rounded text-green-600 focus:ring-green-400">
                 <span class="text-gray-800 font-bold" id="completeCheckLabel">완료 표시하기</span>
               </label>
             </div>
-            <h2 id="currentLessonTitle" class="text-xl sm:text-2xl font-black text-gray-900 tracking-tight">0과 발음: 성조 & 운모 & 성모</h2>
-            <p id="currentLessonSummary" class="text-xs sm:text-sm text-gray-600 mt-1 font-medium">중국어의 4개 성조와 경성, 한어병음의 기본 원리를 마스터해 보세요.</p>
+            <h2 id="currentLessonTitle" class="text-xl sm:text-2xl font-black text-gray-900 tracking-tight">
+              0과 발음: 성조 & 운모 & 성모
+            </h2>
+            <p id="currentLessonSummary" class="text-xs sm:text-sm text-gray-600 mt-1 font-medium">
+              중국어의 4개 성조와 경성, 한어병음의 기본 원리를 마스터해 보세요.
+            </p>
           </div>
 
+          <!-- Quick Action Audio & Shadowing -->
           <div class="flex items-center gap-2">
             <button id="heroPlayKeySentence" class="flex items-center gap-2 bg-brand-500 hover:bg-brand-600 text-white px-4 py-2.5 rounded-xl font-black comic-border-sm comic-btn transition text-xs sm:text-sm">
               <i class="fa-solid fa-volume-high"></i>
@@ -376,33 +460,41 @@
           </div>
         </div>
 
-        <!-- TABS -->
+        <!-- SUB-NAVIGATION TABS -->
         <div id="subTabBar" class="flex items-center border-b-2 border-gray-200 mt-6 -mb-1 space-x-1 sm:space-x-3 overflow-x-auto text-sm" style="scrollbar-width:thin;-webkit-overflow-scrolling:touch">
           <button id="tabPrev" type="button" class="hidden sticky left-0 z-10 shrink-0 self-center w-7 h-7 rounded-full bg-white border-2 border-gray-900 font-black text-gray-900 leading-none">‹</button>
           <button class="nav-tab active-tab pb-3 px-3 sm:px-4 font-black border-b-4 border-brand-500 text-brand-600 flex items-center gap-1.5 whitespace-nowrap" data-tab="vocab">
-            <i class="fa-solid fa-book-bookmark text-xs"></i><span>단어장</span>
+            <i class="fa-solid fa-book-bookmark text-xs"></i>
+            <span>단어장</span>
           </button>
           <button class="nav-tab pb-3 px-3 sm:px-4 font-bold text-gray-500 hover:text-gray-800 border-b-4 border-transparent flex items-center gap-1.5 whitespace-nowrap" data-tab="dialogue">
-            <i class="fa-solid fa-comment-dots text-xs"></i><span>웹툰 대화문 & 쉐도잉</span>
+            <i class="fa-solid fa-comment-dots text-xs"></i>
+            <span>웹툰 대화문 & 쉐도잉</span>
           </button>
           <button class="nav-tab pb-3 px-3 sm:px-4 font-bold text-gray-500 hover:text-gray-800 border-b-4 border-transparent flex items-center gap-1.5 whitespace-nowrap" data-tab="grammar">
-            <i class="fa-solid fa-wand-magic-sparkles text-xs"></i><span>핵심 문법/꿀팁</span>
+            <i class="fa-solid fa-wand-magic-sparkles text-xs"></i>
+            <span>핵심 문법/꿀팁</span>
           </button>
           <button class="nav-tab pb-3 px-3 sm:px-4 font-bold text-gray-500 hover:text-gray-800 border-b-4 border-transparent flex items-center gap-1.5 whitespace-nowrap" data-tab="practice">
-            <i class="fa-solid fa-pen-nib text-xs"></i><span>직접 문제 풀기</span>
+            <i class="fa-solid fa-pen-nib text-xs"></i>
+            <span>직접 문제 풀기</span>
             <span class="bg-amber-400 text-gray-900 text-[10px] font-black px-1.5 py-0.2 rounded-md comic-badge">퀴즈</span>
           </button>
           <button class="nav-tab pb-3 px-3 sm:px-4 font-bold text-gray-500 hover:text-gray-800 border-b-4 border-transparent flex items-center gap-1.5 whitespace-nowrap" data-tab="vocabquiz">
-            <i class="fa-solid fa-lightbulb text-xs"></i><span>단어문제</span>
+            <i class="fa-solid fa-lightbulb text-xs"></i>
+            <span>단어문제</span>
           </button>
           <button class="nav-tab pb-3 px-3 sm:px-4 font-bold text-gray-500 hover:text-gray-800 border-b-4 border-transparent flex items-center gap-1.5 whitespace-nowrap" data-tab="today">
-            <i class="fa-solid fa-medal text-xs"></i><span>오늘의 문장 (암기 카드)</span>
+            <i class="fa-solid fa-medal text-xs"></i>
+            <span>오늘의 문장 (암기 카드)</span>
           </button>
           <button id="tabNext" type="button" class="hidden sticky right-0 z-10 shrink-0 self-center w-7 h-7 rounded-full bg-white border-2 border-gray-900 font-black text-gray-900 leading-none">›</button>
         </div>
       </div>
 
       <!-- TAB CONTENT PANELS -->
+
+      <!-- 1. VOCABULARY TAB -->
       <section id="tab-vocab" class="tab-pane space-y-4">
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-2">
@@ -413,9 +505,13 @@
             <i class="fa-solid fa-play mr-1"></i> 전체 단어 연속 듣기
           </button>
         </div>
-        <div id="vocabListGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+
+        <div id="vocabListGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          <!-- Dynamic Vocab Cards -->
+        </div>
       </section>
 
+      <!-- 2. DIALOGUE TAB -->
       <section id="tab-dialogue" class="tab-pane hidden space-y-4">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-4 rounded-xl comic-border-sm">
           <div>
@@ -434,13 +530,21 @@
             </button>
           </div>
         </div>
-        <div id="dialogueContainer" class="space-y-4"></div>
+
+        <!-- Dialogue Bubble Container -->
+        <div id="dialogueContainer" class="space-y-4">
+          <!-- Dynamic chat bubbles -->
+        </div>
       </section>
 
+      <!-- 3. GRAMMAR TAB -->
       <section id="tab-grammar" class="tab-pane hidden space-y-4">
-        <div id="grammarContent" class="space-y-4"></div>
+        <div id="grammarContent" class="space-y-4">
+          <!-- Dynamic Grammar / Key points breakdown -->
+        </div>
       </section>
 
+      <!-- 4. PRACTICE / QUIZ TAB -->
       <section id="tab-practice" class="tab-pane hidden space-y-6">
         <div class="bg-white p-4 sm:p-5 rounded-2xl comic-border flex items-center justify-between">
           <div>
@@ -456,9 +560,14 @@
             <i class="fa-solid fa-arrows-rotate mr-1"></i> 다시 풀기
           </button>
         </div>
-        <div id="practiceContainer" class="space-y-5"></div>
+
+        <!-- Quiz List -->
+        <div id="practiceContainer" class="space-y-5">
+          <!-- Dynamically populated practice items -->
+        </div>
       </section>
 
+      <!-- 4-2. VOCAB QUIZ TAB -->
       <section id="tab-vocabquiz" class="tab-pane hidden space-y-6">
         <div class="bg-white p-4 sm:p-5 rounded-2xl comic-border flex items-center justify-between gap-3">
           <div>
@@ -476,6 +585,7 @@
         <div id="vocabQuizContainer" class="space-y-5"></div>
       </section>
 
+      <!-- 5. TODAY'S SENTENCES (FLASHCARDS) TAB -->
       <section id="tab-today" class="tab-pane hidden space-y-4">
         <div class="flex items-center justify-between">
           <div>
@@ -484,8 +594,12 @@
           </div>
           <span class="text-xs text-gray-900 bg-amber-300 px-2.5 py-1 rounded-md comic-border-sm font-black">카드 탭하기</span>
         </div>
-        <div id="flashcardsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+
+        <div id="flashcardsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- Dynamic Flashcards -->
+        </div>
       </section>
+
     </main>
 
   </div>
@@ -497,158 +611,2704 @@
   </div>
 
   <script>
-    /* 0과 ~ 10과 교재 및 테스트 로직은 index3.html의 전체 데이터베이스 및 음성 재생, 순서 맞추기, 점수판을 그대로 탑재 */
-    const STORAGE_KEY = 'toon_chinese_progress_v1';
-    const TEST_KEY = 'toon_chinese_tests_v1';
-    const SESS_KEY = 'toon_chinese_test_sessions_v1';
+    /* ==========================================================================
+       CURRICULUM DATABASE (0과 ~ 10과 완벽 구현)
+       ========================================================================== */
+    const lessonsData = [
+      {
+        id: 0,
+        title: "0과 발음: 성조 & 운모 & 성모",
+        subtitle: "중국어 기초 상식과 소리 체계",
+        summary: "4개 성조와 경성, 자음(성모)과 모음(운모), 그리고 성조 표기 규칙을 마스터합니다.",
+        keySentence: {
+          hanzi: "你好，很高兴认识你！",
+          pinyin: "Nǐ hǎo, hěn gāoxìng rènshi nǐ!",
+          korean: "안녕, 만나서 정말 반가워!"
+        },
+        vocab: [
+          { hanzi: "汉语", pinyin: "hànyǔ", korean: "중국어(한어)", desc: "한족의 언어라는 의미" },
+          { hanzi: "普通话", pinyin: "pǔtōnghuà", korean: "보통어(표준 중국어)", desc: "베이징 발음 기반 표준어" },
+          { hanzi: "简体字", pinyin: "jiǎntǐzì", korean: "간체자", desc: "1950년대 문맹퇴치 위해 간소화된 한자" },
+          { hanzi: "妈妈", pinyin: "māma", korean: "엄마", desc: "1성+경성 대표 단어" },
+          { hanzi: "爸爸", pinyin: "bàba", korean: "아빠", desc: "4성+경성 대표 단어" },
+          { hanzi: "姐姐", pinyin: "jiějie", korean: "언니, 누나", desc: "3성+경성 대표 단어" },
+          { hanzi: "妹妹", pinyin: "mèimei", korean: "여동생", desc: "4성+경성 대표 단어" },
+          { hanzi: "哥哥", pinyin: "gēge", korean: "오빠, 형", desc: "1성+경성 대표 단어" },
+          { hanzi: "弟弟", pinyin: "dìdi", korean: "남동생", desc: "4성+경성 대표 단어" },
+          { hanzi: "爷爷", pinyin: "yéye", korean: "할아버지", desc: "2성+경성 대표 단어" },
+          { hanzi: "奶奶", pinyin: "nǎinai", korean: "할머니", desc: "3성+경성 대표 단어" },
+          { hanzi: "电影", pinyin: "diànyǐng", korean: "영화", desc: "4성+3성 결합" },
+          { hanzi: "牛奶", pinyin: "niúnǎi", korean: "우유", desc: "2성+3성 결합" },
+          { hanzi: "苹果", pinyin: "píngguǒ", korean: "사과", desc: "2성+3성 결합" }
+        ],
+        dialogue: [
+          {
+            speaker: "봄쌤",
+            avatar: "👩‍🏫",
+            hanzi: "mā, má, mǎ, mà!",
+            pinyin: "mā, má, mǎ, mà!",
+            korean: "1성, 2성, 3성, 4성의 높낮이를 구분해 보세요!"
+          },
+          {
+            speaker: "또또",
+            avatar: "👦",
+            hanzi: "mā 妈(엄마), má 麻(마비), mǎ 马(말), mà 骂(혼내다)",
+            pinyin: "mā, má, mǎ, mà!",
+            korean: "같은 발음도 성조에 따라 뜻이 완전히 달라져요!"
+          },
+          {
+            speaker: "미미",
+            avatar: "👧",
+            hanzi: "māma, bàba, jiějie, mèimei!",
+            pinyin: "māma, bàba, jiějie, mèimei!",
+            korean: "엄마, 아빠, 언니, 여동생! 경성은 뒤에서 가볍고 짧게 내요!"
+          }
+        ],
+        grammarPoints: [
+          {
+            title: "1. 4개 성조와 경성 완벽 정리",
+            content: `
+              <ul class="list-disc pl-5 space-y-1.5 text-sm text-gray-700">
+                <li><strong>1성 ( — ) [mā]</strong>: 높은 '솔' 음으로 길게 평평하게 쭉 뻗는 소리 (엄마- 하고 부르듯)</li>
+                <li><strong>2성 ( / ) [má]</strong>: 중간에서 위로 빠르게 치고 올라가는 소리 ("왜불러~?", "네?")</li>
+                <li><strong>3성 ( V ) [mǎ]</strong>: 낮게 내려갔다가 살짝 올려주는 소리 ("아~ 그렇구나~")</li>
+                <li><strong>4성 ( \\ ) [mà]</strong>: 높은 곳에서 아래로 딱 끊어 내리꽂는 소리 ("아! 야!")</li>
+                <li><strong>경성</strong>: 성조 표기 없이 앞 음절에 따라 가볍고 짧게 툭 떨어지는 소리 (가족 호칭: mama, baba)</li>
+              </ul>
+            `
+          },
+          {
+            title: "2. 성조 표기 공식 & 특수 변화 규칙",
+            content: `
+              <div class="space-y-2 text-sm text-gray-700">
+                <div class="p-3 bg-orange-50 rounded-xl border border-orange-200">
+                  <span class="font-bold text-brand-600">성조 표기 우선순위:</span> a > o, e > i, u, ü (입이 가장 큰 모음 위에 표기!)<br>
+                  <span class="text-xs text-gray-500">* 단, iu나 ui처럼 i와 u가 함께 있을 때는 맨 뒤 글자에 표기 (예: zuì, xiu)</span>
+                </div>
+                <div class="p-3 bg-amber-50 rounded-xl border border-amber-200">
+                  <span class="font-bold text-amber-700">필수 성조 변화 3가지:</span>
+                  <ul class="list-disc pl-4 text-xs mt-1 space-y-1">
+                    <li><strong>3성 + 3성</strong> ➔ 말할 때만 <strong>2성 + 3성</strong> (예: 你好 nǐhǎo ➔ 실제 발음 [níhǎo])</li>
+                    <li><strong>不(bù, 4성)</strong> 뒤에 4성이 오면 ➔ <strong>2성 (bú)</strong>으로 변경 (예: 不饿 bú è, 不是 bú shì)</li>
+                    <li><strong>一(yī, 1성)</strong> 뒤에 4성 오면 2성(yí), 1/2/3성 앞에서는 4성(yì)으로 변화</li>
+                  </ul>
+                </div>
+              </div>
+            `
+          }
+        ],
+        practice: [
+          {
+            type: "choice",
+            question: "3성과 3성이 연속으로 만나면 앞의 3성은 몇 성으로 발음할까요?",
+            options: ["1성", "2성", "3성 그대로", "4성"],
+            correct: 1,
+            explanation: "你好(nǐ hǎo)처럼 3성이 겹치면 자연스러운 발음을 위해 앞 음절을 2성으로 올려서 [ní hǎo]로 발음합니다."
+          },
+          {
+            type: "choice",
+            question: "부정사 '不(bù)' 뒤에 4성이 올 때, '不'는 몇 성으로 발음이 바뀔까요?",
+            options: ["1성", "2성", "3성", "4성 그대로"],
+            correct: 1,
+            explanation: "不 뒤에 4성이 오면 발음 충돌을 방지하기 위해 2성(bú)으로 변합니다. 예: 不是 (bú shì)"
+          },
+          {
+            type: "order",
+            question: "중국어 기본 어순을 올바르게 완성하세요: [ 사랑해 / 나는 / 너를 ]",
+            tokens: ["我", "爱你", ""],
+            actualTokens: ["我", "爱", "你"],
+            answer: ["我", "爱", "你"],
+            chineseSentence: "我爱你",
+            translation: "나는 너를 사랑해 (주어 + 술어 + 목적어)"
+          }
+        ],
+        todaySentences: [
+          { hanzi: "你好！", pinyin: "Nǐ hǎo!", korean: "안녕하세요!" },
+          { hanzi: "我爱你。", pinyin: "Wǒ ài nǐ.", korean: "나는 너를 사랑해." },
+          { hanzi: "这是什么？", pinyin: "Zhè shì shénme?", korean: "이것은 무엇입니까?" }
+        ]
+      },
+      {
+        id: 1,
+        title: "1과 오랜만이야!",
+        subtitle: "만남과 헤어짐의 반가운 인사",
+        summary: "오랜만에 만났을 때, 식사 여부를 묻는 친근한 인사말과 시간대별 인사를 배웁니다.",
+        keySentence: {
+          hanzi: "好久不见！吃了吗？",
+          pinyin: "Hǎojiǔbújiàn! Chī le ma?",
+          korean: "오랜만이야! 밥 먹었어?"
+        },
+        vocab: [
+          { hanzi: "你", pinyin: "nǐ", korean: "너, 당신", desc: "2인칭 대명사" },
+          { hanzi: "好", pinyin: "hǎo", korean: "좋다, 안녕하다", desc: "형용사" },
+          { hanzi: "好久不见", pinyin: "hǎojiǔbújiàn", korean: "오랜만이야", desc: "오래 만나지 못했다는 뜻" },
+          { hanzi: "大家", pinyin: "dàjiā", korean: "모두, 여러분", desc: "대명사" },
+          { hanzi: "老师", pinyin: "lǎoshī", korean: "선생님", desc: "명사" },
+          { hanzi: "吃", pinyin: "chī", korean: "먹다", desc: "동사" },
+          { hanzi: "了", pinyin: "le", korean: "~했다 (완료/변화)", desc: "어기조사" },
+          { hanzi: "吗", pinyin: "ma", korean: "~입니까? (의문)", desc: "의문조사" },
+          { hanzi: "哈喽", pinyin: "hālóu", korean: "헬로우(외래어)", desc: "친근한 인사" },
+          { hanzi: "嗨", pinyin: "hāi", korean: "하이(외래어)", desc: "가벼운 인사" }
+        ],
+        dialogue: [
+          {
+            speaker: "또또",
+            avatar: "👦",
+            hanzi: "美美，你好！",
+            pinyin: "Měiměi, nǐ hǎo!",
+            korean: "미미야, 안녕!"
+          },
+          {
+            speaker: "미미",
+            avatar: "👧",
+            hanzi: "你们好！好久不见！",
+            pinyin: "Nǐmen hǎo! Hǎojiǔbújiàn!",
+            korean: "얘들아 안녕! 오랜만이야!"
+          },
+          {
+            speaker: "선생님",
+            avatar: "👩‍🏫",
+            hanzi: "大家好！",
+            pinyin: "Dàjiā hǎo!",
+            korean: "여러분 안녕하세요!"
+          },
+          {
+            speaker: "학생들",
+            avatar: "🎒",
+            hanzi: "老师好！",
+            pinyin: "Lǎoshī hǎo!",
+            korean: "선생님 안녕하세요!"
+          },
+          {
+            speaker: "팡팡",
+            avatar: "🧒",
+            hanzi: "嗨！吃了吗？",
+            pinyin: "Hāi! Chī le ma?",
+            korean: "하이! 밥 먹었어?"
+          }
+        ],
+        grammarPoints: [
+          {
+            title: "1. 好久不见 (오랜만이야!)",
+            content: `
+              <p class="text-sm text-gray-700">
+                <strong>好久(hǎojiǔ, 꽤 오래)</strong> + <strong>不见(bújiàn, 보지 못하다)</strong>가 합쳐져 '오랜만이야!'라는 표현이 됩니다. 영어의 'Long time no see'와 똑같아요.
+              </p>
+            `
+          },
+          {
+            title: "2. [대상/시간] + 好 (만났을 때 인사)",
+            content: `
+              <div class="grid grid-cols-2 gap-2 text-xs sm:text-sm">
+                <div class="bg-orange-50 p-2.5 rounded-lg border border-orange-100">
+                  <span class="font-bold text-brand-600">만났을 때 (好)</span>
+                  <p class="mt-1">你好 (안녕)<br>您好 (안녕하세요 - 존칭)<br>大家好 (여러분 안녕)<br>早上好 (좋은 아침)</p>
+                </div>
+                <div class="bg-blue-50 p-2.5 rounded-lg border border-blue-100">
+                  <span class="font-bold text-blue-600">헤어질 때 (见)</span>
+                  <p class="mt-1">再见 (또 봐, 잘 가)<br>明天见 (내일 봐)<br>下周见 (다음 주에 봐)<br>一会儿见 (이따 봐)</p>
+                </div>
+              </div>
+            `
+          },
+          {
+            title: "3. 吃了吗? (밥 먹었어?)",
+            content: `
+              <p class="text-sm text-gray-700">
+                중국인들은 안부를 물을 때 식사 여부를 자주 묻습니다. 진짜 밥을 함께 먹자는 뜻일 수도 있지만, '별일 없이 잘 지내지?'라는 가벼운 인사말입니다.
+              </p>
+            `
+          }
+        ],
+        practice: [
+          {
+            type: "blank",
+            question: "미미가 여러 명의 친구들에게 인사할 때 빈칸에 들어갈 알맞은 말은?",
+            sentenceDisplay: "미미: [ ___ ] 好！好久不见！",
+            options: ["你", "你们", "老师", "他"],
+            correct: "你们",
+            explanation: "복수의 상대(너희들, 얘들아)에게 인사할 때는 2인칭 복수 대명사 '你们(nǐmen)'을 씁니다."
+          },
+          {
+            type: "order",
+            question: "단어를 알맞게 배열하여 '선생님 안녕하세요!'를 완성하세요.",
+            actualTokens: ["老师", "好", "！"],
+            answer: ["老师", "好", "！"],
+            chineseSentence: "老师好！",
+            translation: "선생님 안녕하세요!"
+          },
+          {
+            type: "blank",
+            question: "식사했는지 안부를 물을 때: '嗨！[ ___ ] 了吗？'",
+            sentenceDisplay: "嗨！[ ___ ] 了吗？",
+            options: ["喝", "看", "吃", "买"],
+            correct: "吃",
+            explanation: "밥을 먹었는지 물어보는 표현은 '吃了吗? (Chī le ma?)'입니다."
+          }
+        ],
+        todaySentences: [
+          { hanzi: "好久不见！", pinyin: "Hǎojiǔbújiàn!", korean: "오랜만이야!" },
+          { hanzi: "大家好！", pinyin: "Dàjiā hǎo!", korean: "여러분 안녕하세요!" },
+          { hanzi: "吃了吗？", pinyin: "Chī le ma?", korean: "밥 먹었어?" }
+        ]
+      },
+      {
+        id: 2,
+        title: "2과 너 요즘 바빠?",
+        subtitle: "형용사 술어문과 정반의문문",
+        summary: "바쁜지 여부를 묻고 답하는 표현, '很'의 습관적 사용과 '不太' 부정을 배웁니다.",
+        keySentence: {
+          hanzi: "你最近忙吗？我很忙。",
+          pinyin: "Nǐ zuìjìn máng ma? Wǒ hěn máng.",
+          korean: "너 요즘 바빠? 나 아주 바빠."
+        },
+        vocab: [
+          { hanzi: "最近", pinyin: "zuìjìn", korean: "최근, 요즘", desc: "명사/시간부사" },
+          { hanzi: "忙", pinyin: "máng", korean: "바쁘다", desc: "형용사" },
+          { hanzi: "不", pinyin: "bù", korean: "아니다, 안~", desc: "부정부사" },
+          { hanzi: "呢", pinyin: "ne", korean: "~는? (되물음)", desc: "의문조사" },
+          { hanzi: "现在", pinyin: "xiànzài", korean: "지금, 현재", desc: "명사" },
+          { hanzi: "不好意思", pinyin: "bùhǎoyìsi", korean: "미안하다, 쑥스럽다", desc: "관용 표현" },
+          { hanzi: "很", pinyin: "hěn", korean: "매우, 아주", desc: "정도부사" },
+          { hanzi: "不太", pinyin: "bútài", korean: "그다지 ~하지 않다", desc: "부분 부정" }
+        ],
+        dialogue: [
+          {
+            speaker: "팡팡",
+            avatar: "🧒",
+            hanzi: "美美，你最近忙吗？",
+            pinyin: "Měiměi, nǐ zuìjìn máng ma?",
+            korean: "미미야, 너 요즘 바빠?"
+          },
+          {
+            speaker: "미미",
+            avatar: "👧",
+            hanzi: "我不忙，你呢？",
+            pinyin: "Wǒ bù máng, nǐ ne?",
+            korean: "나 안 바빠. 너는?"
+          },
+          {
+            speaker: "미미",
+            avatar: "👧",
+            hanzi: "豆豆，你现在忙不忙？",
+            pinyin: "Dòudou, nǐ xiànzài máng bu máng?",
+            korean: "또또야, 너 지금 바빠 안 바빠?"
+          },
+          {
+            speaker: "또또",
+            avatar: "👦",
+            hanzi: "不好意思，我很忙。",
+            pinyin: "Bùhǎoyìsi, wǒ hěn máng.",
+            korean: "미안해, 나 정말 바빠."
+          },
+          {
+            speaker: "씽씽",
+            avatar: "✨",
+            hanzi: "我不太忙。",
+            pinyin: "Wǒ bútài máng.",
+            korean: "난 그다지 안 바빠."
+          }
+        ],
+        grammarPoints: [
+          {
+            title: "1. 긍정형용사 앞의 습관적 '很 (hěn)'",
+            content: `
+              <p class="text-sm text-gray-700">
+                중국어 형용사는 단독으로 쓰이기보다 습관적으로 <strong>'很'</strong>을 앞에 붙입니다. 이때 '아주'라는 뜻이 강하지 않고 자연스러운 연결입니다.<br>
+                단! <strong>부정문(我不忙)</strong>이나 <strong>의문문(你忙吗?)</strong>에서는 '很'이 빠져야 합니다.
+              </p>
+            `
+          },
+          {
+            title: "2. 정반의문문 (긍정 + 부정)",
+            content: `
+              <p class="text-sm text-gray-700">
+                술어의 긍정과 부정을 나란히 놓으면 의문문이 됩니다. 문장 끝에 '吗'를 붙이지 않으며 가운데 '不'는 경성으로 가볍게 발음합니다.<br>
+                예: <strong>忙不忙？</strong>(바빠 안 바빠?) / <strong>吃不吃？</strong>(먹을래 안 먹을래?)
+              </p>
+            `
+          },
+          {
+            title: "3. 不太 + 형용사 (그다지 ~하지 않다)",
+            content: `
+              <p class="text-sm text-gray-700">
+                완전한 부정이 아니라 완곡하게 사양하거나 말할 때 <strong>'不太'</strong>를 씁니다.<br>
+                예: 我不太忙 (나 그다지 안 바빠) / 他不太帅 (그는 그다지 잘생기진 않았어)
+              </p>
+            `
+          }
+        ],
+        practice: [
+          {
+            type: "order",
+            question: "단어를 올바른 순서로 배열하세요: [ 忙 / 不 / 太 / 他 ]",
+            actualTokens: ["他", "不", "太", "忙", "。"],
+            answer: ["他", "不", "太", "忙", "。"],
+            chineseSentence: "他不太忙。",
+            translation: "그는 그다지 바쁘지 않아."
+          },
+          {
+            type: "order",
+            question: "단어를 올바른 순서로 배열하세요: [ 吗 / 你 / 最近 / 忙 ]",
+            actualTokens: ["你", "最近", "忙", "吗", "？"],
+            answer: ["你", "最近", "忙", "吗", "？"],
+            chineseSentence: "你最近忙吗？",
+            translation: "너 요즘 바빠?"
+          },
+          {
+            type: "blank",
+            question: "정반의문문 완성: '豆豆，你现在忙 [ ___ ] 忙？'",
+            sentenceDisplay: "豆豆，你现在忙 [ ___ ] 忙？",
+            options: ["不", "很", "吗", "太"],
+            correct: "不",
+            explanation: "'忙不忙(바빠 안 바빠)'은 긍정과 부정을 나란히 결합한 대표적인 정반의문문입니다."
+          }
+        ],
+        todaySentences: [
+          { hanzi: "你最近忙吗？", pinyin: "Nǐ zuìjìn máng ma?", korean: "너 요즘 바빠?" },
+          { hanzi: "你现在忙不忙？", pinyin: "Nǐ xiànzài máng bu máng?", korean: "너 지금 바빠 안 바빠?" },
+          { hanzi: "我很忙。", pinyin: "Wǒ hěn máng.", korean: "나 바빠." },
+          { hanzi: "我不太忙。", pinyin: "Wǒ bútài máng.", korean: "나 그다지 안 바빠." }
+        ]
+      },
+      {
+        id: 3,
+        title: "3과 만나서 반가워!",
+        subtitle: "국적 묻기, 동의(也), 추측(吧)",
+        summary: "첫 만남 인사 '很高兴认识你'와 어느 나라 사람인지 묻는 의문사 '哪'를 배웁니다.",
+        keySentence: {
+          hanzi: "很高兴认识你！你是哪国人？",
+          pinyin: "Hěn gāoxìng rènshi nǐ! Nǐ shì nǎ guó rén?",
+          korean: "만나서 반가워! 너는 어느 나라 사람이니?"
+        },
+        vocab: [
+          { hanzi: "高兴", pinyin: "gāoxìng", korean: "기쁘다", desc: "형용사" },
+          { hanzi: "认识", pinyin: "rènshi", korean: "알다, 인식하다", desc: "동사" },
+          { hanzi: "也", pinyin: "yě", korean: "~도 (또한)", desc: "부사" },
+          { hanzi: "请多多关照", pinyin: "qǐng duōduo guānzhào", korean: "잘 부탁드립니다", desc: "첫인사 관용구" },
+          { hanzi: "是", pinyin: "shì", korean: "~이다 (be동사격)", desc: "판단동사" },
+          { hanzi: "哪", pinyin: "nǎ", korean: "어느, 어떤", desc: "의문대명사" },
+          { hanzi: "国", pinyin: "guó", korean: "나라", desc: "명사" },
+          { hanzi: "人", pinyin: "rén", korean: "사람", desc: "명사" },
+          { hanzi: "吧", pinyin: "ba", korean: "~지? (추측/동의구함)", desc: "어기조사" },
+          { hanzi: "都", pinyin: "dōu", korean: "모두, 다", desc: "부사" }
+        ],
+        dialogue: [
+          {
+            speaker: "팡팡",
+            avatar: "🧒",
+            hanzi: "很高兴认识你！",
+            pinyin: "Hěn gāoxìng rènshi nǐ!",
+            korean: "만나서 반가워!"
+          },
+          {
+            speaker: "또또",
+            avatar: "👦",
+            hanzi: "我也很高兴认识你！请多多关照！",
+            pinyin: "Wǒ yě hěn gāoxìng rènshi nǐ! Qǐng duōduo guānzhào!",
+            korean: "나도 만나서 반가워! 잘 부탁해!"
+          },
+          {
+            speaker: "팡팡",
+            avatar: "🧒",
+            hanzi: "你是哪国人？",
+            pinyin: "Nǐ shì nǎ guó rén?",
+            korean: "너는 어느 나라 사람이야?"
+          },
+          {
+            speaker: "또또",
+            avatar: "👦",
+            hanzi: "我是韩国人，你呢？你是中国人吧！",
+            pinyin: "Wǒ shì Hánguórén, nǐ ne? Nǐ shì Zhōngguórén ba!",
+            korean: "나는 한국인이야, 너는? 넌 중국인이지!"
+          },
+          {
+            speaker: "팡팡",
+            avatar: "🧒",
+            hanzi: "是的。我们都是韩国人。哈哈哈。",
+            pinyin: "Shì de. Wǒmen dōu shì Hánguórén. Hāhāhā.",
+            korean: "맞아. 우리 모두 한국인이야. 하하하."
+          }
+        ],
+        grammarPoints: [
+          {
+            title: "1. 很高兴认识你！(만나서 반가워)",
+            content: `
+              <p class="text-sm text-gray-700">
+                직역하면 '너를 알게 되어 매우 기뻐!'입니다. 상대방이 이 인사를 건네면 주어 뒤에 <strong>'也(yě, ~도)'</strong>를 붙여 <strong>'我也很高兴认识你！'</strong>라고 화답합니다.
+              </p>
+            `
+          },
+          {
+            title: "2. 의문사 '哪 (nǎ, 어느)'",
+            content: `
+              <p class="text-sm text-gray-700">
+                <strong>哪(nǎ)</strong>는 특정 범위 중에서 '어느 것'을 지정해 묻는 의문사입니다. 의문사 자체에 질문의 뜻이 들어 있으므로 끝에 '吗'를 쓰지 않습니다.<br>
+                예: <strong>你是哪国人？</strong> (어느 나라 사람이야?) / <strong>哪个？</strong> (어느 것?)
+              </p>
+            `
+          },
+          {
+            title: "3. 어기조사 '吧 (ba)'의 추측 용법",
+            content: `
+              <p class="text-sm text-gray-700">
+                문장 끝에 <strong>'吧'</strong>를 쓰면 대략 짐작하며 '~이지?', '~맞지?' 하고 동의를 구하는 뉘앙스가 됩니다.<br>
+                예: <strong>你是中国人吧！</strong> (너 중국인 맞지!)
+              </p>
+            `
+          }
+        ],
+        practice: [
+          {
+            type: "order",
+            question: "단어를 올바른 순서로 배열하세요: [ 人 / 你 / 是 / 哪 / 国 ]",
+            actualTokens: ["你", "是", "哪", "国", "人", "？"],
+            answer: ["你", "是", "哪", "国", "人", "？"],
+            chineseSentence: "你是哪国人？",
+            translation: "너는 어느 나라 사람이야?"
+          },
+          {
+            type: "order",
+            question: "단어를 올바른 순서로 배열하세요: [ 韩国人 / 都 / 是 / 我们 ]",
+            actualTokens: ["我们", "都", "是", "韩国人", "。"],
+            answer: ["我们", "都", "是", "韩国人", "。"],
+            chineseSentence: "我们都是韩国人。",
+            translation: "우리 모두 한국인이야."
+          },
+          {
+            type: "blank",
+            question: "팡팡의 말에 또또의 화답: '我 [ ___ ] 很高兴认识你！'",
+            sentenceDisplay: "我 [ ___ ] 很高兴认识你！",
+            options: ["也", "都", "很", "是"],
+            correct: "也",
+            explanation: "'나도' 역시 기쁘다고 맞받아칠 때는 부사 '也(yě)'를 씁니다."
+          }
+        ],
+        todaySentences: [
+          { hanzi: "很高兴认识你！", pinyin: "Hěn gāoxìng rènshi nǐ!", korean: "만나서 반가워!" },
+          { hanzi: "你是哪国人？", pinyin: "Nǐ shì nǎ guó rén?", korean: "너는 어느 나라 사람이야?" },
+          { hanzi: "你是中国人吧！", pinyin: "Nǐ shì Zhōngguórén ba!", korean: "너는 중국인이지!" }
+        ]
+      },
+      {
+        id: 4,
+        title: "4과 너 남자친구 있어 없어?",
+        subtitle: "소유와 존재의 동사 '有' & '没有'",
+        summary: "소유/존재를 나타내는 '有'와 부정형 '没有', 형제자매 관련 어휘를 익힙니다.",
+        keySentence: {
+          hanzi: "你有没有男朋友？我只有弟弟。",
+          pinyin: "Nǐ yǒu méiyǒu nánpéngyou? Wǒ zhǐ yǒu dìdi.",
+          korean: "너 남자친구 있어 없어? 난 남동생만 있어."
+        },
+        vocab: [
+          { hanzi: "有", pinyin: "yǒu", korean: "있다 (소유/존재)", desc: "동사" },
+          { hanzi: "没有", pinyin: "méiyǒu", korean: "없다", desc: "有의 유일한 부정형" },
+          { hanzi: "兄弟姐妹", pinyin: "xiōngdì jiěmèi", korean: "형제자매", desc: "명사" },
+          { hanzi: "姐姐", pinyin: "jiějie", korean: "언니, 누나", desc: "명사" },
+          { hanzi: "妹妹", pinyin: "mèimei", korean: "여동생", desc: "명사" },
+          { hanzi: "只", pinyin: "zhǐ", korean: "오직, 단지", desc: "부사" },
+          { hanzi: "弟弟", pinyin: "dìdi", korean: "남동생", desc: "명사" },
+          { hanzi: "男朋友", pinyin: "nánpéngyou", korean: "남자친구", desc: "명사" },
+          { hanzi: "女朋友", pinyin: "nǚpéngyou", korean: "여자친구", desc: "명사" },
+          { hanzi: "应该", pinyin: "yīnggāi", korean: "아마도, 당연히 ~일 것이다", desc: "조동사" }
+        ],
+        dialogue: [
+          {
+            speaker: "팡팡",
+            avatar: "🧒",
+            hanzi: "你有兄弟姐妹吗？",
+            pinyin: "Nǐ yǒu xiōngdì jiěmèi ma?",
+            korean: "너 형제자매 있어?"
+          },
+          {
+            speaker: "미미",
+            avatar: "👧",
+            hanzi: "我有姐姐和妹妹，你呢？",
+            pinyin: "Wǒ yǒu jiějie hé mèimei, nǐ ne?",
+            korean: "난 언니랑 여동생 있어, 너는?"
+          },
+          {
+            speaker: "팡팡",
+            avatar: "🧒",
+            hanzi: "我只有弟弟。",
+            pinyin: "Wǒ zhǐ yǒu dìdi.",
+            korean: "난 남동생만 있어."
+          },
+          {
+            speaker: "팡팡",
+            avatar: "🧒",
+            hanzi: "美美，你有没有男朋友？",
+            pinyin: "Měiměi, nǐ yǒu méiyǒu nánpéngyou?",
+            korean: "미미야, 너 남자친구 있어 없어?"
+          },
+          {
+            speaker: "미미",
+            avatar: "👧",
+            hanzi: "我没有男朋友。你应该有女朋友吧？",
+            pinyin: "Wǒ méiyǒu nánpéngyou. Nǐ yīnggāi yǒu nǚpéngyou ba?",
+            korean: "난 남친 없어. 넌 아마 여친 있겠지?"
+          }
+        ],
+        grammarPoints: [
+          {
+            title: "1. '有(yǒu)'의 부정은 무조건 '没有(méiyǒu)'!",
+            content: `
+              <p class="text-sm text-gray-700">
+                중국어의 대부분 동사는 '不'로 부정하지만, <strong>'有'는 절대로 不有라고 하지 않고 무조건 '没有'</strong>로 부정합니다. 꼭 암기하세요!
+              </p>
+            `
+          },
+          {
+            title: "2. 정반의문문 '有没有 (있어 없어?)'",
+            content: `
+              <p class="text-sm text-gray-700">
+                '有'와 '没有'를 결합하면 '있어 없어?'라는 질문이 됩니다.<br>
+                예: <strong>你有没有手机？</strong> (핸드폰 있어 없어?) / <strong>你有没有时间？</strong> (시간 있어 없어?)
+              </p>
+            `
+          },
+          {
+            title: "3. 부사 '只 (zhǐ, 오직/단지)'의 위치",
+            content: `
+              <p class="text-sm text-gray-700">
+                부사는 술어(동사/형용사) 바로 앞에 위치합니다.<br>
+                예: <strong>我只有弟弟。</strong> (나는 남동생만 있어. 주어 + 부사[只] + 술어[有] + 목적어)
+              </p>
+            `
+          }
+        ],
+        practice: [
+          {
+            type: "order",
+            question: "단어를 올바른 순서로 배열하세요: [ 弟弟 / 只 / 我 / 有 ]",
+            actualTokens: ["我", "只", "有", "弟弟", "。"],
+            answer: ["我", "只", "有", "弟弟", "。"],
+            chineseSentence: "我只有弟弟。",
+            translation: "나는 남동생만 있어."
+          },
+          {
+            type: "order",
+            question: "단어를 올바른 순서로 배열하세요: [ 汉语书 / 有 / 没有 / 你 ]",
+            actualTokens: ["你", "有", "没有", "汉语书", "？"],
+            answer: ["你", "有", "没有", "汉语书", "？"],
+            chineseSentence: "你有没有汉语书？",
+            translation: "너 중국어 책 있어 없어?"
+          },
+          {
+            type: "blank",
+            question: "빈칸 채우기: '美美，你有 [ ___ ] 男朋友？'",
+            sentenceDisplay: "美美，你有 [ ___ ] 男朋友？",
+            options: ["没有", "不", "很", "是"],
+            correct: "没有",
+            explanation: "'있어 없어?'를 물을 때는 '有没有'를 사용합니다."
+          }
+        ],
+        todaySentences: [
+          { hanzi: "我有姐姐和妹妹。", pinyin: "Wǒ yǒu jiějie hé mèimei.", korean: "나는 언니랑 여동생이 있어." },
+          { hanzi: "你有没有男朋友？", pinyin: "Nǐ yǒu méiyǒu nánpéngyou?", korean: "너 남자친구 있어 없어?" },
+          { hanzi: "我只有弟弟。", pinyin: "Wǒ zhǐ yǒu dìdi.", korean: "나는 남동생만 있어." }
+        ]
+      },
+      {
+        id: 5,
+        title: "5과 이건 무슨 음식이야?",
+        subtitle: "지시대명사(这/那) & 동사 중첩(一下)",
+        summary: "이것(这), 저것(那) 지시 대명사와 시도를 나타내는 '동사+一下(한번 ~해보다)'를 배웁니다.",
+        keySentence: {
+          hanzi: "这是什么菜？你尝一下。",
+          pinyin: "Zhè shì shénme cài? Nǐ cháng yíxià.",
+          korean: "이건 무슨 음식이야? 한번 먹어봐."
+        },
+        vocab: [
+          { hanzi: "这", pinyin: "zhè", korean: "이, 이것", desc: "가까운 것 지시" },
+          { hanzi: "什么", pinyin: "shénme", korean: "무엇, 무슨", desc: "의문대명사" },
+          { hanzi: "那", pinyin: "nà", korean: "그, 저, 저것", desc: "먼 것 지시" },
+          { hanzi: "苹果", pinyin: "píngguǒ", korean: "사과", desc: "명사" },
+          { hanzi: "哈密瓜", pinyin: "hāmìguā", korean: "하미과(메론)", desc: "중국 대표 달콤한 과일" },
+          { hanzi: "菜", pinyin: "cài", korean: "음식, 요리, 채소", desc: "명사" },
+          { hanzi: "味道", pinyin: "wèidào", korean: "맛, 냄새, 향", desc: "명사" },
+          { hanzi: "香", pinyin: "xiāng", korean: "향기롭다, 맛있는 냄새가 난다", desc: "형용사" },
+          { hanzi: "地三鲜", pinyin: "dìsānxiān", korean: "지삼선", desc: "감자, 가지, 피망 볶음 요리" },
+          { hanzi: "尝", pinyin: "cháng", korean: "맛보다", desc: "동사" },
+          { hanzi: "一下", pinyin: "yíxià", korean: "한번, 좀", desc: "동작의 짧은 시도" }
+        ],
+        dialogue: [
+          {
+            speaker: "미미",
+            avatar: "👧",
+            hanzi: "这是什么？",
+            pinyin: "Zhè shì shénme?",
+            korean: "이건 뭐예요?"
+          },
+          {
+            speaker: "사장님",
+            avatar: "👨‍🍳",
+            hanzi: "这是苹果。",
+            pinyin: "Zhè shì píngguǒ.",
+            korean: "이건 사과예요."
+          },
+          {
+            speaker: "미미",
+            avatar: "👧",
+            hanzi: "那是什么？",
+            pinyin: "Nà shì shénme?",
+            korean: "저건 뭐예요?"
+          },
+          {
+            speaker: "사장님",
+            avatar: "👨‍🍳",
+            hanzi: "那是哈密瓜。",
+            pinyin: "Nà shì hāmìguā.",
+            korean: "저건 하미과(메론)예요."
+          },
+          {
+            speaker: "미미",
+            avatar: "👧",
+            hanzi: "这是什么菜？味道很香啊！",
+            pinyin: "Zhè shì shénme cài? Wèidào hěn xiāng a!",
+            korean: "이건 무슨 요리예요? 냄새가 정말 좋아요!"
+          },
+          {
+            speaker: "팡팡",
+            avatar: "🧒",
+            hanzi: "这是地三鲜。你尝一下。",
+            pinyin: "Zhè shì dìsānxiān. Nǐ cháng yíxià.",
+            korean: "이건 지삼선이야. 한번 맛봐."
+          }
+        ],
+        grammarPoints: [
+          {
+            title: "1. 지시대명사 3종 세트 (这 / 那 / 哪)",
+            content: `
+              <div class="grid grid-cols-3 gap-2 text-xs sm:text-sm">
+                <div class="bg-orange-50 p-2.5 rounded-lg border border-orange-200">
+                  <strong class="text-brand-600">这 (zhè)</strong>
+                  <p class="mt-1">이것 (가까움)<br>这里/这儿 (여기)</p>
+                </div>
+                <div class="bg-amber-50 p-2.5 rounded-lg border border-amber-200">
+                  <strong class="text-amber-700">那 (nà)</strong>
+                  <p class="mt-1">저것 (멂)<br>那里/那儿 (저기)</p>
+                </div>
+                <div class="bg-rose-50 p-2.5 rounded-lg border border-rose-200">
+                  <strong class="text-rose-600">哪 (nǎ)</strong>
+                  <p class="mt-1">어느 것? (의문)<br>哪里/哪儿 (어디?)</p>
+                </div>
+              </div>
+            `
+          },
+          {
+            title: "2. 동사 + 一下 (한번 ~해 보다)",
+            content: `
+              <p class="text-sm text-gray-700">
+                동사 뒤에 <strong>'一下(yíxià)'</strong>를 붙이면 '가볍게 한번 시도해보거나 권유'하는 부드러운 말투가 됩니다.<br>
+                예: <strong>尝一下</strong> (맛보다) = <strong>尝一尝 / 尝尝</strong><br>
+                예: <strong>看一下</strong> (좀 보다) / <strong>商量一下</strong> (좀 상의해보다)
+              </p>
+            `
+          }
+        ],
+        practice: [
+          {
+            type: "order",
+            question: "단어를 올바른 순서로 배열하세요: [ 一下 / 商量 / 我们 ]",
+            actualTokens: ["我们", "商量", "一下", "。"],
+            answer: ["我们", "商量", "一下", "。"],
+            chineseSentence: "我们商量一下。",
+            translation: "우리 좀 상의해보자."
+          },
+          {
+            type: "order",
+            question: "단어를 올바른 순서로 배열하세요: [ 什么 / 味道 / 是 / 这 ]",
+            actualTokens: ["这", "是", "什么", "味道", "？"],
+            answer: ["这", "是", "什么", "味道", "？"],
+            chineseSentence: "这是什么味道？",
+            translation: "이건 무슨 냄새/맛이야?"
+          },
+          {
+            type: "blank",
+            question: "빈칸 채우기: '这是地三鲜。你尝 [ ___ ]。'",
+            sentenceDisplay: "这是地三鲜。你尝 [ ___ ]。",
+            options: ["一下", "一回", "一点", "一个"],
+            correct: "一下",
+            explanation: "동사 뒤에 가벼운 시도를 나타내는 양사는 '一下(yíxià)'입니다."
+          }
+        ],
+        todaySentences: [
+          { hanzi: "这是什么？", pinyin: "Zhè shì shénme?", korean: "이건 뭐야?" },
+          { hanzi: "这是什么菜？", pinyin: "Zhè shì shénme cài?", korean: "이건 무슨 음식이야?" },
+          { hanzi: "你尝一下。", pinyin: "Nǐ cháng yíxià.", korean: "한번 먹어봐." }
+        ]
+      },
+      {
+        id: 6,
+        title: "6과 모레는 무슨 요일이야?",
+        subtitle: "요일 표현과 제안 부사 一起",
+        summary: "요일(星期)과 날짜 전후 표현(어제/오늘/내일/모레), '~하자' 제안문(一起~吧)을 배웁니다.",
+        keySentence: {
+          hanzi: "后天星期几？我们一起吃饭吧。",
+          pinyin: "Hòutiān xīngqī jǐ? Wǒmen yìqǐ chīfàn ba.",
+          korean: "모레는 무슨 요일이야? 우리 같이 밥 먹자."
+        },
+        vocab: [
+          { hanzi: "后天", pinyin: "hòutiān", korean: "모레", desc: "명사" },
+          { hanzi: "时间", pinyin: "shíjiān", korean: "시간", desc: "명사" },
+          { hanzi: "一起", pinyin: "yìqǐ", korean: "함께, 같이", desc: "부사" },
+          { hanzi: "星期", pinyin: "xīngqī", korean: "요일, 주", desc: "명사" },
+          { hanzi: "几", pinyin: "jǐ", korean: "몇 (10 이하 숫자 묻기)", desc: "의문사" },
+          { hanzi: "星期几", pinyin: "xīngqī jǐ", korean: "무슨 요일", desc: "질문 표현" },
+          { hanzi: "每周", pinyin: "měi zhōu", korean: "매주", desc: "명사" },
+          { hanzi: "课", pinyin: "kè", korean: "수업", desc: "명사" },
+          { hanzi: "吃饭", pinyin: "chīfàn", korean: "밥을 먹다", desc: "동사" },
+          { hanzi: "改天", pinyin: "gǎitiān", korean: "다음 날에, 나중에", desc: "명사" },
+          { hanzi: "好的", pinyin: "hǎo de", korean: "좋아, 알았어", desc: "감탄사" }
+        ],
+        dialogue: [
+          {
+            speaker: "팡팡",
+            avatar: "🧒",
+            hanzi: "美美。后天你有时间吗？我们一起吃饭吧。",
+            pinyin: "Měiměi. Hòutiān nǐ yǒu shíjiān ma? Wǒmen yìqǐ chīfàn ba.",
+            korean: "미미야. 모레 시간 있어? 우리 같이 밥 먹자."
+          },
+          {
+            speaker: "미미",
+            avatar: "👧",
+            hanzi: "后天星期几？",
+            pinyin: "Hòutiān xīngqī jǐ?",
+            korean: "모레 무슨 요일인데?"
+          },
+          {
+            speaker: "팡팡",
+            avatar: "🧒",
+            hanzi: "后天星期三。",
+            pinyin: "Hòutiān xīngqī sān.",
+            korean: "모레 수요일이야."
+          },
+          {
+            speaker: "미미",
+            avatar: "👧",
+            hanzi: "不好意思，我每周三有中文课。",
+            pinyin: "Bùhǎoyìsi, wǒ měi zhōu sān yǒu zhōngwén kè.",
+            korean: "미안, 나 매주 수요일에 중국어 수업이 있어."
+          },
+          {
+            speaker: "팡팡",
+            avatar: "🧒",
+            hanzi: "那改天一起吃饭吧。",
+            pinyin: "Nà gǎitiān yìqǐ chīfàn ba.",
+            korean: "그럼 다음에 같이 밥 먹자."
+          }
+        ],
+        grammarPoints: [
+          {
+            title: "1. 요일 말하기 (월~일)",
+            content: `
+              <div class="space-y-1.5 text-xs sm:text-sm text-gray-700">
+                <p>중국은 한 주의 시작을 월요일(1)로 생각합니다!</p>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 font-mono">
+                  <span class="bg-white p-1.5 rounded border">星期一 (월)</span>
+                  <span class="bg-white p-1.5 rounded border">星期二 (화)</span>
+                  <span class="bg-white p-1.5 rounded border">星期三 (수)</span>
+                  <span class="bg-white p-1.5 rounded border">星期四 (목)</span>
+                  <span class="bg-white p-1.5 rounded border">星期五 (금)</span>
+                  <span class="bg-white p-1.5 rounded border">星期六 (토)</span>
+                  <span class="bg-amber-100 p-1.5 rounded border col-span-2 text-amber-800 font-bold">星期天 / 星期日 (일요일★ 7이 아님!)</span>
+                </div>
+              </div>
+            `
+          },
+          {
+            title: "2. 우리 함께 ~하자 (我们一起 ~ 吧)",
+            content: `
+              <p class="text-sm text-gray-700">
+                <strong>一起(yìqǐ, 함께)</strong> + 동사 + <strong>吧(ba, 권유/청유)</strong>의 형태로 친구에게 같이 무언가를 하자고 제안할 때 가장 많이 쓰는 필수 패턴입니다.
+              </p>
+            `
+          }
+        ],
+        practice: [
+          {
+            type: "blank",
+            question: "요일을 물어볼 때 알맞은 의문사는? '后天 星期 [ ___ ]？'",
+            sentenceDisplay: "后天 星期 [ ___ ]？",
+            options: ["几", "多", "什么", "哪"],
+            correct: "几",
+            explanation: "10 이하의 적은 수나 요일을 물을 때는 의문사 '几(jǐ)'를 씁니다. '星期几?'"
+          },
+          {
+            type: "order",
+            question: "단어를 올바른 순서로 배열하세요: [ 吧 / 吃饭 / 一起 / 我们 ]",
+            actualTokens: ["我们", "一起", "吃饭", "吧", "。"],
+            answer: ["我们", "一起", "吃饭", "吧", "。"],
+            chineseSentence: "我们一起吃饭吧。",
+            translation: "우리 같이 밥 먹자."
+          }
+        ],
+        todaySentences: [
+          { hanzi: "我们一起吃饭吧。", pinyin: "Wǒmen yìqǐ chīfàn ba.", korean: "우리 같이 밥 먹자." },
+          { hanzi: "后天星期几？", pinyin: "Hòutiān xīngqī jǐ?", korean: "모레는 무슨 요일이야?" },
+          { hanzi: "后天星期三。", pinyin: "Hòutiān xīngqī sān.", korean: "모레는 수요일이야." }
+        ]
+      },
+      {
+        id: 7,
+        title: "7과 지금 몇 시야?",
+        subtitle: "시간 묻기와 2시(两), 분(分/半/刻)",
+        summary: "현재 시간을 묻는 '现在几点?'과 분 단위(半, 一刻=15분, 三刻=45분) 표현을 배웁니다.",
+        keySentence: {
+          hanzi: "现在几点？我下午两点半下课。",
+          pinyin: "Xiànzài jǐ diǎn? Wǒ xiàwǔ liǎng diǎn bàn xiàkè.",
+          korean: "지금 몇 시야? 나 오후 2시 반에 수업 끝나."
+        },
+        vocab: [
+          { hanzi: "几点", pinyin: "jǐ diǎn", korean: "몇 시", desc: "시간 의문사" },
+          { hanzi: "点", pinyin: "diǎn", korean: "시(hour)", desc: "양사" },
+          { hanzi: "分", pinyin: "fēn", korean: "분(minute)", desc: "양사" },
+          { hanzi: "早上", pinyin: "zǎoshang", korean: "아침", desc: "시간대" },
+          { hanzi: "下午", pinyin: "xiàwǔ", korean: "오후", desc: "시간대" },
+          { hanzi: "两", pinyin: "liǎng", korean: "둘, 두 (2시/개수)", desc: "시간 2시는 两点" },
+          { hanzi: "半", pinyin: "bàn", korean: "반 (30분)", desc: "수사" },
+          { hanzi: "一刻", pinyin: "yíkè", korean: "15분", desc: "15분 단위" },
+          { hanzi: "三刻", pinyin: "sānkè", korean: "45분", desc: "45분" },
+          { hanzi: "下课", pinyin: "xiàkè", korean: "수업이 끝나다", desc: "동사" },
+          { hanzi: "一会儿见", pinyin: "yíhuìr jiàn", korean: "이따가 봐", desc: "작별인사" }
+        ],
+        dialogue: [
+          {
+            speaker: "팡팡",
+            avatar: "🧒",
+            hanzi: "现在几点？",
+            pinyin: "Xiànzài jǐ diǎn?",
+            korean: "지금 몇 시야?"
+          },
+          {
+            speaker: "미미",
+            avatar: "👧",
+            hanzi: "现在早上八点。",
+            pinyin: "Xiànzài zǎoshang bā diǎn.",
+            korean: "지금 아침 8시야."
+          },
+          {
+            speaker: "팡팡",
+            avatar: "🧒",
+            hanzi: "你几点下课？",
+            pinyin: "Nǐ jǐ diǎn xiàkè?",
+            korean: "너 몇 시에 수업 끝나?"
+          },
+          {
+            speaker: "미미",
+            avatar: "👧",
+            hanzi: "我下午两点半下课。",
+            pinyin: "Wǒ xiàwǔ liǎng diǎn bàn xiàkè.",
+            korean: "나 오후 2시 반에 수업 끝나."
+          },
+          {
+            speaker: "팡팡",
+            avatar: "🧒",
+            hanzi: "我们下午两点三刻见面吧。",
+            pinyin: "Wǒmen xiàwǔ liǎng diǎn sān kè jiànmiàn ba.",
+            korean: "우리 오후 2시 45분에 만나자."
+          },
+          {
+            speaker: "미미",
+            avatar: "👧",
+            hanzi: "好的。一会儿见！",
+            pinyin: "Hǎo de. Yíhuìr jiàn!",
+            korean: "좋아, 이따 봐!"
+          }
+        ],
+        grammarPoints: [
+          {
+            title: "1. 2시는 èr diǎn이 아니라 '两点 (liǎng diǎn)'!",
+            content: `
+              <p class="text-sm text-gray-700">
+                숫자 2(二, èr)는 서수나 전화번호 등에 쓰고, <strong>시간(2시)이나 수량을 셀 때는 '两(liǎng)'</strong>을 씁니다. 꼭 기억하세요: <strong>两点(2시)</strong>
+              </p>
+            `
+          },
+          {
+            title: "2. 분(分), 반(半), 각(刻) 표현법",
+            content: `
+              <ul class="list-disc pl-5 text-sm space-y-1 text-gray-700">
+                <li><strong>30분 = 半(bàn)</strong> : 两点半 (2시 반) - 뒤에 分을 붙이지 않음</li>
+                <li><strong>15분 = 一刻(yíkè)</strong> : 十点一刻 (10시 15분)</li>
+                <li><strong>45분 = 三刻(sānkè)</strong> : 两点三刻 (2시 45분)</li>
+              </ul>
+            `
+          }
+        ],
+        practice: [
+          {
+            type: "choice",
+            question: "'지금 오후 2시야'를 중국어로 가장 올바르게 표현한 것은?",
+            options: ["现在下午二点。", "现在下午两点。", "现在上午两点。", "现在下午两分。"],
+            correct: 1,
+            explanation: "2시는 숫자 二가 아닌 양사 앞의 형태인 '两(liǎng)'을 써서 '两点'이라고 합니다."
+          },
+          {
+            type: "order",
+            question: "단어를 올바른 순서로 배열하세요: [ 几点 / 现在 / ？ ]",
+            actualTokens: ["现在", "几点", "？"],
+            answer: ["现在", "几点", "？"],
+            chineseSentence: "现在几点？",
+            translation: "지금 몇 시야?"
+          }
+        ],
+        todaySentences: [
+          { hanzi: "现在几点？", pinyin: "Xiànzài jǐ diǎn?", korean: "지금 몇 시야?" },
+          { hanzi: "你几点下课？", pinyin: "Nǐ jǐ diǎn xiàkè?", korean: "너 몇 시에 수업 끝나?" },
+          { hanzi: "好的。一会儿见！", pinyin: "Hǎo de. Yíhuìr jiàn!", korean: "좋아. 이따가 봐!" }
+        ]
+      },
+      {
+        id: 8,
+        title: "8과 오늘 몇 월 며칠이야?",
+        subtitle: "날짜(月, 号) & 감탄 표현(怎么办, 怎么了)",
+        summary: "날짜 묻기 '几月几号?', 1~31 숫자 체계와 난처할 때 쓰는 '怎么办?(어쩌지)'를 익힙니다.",
+        keySentence: {
+          hanzi: "今天几月几号？天啊，怎么办？",
+          pinyin: "Jīntiān jǐ yuè jǐ hào? Tiān a, zěnmebàn?",
+          korean: "오늘 몇 월 며칠이야? 세상에, 어떡하지?"
+        },
+        vocab: [
+          { hanzi: "今天", pinyin: "jīntiān", korean: "오늘", desc: "명사" },
+          { hanzi: "月", pinyin: "yuè", korean: "월(달)", desc: "명사" },
+          { hanzi: "号", pinyin: "hào", korean: "일(날짜 구어)", desc: "서면어는 日" },
+          { hanzi: "天啊", pinyin: "tiān a", korean: "세상에! 오마이갓!", desc: "감탄사" },
+          { hanzi: "怎么办", pinyin: "zěnmebàn", korean: "어쩌지? 어떻게 해?", desc: "난처할 때 표현" },
+          { hanzi: "怎么了", pinyin: "zěnme le", korean: "무슨 일이야? 왜 그래?", desc: "상태를 물을 때" },
+          { hanzi: "昨天", pinyin: "zuótiān", korean: "어제", desc: "명사" },
+          { hanzi: "生日", pinyin: "shēngrì", korean: "생일", desc: "명사" },
+          { hanzi: "居然", pinyin: "jūrán", korean: "뜻밖에, 의외로", desc: "부사" },
+          { hanzi: "忘", pinyin: "wàng", korean: "잊어버리다, 까먹다", desc: "동사" }
+        ],
+        dialogue: [
+          {
+            speaker: "팡팡",
+            avatar: "🧒",
+            hanzi: "今天几月几号？",
+            pinyin: "Jīntiān jǐ yuè jǐ hào?",
+            korean: "오늘 몇 월 며칠이야?"
+          },
+          {
+            speaker: "씽씽",
+            avatar: "✨",
+            hanzi: "今天是十月十三号。",
+            pinyin: "Jīntiān shì shí yuè shísān hào.",
+            korean: "오늘은 10월 13일이야."
+          },
+          {
+            speaker: "팡팡",
+            avatar: "🧒",
+            hanzi: "天啊，糟了！怎么办？",
+            pinyin: "Tiān a, zāo le! Zěnmebàn?",
+            korean: "세상에, 큰일 났다! 어쩌지?"
+          },
+          {
+            speaker: "씽씽",
+            avatar: "✨",
+            hanzi: "怎么了？",
+            pinyin: "Zěnme le?",
+            korean: "왜 그래? 무슨 일이야?"
+          },
+          {
+            speaker: "팡팡",
+            avatar: "🧒",
+            hanzi: "昨天是美美的生日，我们居然都忘了！",
+            pinyin: "Zuótiān shì Měiměi de shēngrì, wǒmen jūrán dōu wàng le!",
+            korean: "어제가 미미 생일이었는데, 우리 뜻밖에 다 잊고 있었어!"
+          }
+        ],
+        grammarPoints: [
+          {
+            title: "1. 날짜 묻기 '几月几号? (몇 월 며칠?)'",
+            content: `
+              <p class="text-sm text-gray-700">
+                달을 물을 때는 <strong>几月(jǐ yuè)</strong>, 날짜를 물을 때는 구어에서 <strong>几号(jǐ hào)</strong>를 씁니다. 대답할 때는 几 자리에 해당 숫자를 그대로 넣어주면 됩니다.<br>
+                예: <strong>今天十月十二号。</strong> (오늘 10월 12일이야.)
+              </p>
+            `
+          },
+          {
+            title: "2. 怎么办 vs 怎么了 뉘앙스 차이",
+            content: `
+              <div class="grid grid-cols-2 gap-2 text-xs sm:text-sm">
+                <div class="bg-red-50 p-2.5 rounded-lg border border-red-200">
+                  <strong class="text-red-700">怎么办？(zěnmebàn)</strong>
+                  <p class="mt-1">어떡하지? 어쩌면 좋지?<br>(해결책이 막막할 때)</p>
+                </div>
+                <div class="bg-blue-50 p-2.5 rounded-lg border border-blue-200">
+                  <strong class="text-blue-700">怎么了？(zěnme le)</strong>
+                  <p class="mt-1">왜 그래? 무슨 일 있어?<br>(상대방의 상태를 걱정할 때)</p>
+                </div>
+              </div>
+            `
+          }
+        ],
+        practice: [
+          {
+            type: "blank",
+            question: "오늘이 10월 12일일 때, '내일은 몇 월 며칠이야?'의 대답은?",
+            sentenceDisplay: "明天 [ ___ ]。",
+            options: ["十月十一号", "十月十三号", "十月十四号", "九月十二号"],
+            correct: "十月十三号",
+            explanation: "10월 12일의 내일(明天)은 10월 13일(十月十三号)입니다."
+          },
+          {
+            type: "order",
+            question: "단어를 올바른 순서로 배열하세요: [ 几号 / 今天 / 几月 / ？ ]",
+            actualTokens: ["今天", "几月", "几号", "？"],
+            answer: ["今天", "几月", "几号", "？"],
+            chineseSentence: "今天几月几号？",
+            translation: "오늘 몇 월 며칠이야?"
+          }
+        ],
+        todaySentences: [
+          { hanzi: "今天几月几号？", pinyin: "Jīntiān jǐ yuè jǐ hào?", korean: "오늘은 몇 월 며칠이야?" },
+          { hanzi: "怎么办？", pinyin: "Zěnmebàn?", korean: "어떡하지?" },
+          { hanzi: "怎么了？", pinyin: "Zěnme le?", korean: "왜 그래? 무슨 일이야?" }
+        ]
+      },
+      {
+        id: 9,
+        title: "9과 나 가는 길이야.",
+        subtitle: "진행과 완료, 장소 개사 在",
+        summary: "길 위에 있다는 표현(在路上), 이미 완료됨을 알리는 '已经~了', 당부 표현을 배웁니다.",
+        keySentence: {
+          hanzi: "我在路上。我们已经到了。",
+          pinyin: "Wǒ zài lùshang. Wǒmen yǐjīng dào le.",
+          korean: "나 가는 중이야. 우리 이미 도착했어."
+        },
+        vocab: [
+          { hanzi: "在", pinyin: "zài", korean: "~에 있다 (존재/개사)", desc: "동사/개사" },
+          { hanzi: "哪儿", pinyin: "nǎr", korean: "어디", desc: "장소 의문사" },
+          { hanzi: "路上", pinyin: "lùshang", korean: "길 위, 길(가는 중)", desc: "명사" },
+          { hanzi: "到", pinyin: "dào", korean: "도착하다", desc: "동사" },
+          { hanzi: "已经", pinyin: "yǐjīng", korean: "이미, 벌써", desc: "부사 (짝꿍 了)" },
+          { hanzi: "马上", pinyin: "mǎshàng", korean: "곧, 바로, 즉시", desc: "부사" },
+          { hanzi: "去", pinyin: "qù", korean: "가다", desc: "동사" },
+          { hanzi: "不要", pinyin: "búyào", korean: "~하지 마라", desc: "금지 부사" },
+          { hanzi: "急", pinyin: "jí", korean: "조급하다, 서두르다", desc: "형용사" },
+          { hanzi: "慢慢来", pinyin: "mànman lái", korean: "천천히 해/와", desc: "다독이는 표현" }
+        ],
+        dialogue: [
+          {
+            speaker: "팡팡",
+            avatar: "🧒",
+            hanzi: "美美，你在哪儿？",
+            pinyin: "Měiměi, nǐ zài nǎr?",
+            korean: "미미야, 너 어디야?"
+          },
+          {
+            speaker: "미미",
+            avatar: "👧",
+            hanzi: "我在路上。你们都到了吗？",
+            pinyin: "Wǒ zài lùshang. Nǐmen dōu dào le ma?",
+            korean: "나 가는 길이야. 너희 다 도착했어?"
+          },
+          {
+            speaker: "팡팡",
+            avatar: "🧒",
+            hanzi: "嗯。我们已经到了。",
+            pinyin: "Èng. Wǒmen yǐjīng dào le.",
+            korean: "응. 우리 벌써 도착했어."
+          },
+          {
+            speaker: "미미",
+            avatar: "👧",
+            hanzi: "不好意思，我马上去。",
+            pinyin: "Bùhǎoyìsi, wǒ mǎshàng qù.",
+            korean: "미안해, 곧 갈게."
+          },
+          {
+            speaker: "팡팡",
+            avatar: "🧒",
+            hanzi: "不要急，慢慢来。",
+            pinyin: "Búyào jí, mànman lái.",
+            korean: "서두르지 말고 천천히 와."
+          }
+        ],
+        grammarPoints: [
+          {
+            title: "1. 장소를 묻고 답하는 在 (zài)",
+            content: `
+              <p class="text-sm text-gray-700">
+                <strong>你在哪儿？(너 어디야?)</strong> ➔ <strong>我在[장소]</strong>.<br>
+                약속에 늦었을 때 '나 지금 가는 중이야!'는 <strong>我在路上。(Wǒ zài lùshang)</strong>라고 합니다.
+              </p>
+            `
+          },
+          {
+            title: "2. 已经 ~ 了 (이미/벌써 ~했다)",
+            content: `
+              <p class="text-sm text-gray-700">
+                부사 <strong>'已经(yǐjīng)'</strong>은 문장 끝의 변화/완료 조사 <strong>'了(le)'</strong>와 단짝으로 자주 쓰여 '이미 완료되었음'을 나타냅니다.<br>
+                예: <strong>我们已经到了。</strong> (우리 벌써 도착했어.)
+              </p>
+            `
+          }
+        ],
+        practice: [
+          {
+            type: "blank",
+            question: "약속 상대방을 안심시키는 말: '[ ___ ] 急，慢慢来。'",
+            sentenceDisplay: "[ ___ ] 急，慢慢来。",
+            options: ["不要", "不能", "不有", "不很"],
+            correct: "不要",
+            explanation: "'~하지 마라'는 금지 표현은 '不要(búyào)'입니다. 不要急(조급해하지 마)."
+          },
+          {
+            type: "order",
+            question: "단어를 올바른 순서로 배열하세요: [ 到了 / 我们 / 已经 ]",
+            actualTokens: ["我们", "已经", "到了", "。"],
+            answer: ["我们", "已经", "到了", "。"],
+            chineseSentence: "我们已经到了。",
+            translation: "우리 이미 도착했어."
+          }
+        ],
+        todaySentences: [
+          { hanzi: "你在哪儿？", pinyin: "Nǐ zài nǎr?", korean: "너 어디야?" },
+          { hanzi: "我在路上。", pinyin: "Wǒ zài lùshang.", korean: "나 가는 길이야." },
+          { hanzi: "我们已经到了。", pinyin: "Wǒmen yǐjīng dào le.", korean: "우리 벌써 도착했어." }
+        ]
+      },
+      {
+        id: 10,
+        title: "10과 나 삼겹살 먹고 싶어.",
+        subtitle: "조동사 想 & 한턱내기 (请客)",
+        summary: "~하고 싶다는 희망의 '想', 내가 쏠게!(请客), 마음대로(随便)를 배웁니다.",
+        keySentence: {
+          hanzi: "我想吃烤五花肉！今天我请客！",
+          pinyin: "Wǒ xiǎng chī kǎowǔhuāròu! Jīntiān wǒ qǐngkè!",
+          korean: "나 삼겹살 먹고 싶어! 오늘 내가 쏠게!"
+        },
+        vocab: [
+          { hanzi: "想", pinyin: "xiǎng", korean: "~하고 싶다 (희망)", desc: "조동사" },
+          { hanzi: "烤五花肉", pinyin: "kǎowǔhuāròu", korean: "삼겹살(구이)", desc: "명사" },
+          { hanzi: "请客", pinyin: "qǐngkè", korean: "한턱내다, 쏘다", desc: "동사" },
+          { hanzi: "真的假的", pinyin: "zhēn de jiǎ de", korean: "진짜야 가짜야? (실화야?)", desc: "관용 표현" },
+          { hanzi: "可以", pinyin: "kěyǐ", korean: "~해도 된다, 가능하다", desc: "조동사" },
+          { hanzi: "都可以", pinyin: "dōu kěyǐ", korean: "다 좋아, 다 괜찮아", desc: "선택 표현" },
+          { hanzi: "随便", pinyin: "suíbiàn", korean: "마음대로, 편하게", desc: "부사/형용사" },
+          { hanzi: "点", pinyin: "diǎn", korean: "주문하다, 고르다", desc: "동사" }
+        ],
+        dialogue: [
+          {
+            speaker: "미미",
+            avatar: "👧",
+            hanzi: "你们想吃什么？今天我请客！",
+            pinyin: "Nǐmen xiǎng chī shénme? Jīntiān wǒ qǐngkè!",
+            korean: "너희 뭐 먹고 싶어? 오늘 내가 쏠게!"
+          },
+          {
+            speaker: "팡팡",
+            avatar: "🧒",
+            hanzi: "真的假的？那我想吃烤五花肉！",
+            pinyin: "Zhēn de jiǎ de? Nà wǒ xiǎng chī kǎowǔhuāròu!",
+            korean: "진짜야 가짜야? 그럼 난 삼겹살 먹고 싶어!"
+          },
+          {
+            speaker: "미미",
+            avatar: "👧",
+            hanzi: "哈哈哈，真的。豆豆，你呢？",
+            pinyin: "Hāhāhā, zhēn de. Dòudou, nǐ ne?",
+            korean: "하하하, 진짜야. 또또 너는?"
+          },
+          {
+            speaker: "또또",
+            avatar: "👦",
+            hanzi: "我都可以。你们随便点。",
+            pinyin: "Wǒ dōu kěyǐ. Nǐmen suíbiàn diǎn.",
+            korean: "난 다 좋아. 너희가 편하게 마음대로 골라."
+          }
+        ],
+        grammarPoints: [
+          {
+            title: "1. 조동사 '想 (xiǎng, ~하고 싶다)'",
+            content: `
+              <p class="text-sm text-gray-700">
+                동사 앞에 <strong>'想'</strong>을 쓰면 희망이나 바람을 나타냅니다. 부정할 때는 앞에 不를 붙여 <strong>'不想(하고 싶지 않다)'</strong>로 만듭니다.<br>
+                예: <strong>我想吃烤五花肉</strong> (삼겹살 먹고 싶어) / <strong>我不想见你</strong> (너 만나고 싶지 않아)
+              </p>
+            `
+          },
+          {
+            title: "2. 今天我请客！(오늘 내가 쏠게!)",
+            content: `
+              <p class="text-sm text-gray-700">
+                <strong>请客(qǐngkè)</strong>는 손님을 대접하다, 밥이나 술을 산다는 뜻입니다. 기분 좋게 한턱 낼 때 '我请客!'라고 외쳐보세요.
+              </p>
+            `
+          },
+          {
+            title: "3. 随便 (suíbiàn, 마음대로/편하게)",
+            content: `
+              <p class="text-sm text-gray-700">
+                식당에서 무엇을 먹을지 정할 때 <strong>'随便点(편하게 마음껏 시켜)'</strong>, <strong>'随便坐(편한 데 앉아)'</strong>처럼 격식 없이 자유롭게 행동하라고 권할 때 자주 사용합니다.
+              </p>
+            `
+          }
+        ],
+        practice: [
+          {
+            type: "blank",
+            question: "미미의 멋진 대사: '你们想吃什么？今天我 [ ___ ]！'",
+            sentenceDisplay: "你们想吃什么？今天我 [ ___ ]！",
+            options: ["请客", "买买", "高兴", "商量"],
+            correct: "请客",
+            explanation: "내가 대접하겠다(한턱내다)는 표현은 '请客(qǐngkè)'입니다."
+          },
+          {
+            type: "order",
+            question: "단어를 올바른 순서로 배열하세요: [ 想 / 烤五花肉 / 吃 / 我 ]",
+            actualTokens: ["我", "想", "吃", "烤五花肉", "。"],
+            answer: ["我", "想", "吃", "烤五花肉", "。"],
+            chineseSentence: "我想吃烤五花肉。",
+            translation: "나 삼겹살 먹고 싶어."
+          }
+        ],
+        todaySentences: [
+          { hanzi: "你想吃什么？", pinyin: "Nǐ xiǎng chī shénme?", korean: "너 뭐 먹고 싶어?" },
+          { hanzi: "今天我请客！", pinyin: "Jīntiān wǒ qǐngkè!", korean: "오늘 내가 쏠게!" },
+          { hanzi: "你们随便点。", pinyin: "Nǐmen suíbiàn diǎn.", korean: "너희가 마음대로 골라." }
+        ]
+      }
+    ];
 
+    /* ==========================================================================
+       SOUND EFFECTS (Tone.js synthesizer)
+       ========================================================================== */
+    let soundEnabled = true;
+    let synthAudio = null;
+
+    function initTone() {
+      if (!synthAudio && typeof Tone !== 'undefined') {
+        synthAudio = new Tone.PolySynth(Tone.Synth, {
+          oscillator: { type: "triangle" },
+          envelope: { attack: 0.005, decay: 0.1, sustain: 0, release: 0.1 }
+        }).toDestination();
+        synthAudio.volume.value = -12;
+      }
+    }
+
+    function playSound(type) {
+      if (!soundEnabled) return;
+      try {
+        if (typeof Tone !== 'undefined') {
+          Tone.start();
+          initTone();
+          if (type === 'correct') {
+            synthAudio.triggerAttackRelease(["E5", "G#5", "B5"], "16n");
+          } else if (type === 'wrong') {
+            synthAudio.triggerAttackRelease(["C3", "B2"], "8n");
+          } else if (type === 'pop') {
+            synthAudio.triggerAttackRelease(["C5"], "32n");
+          }
+        }
+      } catch (e) {
+        console.warn("Tone.js sound warning:", e);
+      }
+    }
+
+    document.getElementById('soundFxBtn').onclick = () => {
+      soundEnabled = !soundEnabled;
+      const btn = document.getElementById('soundFxBtn');
+      if (soundEnabled) {
+        btn.classList.remove('text-gray-400', 'bg-gray-100');
+        btn.classList.add('text-gray-700', 'bg-white');
+        btn.innerHTML = '<i class="fa-solid fa-music"></i>';
+        showToast("효과음이 켜졌습니다.");
+        playSound('pop');
+      } else {
+        btn.classList.add('text-gray-400', 'bg-gray-100');
+        btn.classList.remove('text-gray-700', 'bg-white');
+        btn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>';
+        showToast("효과음이 꺼졌습니다.");
+      }
+    };
+
+    /* ==========================================================================
+       APP STATE & STORAGE
+       ========================================================================== */
+    const STORAGE_KEY = 'toon_chinese_progress_v1';
     let currentLessonId = 0;
     let completedLessons = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-    let testRecords = JSON.parse(localStorage.getItem(TEST_KEY) || "{}");
-    let testSessions = JSON.parse(localStorage.getItem(SESS_KEY) || "{}");
     let showPinyin = true;
     let viewMode = 'lesson';
 
-    let activeUser = null;
-    let syncTimer = null;
+    /* Web Speech Synthesis */
+    const synth = window.speechSynthesis;
+    let chineseVoice = null;
 
-    function triggerCloudSave() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(completedLessons));
-      localStorage.setItem(TEST_KEY, JSON.stringify(testRecords));
-      localStorage.setItem(SESS_KEY, JSON.stringify(testSessions));
-
-      if (activeUser && window.FB_BRIDGE && window.FB_BRIDGE.saveCloud) {
-        clearTimeout(syncTimer);
-        syncTimer = setTimeout(async () => {
-          try {
-            await window.FB_BRIDGE.saveCloud(activeUser.uid, {
-              completedLessons,
-              testRecords,
-              testSessions
-            });
-            const statusEl = document.getElementById('cloudStatusMsg');
-            if (statusEl) {
-              statusEl.textContent = `클라우드 동기화 완료 (${new Date().toLocaleTimeString()})`;
-            }
-          } catch (e) {
-            console.error("클라우드 저장 실패:", e);
-          }
-        }, 800);
-      }
+    function initVoices() {
+      if (!synth) return;
+      const voices = synth.getVoices();
+      chineseVoice = voices.find(v => v.lang === 'zh-CN') || 
+                     voices.find(v => v.lang.startsWith('zh')) || null;
     }
-
-    // AUTH UI 연동
-    const authModal = document.getElementById('authModal');
-    const authBtn = document.getElementById('authBtn');
-    const authBtnLabel = document.getElementById('authBtnLabel');
-    const closeAuthModal = document.getElementById('closeAuthModal');
-    const authLoggedInView = document.getElementById('authLoggedInView');
-    const authLoggedOutView = document.getElementById('authLoggedOutView');
-    const cloudStatusBar = document.getElementById('cloudStatusBar');
-
-    authBtn.onclick = () => authModal.classList.remove('hidden');
-    closeAuthModal.onclick = () => authModal.classList.add('hidden');
-    authModal.onclick = (e) => { if (e.target === authModal) authModal.classList.add('hidden'); };
-
-    function updateAuthUI(user) {
-      activeUser = user;
-      if (user) {
-        const idDisplay = user.displayName || user.email.split('@')[0];
-        authBtnLabel.textContent = idDisplay;
-        document.getElementById('userNameLabel').textContent = idDisplay + "님";
-        document.getElementById('userEmailLabel').textContent = idDisplay;
-        document.getElementById('userAvatar').textContent = idDisplay.charAt(0).toUpperCase();
-
-        authLoggedInView.classList.remove('hidden');
-        authLoggedOutView.classList.add('hidden');
-        cloudStatusBar.classList.remove('hidden');
-      } else {
-        authBtnLabel.textContent = "로그인";
-        authLoggedInView.classList.add('hidden');
-        authLoggedOutView.classList.remove('hidden');
-        cloudStatusBar.classList.add('hidden');
-      }
+    if (synth && synth.onvoiceschanged !== undefined) {
+      synth.onvoiceschanged = initVoices;
     }
+    initVoices();
 
-    document.getElementById('googleLoginBtn').onclick = async () => {
-      try {
-        await window.FB_BRIDGE.signInGoogle();
-        authModal.classList.add('hidden');
-        showToast("Google 계정으로 로그인되었습니다.");
-      } catch (err) {
-        alert("로그인 실패: " + err.message);
-      }
-    };
+    let cur = null, speakId = 0, chainKey = null, chainId = 0, chainPaused = false, chainPending = null;
 
-    document.getElementById('emailLoginSubmit').onclick = async () => {
-      const idOrEmail = document.getElementById('authEmail').value.trim();
-      const pw = document.getElementById('authPw').value;
-      if (!idOrEmail || !pw) return alert("아이디와 비밀번호를 입력해주세요.");
-      try {
-        await window.FB_BRIDGE.signInEmailOrId(idOrEmail, pw);
-        authModal.classList.add('hidden');
-        showToast("로그인되었습니다.");
-      } catch (err) {
-        alert("로그인 오류: " + err.message);
-      }
-    };
-
-    document.getElementById('emailSignUpSubmit').onclick = async () => {
-      const idOrEmail = document.getElementById('authEmail').value.trim();
-      const pw = document.getElementById('authPw').value;
-      if (!idOrEmail || !pw) return alert("아이디와 비밀번호를 입력해주세요.");
-      try {
-        await window.FB_BRIDGE.signUpEmailOrId(idOrEmail, pw);
-        authModal.classList.add('hidden');
-        showToast("계정 등록 및 자동 로그인되었습니다.");
-      } catch (err) {
-        alert("계정 등록 오류: " + err.message);
-      }
-    };
-
-    document.getElementById('doSignOutBtn').onclick = async () => {
-      if (window.FB_BRIDGE && window.FB_BRIDGE.logOut) {
-        await window.FB_BRIDGE.logOut();
-      }
-      authModal.classList.add('hidden');
-      showToast("로그아웃되었습니다.");
-    };
-
-    function setupAuthSync() {
-      if (!window.FB_BRIDGE || !window.FB_BRIDGE.onAuthStateChanged) return;
-      window.FB_BRIDGE.onAuthStateChanged(async (user) => {
-        updateAuthUI(user);
-        if (user) {
-          try {
-            const cloudData = await window.FB_BRIDGE.loadCloud(user.uid);
-            if (cloudData) {
-              if (cloudData.completedLessons) {
-                completedLessons = Array.from(new Set([...completedLessons, ...cloudData.completedLessons]));
-              }
-              if (cloudData.testRecords) {
-                testRecords = { ...testRecords, ...cloudData.testRecords };
-              }
-              if (cloudData.testSessions) {
-                testSessions = { ...testSessions, ...cloudData.testSessions };
-              }
-            }
-            triggerCloudSave();
-            renderSidebar();
-            if (viewMode === 'tests') renderTestHub();
-            showToast(`${user.displayName || user.email.split('@')[0]}님의 학습 기록을 불러왔습니다!`);
-          } catch (e) {
-            console.error("클라우드 로드 오류:", e);
-          }
-        }
+    function stateOf(k) {
+      if (k === chainKey) return chainPaused ? 'paused' : 'playing';
+      if (cur && cur.key === k) return cur.state;
+      return 'idle';
+    }
+    function updateSpeakUI() {
+      const rn = document.getElementById('relayNow');
+      if (rn && !(chainKey && chainKey.startsWith('chain:relay'))) rn.classList.add('hidden');
+      document.querySelectorAll('[data-speak-key]').forEach(el => {
+        const st = stateOf(el.dataset.speakKey);
+        el.classList.toggle('is-speaking', st !== 'idle');
+        if (el.tagName !== 'BUTTON') return;
+        if (el._orig === undefined) el._orig = el.innerHTML;
+        if (st === 'idle') { el.innerHTML = el._orig; return; }
+        const icon = st === 'playing' ? 'fa-pause' : 'fa-play';
+        const hasText = el._orig.replace(/<[^>]*>/g, '').trim() !== '';
+        el.innerHTML = hasText
+          ? `<i class="fa-solid ${icon} text-[10px] mr-1"></i><span>${st === 'playing' ? '정지' : '이어듣기'}</span>`
+          : `<i class="fa-solid ${icon} text-xs"></i>`;
       });
     }
 
-    // 기존 index3.html의 모든 함수 (speak, tab, quiz, relay 등) 호출
+    function launch(c) {
+      const id = ++speakId;
+      c.state = 'playing';
+      const base = c.offset;
+      c.base = base; c.t0 = performance.now(); c.elapsed = 0; c.gotB = false;
+      const u = new SpeechSynthesisUtterance(c.clean.slice(base));
+      u.lang = 'zh-CN';
+      if (chineseVoice) u.voice = chineseVoice;
+      u.rate = parseFloat(document.getElementById('speedSelect').value || "1.0");
+      u.onboundary = e => {
+        if (id === speakId && typeof e.charIndex === 'number') { c.offset = base + e.charIndex; c.gotB = true; }
+      };
+      const done = () => {
+        if (id !== speakId) return;
+        if (c.state === 'paused') return;   // 일시정지 중 발생한 종료/취소 이벤트는 무시
+        if (cur === c) cur = null;
+        updateSpeakUI();
+        if (c.cb) c.cb();
+      };
+      u.onend = done;
+      u.onerror = done;
+      if (synth.paused) synth.resume();
+      synth.cancel();
+      synth.speak(u);
+      updateSpeakUI();
+    }
+    function pauseCur() {
+      if (!cur || cur.state !== 'playing') return;
+      const c = cur;
+      // 경과 시간으로 위치 추정 (음성 엔진이 위치 정보를 주지 않을 때 대비)
+      c.elapsed += performance.now() - c.t0;
+      const rate = parseFloat(document.getElementById('speedSelect').value || "1.0") || 1;
+      const remainLen = Math.max(1, c.clean.length - c.base);
+      const ratio = Math.min(0.95, c.elapsed / (remainLen * 260 / rate));
+      c.estOffset = c.base + Math.floor(remainLen * ratio);
+      c.state = 'paused';
+      synth.pause();               // 브라우저 기본 일시정지 (멈춘 위치 그대로 보존)
+      updateSpeakUI();
+    }
+    function resumeCur() {
+      if (!cur || cur.state !== 'paused') return;
+      const c = cur;
+      c.state = 'playing';
+      c.t0 = performance.now();
+      synth.resume();
+      updateSpeakUI();
+      // 일시정지를 지원하지 않는 브라우저(일부 모바일): 멈춘 위치부터 다시 읽기
+      setTimeout(() => {
+        if (cur === c && c.state === 'playing' && !synth.speaking) {
+          c.offset = c.gotB ? c.offset : c.estOffset;
+          if (c.offset >= c.clean.length) c.offset = 0;
+          launch(c);
+        }
+      }, 350);
+    }
+    function stopSpeaking() {
+      speakId++; chainId++;
+      cur = null; chainKey = null; chainPaused = false; chainPending = null;
+      if (synth) { if (synth.paused) synth.resume(); synth.cancel(); }
+      updateSpeakUI();
+    }
+
+    /* 연속 재생: 같은 버튼 → 정지 / 이어듣기, ↺ → 처음부터 */
+    function toggleChain(key, startFn) {
+      if (chainKey === key) {
+        if (chainPaused) {
+          chainPaused = false;
+          if (cur && cur.state === 'paused') resumeCur();
+          else if (chainPending) { const f = chainPending; chainPending = null; f(); }
+        } else {
+          chainPaused = true;
+          pauseCur();
+        }
+        updateSpeakUI();
+        return;
+      }
+      restartChain(key, startFn);
+    }
+    function restartChain(key, startFn) {
+      stopSpeaking();
+      chainKey = key;
+      const cid = ++chainId;
+      updateSpeakUI();
+      startFn(cid);
+    }
+    function endChain(cid) {
+      if (cid === chainId) { chainKey = null; updateSpeakUI(); }
+    }
+    function chainGate(cid, next) {   // 대기 중 일시정지 처리
+      if (cid !== chainId) return false;
+      if (chainPaused) { chainPending = next; return false; }
+      return true;
+    }
+
+    /* ↺ 처음부터 버튼 붙이기 */
+    function addRestart(btn, fn) {
+      btn._restartFn = fn;
+      if (btn.dataset.hasRestart) return;
+      btn.dataset.hasRestart = '1';
+      const wrap = document.createElement('span');
+      wrap.className = 'inline-flex items-center gap-1.5 flex-shrink-0';
+      btn.replaceWith(wrap);
+      const rb = document.createElement('button');
+      rb.type = 'button';
+      rb.className = 'restart-btn';
+      rb.title = '처음부터 다시';
+      rb.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 3v6h6"/></svg>';
+      rb.onclick = e => { e.stopPropagation(); btn._restartFn(); };
+      wrap.append(btn, rb);
+    }
+
+    function speakChinese(text, callback, key, opts) {
+      opts = opts || {};
+      if (!synth) {
+        showToast("브라우저 음성 지원이 불가능합니다.");
+        if (callback) callback();
+        return;
+      }
+      if (!opts.chain) {
+        if (chainKey) stopSpeaking();
+        // 같은 버튼: 재생 중 → 정지, 정지 중 → 멈춘 곳부터 이어듣기
+        if (key && !opts.restart && cur && cur.key === key) {
+          cur.state === 'playing' ? pauseCur() : resumeCur();
+          return;
+        }
+      }
+      cur = { key: key || null, clean: text.replace(/[\(\)\[\]·]/g, '').trim(), cb: callback, offset: 0, state: 'playing' };
+      launch(cur);
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toastMsg');
+      toastMsg.textContent = msg;
+      toast.classList.remove('opacity-0', 'translate-y-20');
+      toast.classList.add('opacity-100', 'translate-y-0');
+      setTimeout(() => {
+        toast.classList.remove('opacity-100', 'translate-y-0');
+        toast.classList.add('opacity-0', 'translate-y-20');
+      }, 2500);
+    }
+
+    /* ==========================================================================
+       RENDER SIDEBAR & PROGRESS
+       ========================================================================== */
+    function renderSidebar() {
+      const container = document.getElementById('lessonListContainer');
+      container.innerHTML = '';
+      const tb = document.getElementById('openTestHubBtn');
+      if (tb) ['ring-4', 'ring-brand-500'].forEach(c => tb.classList.toggle(c, viewMode === 'tests'));
+
+      lessonsData.forEach(lesson => {
+        const isCompleted = completedLessons.includes(lesson.id);
+        const isActive = lesson.id === currentLessonId && viewMode === 'lesson';
+
+        const btn = document.createElement('button');
+        btn.className = `w-full text-left px-3 py-2.5 rounded-xl transition flex items-center justify-between group comic-btn ${
+          isActive 
+            ? 'bg-brand-500 text-white font-extrabold comic-border-sm' 
+            : 'bg-white hover:bg-orange-50 text-gray-800 font-bold border border-gray-300'
+        }`;
+        
+        btn.innerHTML = `
+          <div class="flex items-center space-x-2.5 min-w-0">
+            <span class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-black ${
+              isActive ? 'bg-white text-brand-600' : (isCompleted ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700')
+            }">
+              ${isCompleted ? '<i class="fa-solid fa-check text-[10px]"></i>' : lesson.id}
+            </span>
+            <span class="truncate text-xs sm:text-sm tracking-tight">${lesson.title}</span>
+          </div>
+          ${isCompleted && !isActive ? '<i class="fa-solid fa-circle-check text-green-600 text-xs"></i>' : ''}
+        `;
+
+        btn.onclick = () => {
+          playSound('pop');
+          selectLesson(lesson.id);
+          closeMobileSidebar();
+        };
+
+        container.appendChild(btn);
+      });
+
+      updateProgressStats();
+    }
+
+    function updateProgressStats() {
+      const total = lessonsData.length;
+      const count = completedLessons.length;
+      const pct = Math.round((count / total) * 100);
+
+      document.getElementById('completedCountBadge').textContent = `${count}개 완료`;
+      document.getElementById('globalProgressTxt').textContent = `${count}/${total}강 (${pct}%)`;
+      document.getElementById('globalProgressBar').style.width = `${pct}%`;
+
+      const chk = document.getElementById('lessonCompleteCheckbox');
+      const label = document.getElementById('completeCheckLabel');
+      const isCurCompleted = completedLessons.includes(currentLessonId);
+      chk.checked = isCurCompleted;
+      label.textContent = isCurCompleted ? "완료됨 ✓" : "완료 표시하기";
+      label.className = isCurCompleted ? "text-green-700 font-black" : "text-gray-800 font-bold";
+    }
+
+    function toggleLessonCompletion(id) {
+      if (completedLessons.includes(id)) {
+        completedLessons = completedLessons.filter(x => x !== id);
+      } else {
+        completedLessons.push(id);
+        playSound('correct');
+      }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(completedLessons));
+      renderSidebar();
+    }
+
+    /* ==========================================================================
+       RENDER CURRENT LESSON DATA
+       ========================================================================== */
+    function selectLesson(id) {
+      stopSpeaking();
+      currentLessonId = id;
+      setView('lesson');
+      const lesson = lessonsData.find(l => l.id === id);
+      if (!lesson) return;
+
+      document.getElementById('currentLessonBadge').textContent = `${lesson.id}과`;
+      document.getElementById('currentLessonSubtitle').textContent = lesson.subtitle;
+      document.getElementById('currentLessonTitle').textContent = lesson.title;
+      document.getElementById('currentLessonSummary').textContent = lesson.summary;
+      document.getElementById('heroHanziBg').textContent = lesson.keySentence.hanzi.charAt(0) || '中';
+
+      const heroPlayBtn = document.getElementById('heroPlayKeySentence');
+      heroPlayBtn.dataset.speakKey = 'hero';
+      addRestart(heroPlayBtn, () => speakChinese(lesson.keySentence.hanzi, null, 'hero', { restart: true }));
+      heroPlayBtn.onclick = () => {
+        speakChinese(lesson.keySentence.hanzi, null, 'hero');
+        showToast(`대표 문장: "${lesson.keySentence.hanzi}"`);
+      };
+
+      renderVocab(lesson.vocab);
+      renderVocabQuiz(lesson.vocab);
+      renderDialogue(lesson.dialogue);
+      renderGrammar(lesson.grammarPoints);
+      renderPractice(lesson.practice);
+      renderToday(lesson.todaySentences);
+
+      renderSidebar();
+    }
+
+    /* 1. VOCABULARY */
+    function renderVocab(vocabList) {
+      const grid = document.getElementById('vocabListGrid');
+      document.getElementById('vocabCountBadge').textContent = `${vocabList.length} 단어`;
+      grid.innerHTML = '';
+
+      vocabList.forEach((v, vi) => {
+        const card = document.createElement('div');
+        card.className = "bg-white p-3.5 rounded-xl comic-border-sm hover:bg-orange-50/50 transition flex items-center justify-between group cursor-pointer";
+        card.innerHTML = `
+          <div class="space-y-0.5">
+            <div class="flex items-baseline gap-2">
+              <span class="font-cn text-xl font-black text-gray-900">${v.hanzi}</span>
+              <span class="text-xs font-bold text-brand-600 font-sans pinyin-text">[${v.pinyin}]</span>
+            </div>
+            <p class="text-xs text-gray-800 font-bold">${v.korean}</p>
+            ${v.desc ? `<p class="text-[11px] text-gray-500 font-cute font-bold">${v.desc}</p>` : ''}
+          </div>
+          <button class="w-8 h-8 rounded-full bg-orange-100 text-brand-600 hover:bg-brand-500 hover:text-white flex items-center justify-center transition border border-gray-900 shadow-2xs active:scale-90" title="발음 듣기">
+            <i class="fa-solid fa-volume-high text-xs"></i>
+          </button>
+        `;
+
+        const vKey = 'v:' + vi;
+        card.dataset.speakKey = vKey;
+        const vBtn = card.querySelector('button');
+        vBtn.dataset.speakKey = vKey;
+        vBtn.onclick = (e) => {
+          e.stopPropagation();
+          speakChinese(v.hanzi, null, vKey);
+        };
+        card.onclick = () => speakChinese(v.hanzi, null, vKey);
+
+        grid.appendChild(card);
+        addRestart(vBtn, () => speakChinese(v.hanzi, null, vKey, { restart: true }));
+      });
+
+      const allV = document.getElementById('playAllVocabBtn');
+      allV.dataset.speakKey = 'chain:vocab';
+      const runVocab = (cid) => {
+        let idx = 0;
+        function playNext() {
+          if (!chainGate(cid, playNext)) return;
+          if (idx >= vocabList.length) { endChain(cid); showToast("단어 전체 재생 완료!"); return; }
+          speakChinese(vocabList[idx].hanzi, () => {
+            idx++;
+            setTimeout(playNext, 600);
+          }, 'v:' + idx, { chain: true });
+        }
+        playNext();
+        showToast("단어들을 차례대로 읽어드립니다.");
+      };
+      addRestart(allV, () => restartChain('chain:vocab', runVocab));
+      allV.onclick = () => toggleChain('chain:vocab', runVocab);
+    }
+
+    /* 2. DIALOGUE */
+    function renderDialogue(dialogues) {
+      const container = document.getElementById('dialogueContainer');
+      container.innerHTML = '';
+
+      dialogues.forEach((d, idx) => {
+        const row = document.createElement('div');
+        row.className = "flex items-start gap-3 p-3.5 rounded-2xl bg-white comic-border-sm hover:bg-orange-50/30 transition";
+        row.id = `dialogue-row-${idx}`;
+        row.dataset.speakKey = 'd:' + idx;
+
+        row.innerHTML = `
+          <div class="w-11 h-11 rounded-2xl bg-amber-100 border-2 border-gray-900 flex items-center justify-center text-xl flex-shrink-0 shadow-2xs">
+            ${d.avatar}
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-xs font-black text-gray-700 bg-gray-100 px-2 py-0.5 rounded-md">${d.speaker}</span>
+              <button data-speak-key="d:${idx}" class="play-btn text-gray-900 bg-amber-300 hover:bg-amber-400 px-2.5 py-1 rounded-lg text-xs font-black flex items-center gap-1 transition comic-border-sm comic-btn">
+                <i class="fa-solid fa-volume-high text-[10px]"></i>
+                <span>듣기</span>
+              </button>
+            </div>
+            <div class="bg-gray-50 speech-bubble p-3 rounded-xl mt-1.5">
+              <p class="font-cn text-lg sm:text-xl font-black text-gray-900 tracking-wide">${d.hanzi}</p>
+              <p class="pinyin-label text-xs sm:text-sm text-brand-600 font-extrabold pinyin-text mt-0.5 ${showPinyin ? '' : 'hidden'}">${d.pinyin}</p>
+              <p class="text-xs sm:text-sm text-gray-700 font-medium mt-1">${d.korean}</p>
+            </div>
+          </div>
+        `;
+
+        const pb = row.querySelector('.play-btn');
+        pb.onclick = () => speakChinese(d.hanzi, null, 'd:' + idx);
+        container.appendChild(row);
+        addRestart(pb, () => speakChinese(d.hanzi, null, 'd:' + idx, { restart: true }));
+      });
+
+      const allD = document.getElementById('playAllDialogueBtn');
+      allD.dataset.speakKey = 'chain:dialogue';
+      const runDlg = (cid) => {
+        let i = 0;
+        function playStep() {
+          if (!chainGate(cid, playStep)) return;
+          if (i >= dialogues.length) { endChain(cid); showToast("대화문 연속 듣기 완료!"); return; }
+          speakChinese(dialogues[i].hanzi, () => {
+            i++;
+            setTimeout(playStep, 800);
+          }, 'd:' + i, { chain: true });
+        }
+        playStep();
+        showToast("대화문을 릴레이 재생합니다.");
+      };
+      addRestart(allD, () => restartChain('chain:dialogue', runDlg));
+      allD.onclick = () => toggleChain('chain:dialogue', runDlg);
+    }
+
+    document.getElementById('togglePinyinBtn').onclick = () => {
+      showPinyin = !showPinyin;
+      document.querySelectorAll('.pinyin-label').forEach(el => {
+        el.classList.toggle('hidden', !showPinyin);
+      });
+      document.getElementById('togglePinyinBtn').textContent = showPinyin ? "병음 On/Off" : "병음 보기";
+    };
+
+    /* 3. GRAMMAR */
+    /* 문법별 예문 [한자, 병음, 뜻] — 키: "과-번호" */
+    const GRAMMAR_EX = {
+      "0-0":[["妈妈在家。","Māma zài jiā.","엄마는 집에 있어요."],["哥哥很高。","Gēge hěn gāo.","형은 키가 커요."]],
+      "0-1":[["你好！","Nǐ hǎo!","안녕! (3성+3성 → 2성+3성으로 발음)"],["我不是老师。","Wǒ bú shì lǎoshī.","나는 선생님이 아니에요. (不+4성 → bú)"]],
+      "1-0":[["好久不见，你好吗？","Hǎojiǔ bú jiàn, nǐ hǎo ma?","오랜만이야, 잘 지내?"],["好久不见，我很想你！","Hǎojiǔ bú jiàn, wǒ hěn xiǎng nǐ!","오랜만이야, 정말 보고 싶었어!"]],
+      "1-1":[["老师好！","Lǎoshī hǎo!","선생님 안녕하세요!"],["同学们好！","Tóngxuémen hǎo!","학우 여러분 안녕!"]],
+      "1-2":[["你吃了吗？","Nǐ chī le ma?","너 밥 먹었어?"],["我吃了，你呢？","Wǒ chī le, nǐ ne?","나는 먹었어, 너는?"]],
+      "2-0":[["我很忙。","Wǒ hěn máng.","나는 바빠."],["今天很冷。","Jīntiān hěn lěng.","오늘은 추워."]],
+      "2-1":[["你忙不忙？","Nǐ máng bu máng?","너 바빠 안 바빠?"],["他累不累？","Tā lèi bu lèi?","그는 피곤해 안 피곤해?"]],
+      "2-2":[["我不太忙。","Wǒ bú tài máng.","나는 그다지 안 바빠."],["这个不太贵。","Zhège bú tài guì.","이건 그다지 비싸지 않아."]],
+      "3-0":[["很高兴认识你！","Hěn gāoxìng rènshi nǐ!","만나서 반가워요!"],["我也很高兴认识你！","Wǒ yě hěn gāoxìng rènshi nǐ!","저도 만나서 반가워요!"]],
+      "3-1":[["你是哪国人？","Nǐ shì nǎ guó rén?","어느 나라 사람이에요?"],["你喝哪个？","Nǐ hē nǎge?","어느 것을 마실래?"]],
+      "3-2":[["你是中国人吧！","Nǐ shì Zhōngguórén ba!","중국인이죠!"],["他是老师吧？","Tā shì lǎoshī ba?","그분은 선생님이죠?"]],
+      "4-0":[["我没有哥哥。","Wǒ méiyǒu gēge.","나는 형이 없어."],["他没有手机。","Tā méiyǒu shǒujī.","그는 휴대폰이 없어."]],
+      "4-1":[["你有没有妹妹？","Nǐ yǒu méiyǒu mèimei?","너 여동생 있어 없어?"],["你有没有时间？","Nǐ yǒu méiyǒu shíjiān?","너 시간 있어 없어?"]],
+      "4-2":[["我只有一个弟弟。","Wǒ zhǐ yǒu yí ge dìdi.","나는 남동생 한 명뿐이야."],["他只喝水。","Tā zhǐ hē shuǐ.","그는 물만 마셔."]],
+      "5-0":[["这是书。","Zhè shì shū.","이건 책이야."],["那是什么？","Nà shì shénme?","저건 뭐야?"]],
+      "5-1":[["你尝一下。","Nǐ cháng yíxià.","한번 맛봐."],["请等一下。","Qǐng děng yíxià.","잠깐 기다려 주세요."]],
+      "6-0":[["今天星期五。","Jīntiān xīngqīwǔ.","오늘은 금요일이야."],["明天星期六。","Míngtiān xīngqīliù.","내일은 토요일이야."]],
+      "6-1":[["我们一起去吧。","Wǒmen yìqǐ qù ba.","우리 같이 가자."],["我们一起看电影吧。","Wǒmen yìqǐ kàn diànyǐng ba.","우리 같이 영화 보자."]],
+      "7-0":[["现在两点。","Xiànzài liǎng diǎn.","지금 2시야."],["我两点上课。","Wǒ liǎng diǎn shàngkè.","나는 2시에 수업해."]],
+      "7-1":[["现在三点半。","Xiànzài sān diǎn bàn.","지금 3시 반이야."],["现在五点一刻。","Xiànzài wǔ diǎn yí kè.","지금 5시 15분이야."]],
+      "8-0":[["今天几月几号？","Jīntiān jǐ yuè jǐ hào?","오늘 몇 월 며칠이야?"],["明天十二月二十五号。","Míngtiān shí'èr yuè èrshíwǔ hào.","내일은 12월 25일이야."]],
+      "8-1":[["怎么办？","Zěnme bàn?","어떡하지?"],["你怎么了？","Nǐ zěnme le?","너 무슨 일이야?"]],
+      "9-0":[["我在家。","Wǒ zài jiā.","나는 집에 있어."],["你在哪儿？","Nǐ zài nǎr?","너 어디야?"]],
+      "9-1":[["我已经吃了。","Wǒ yǐjīng chī le.","나는 벌써 먹었어."],["他已经到了。","Tā yǐjīng dào le.","그는 이미 도착했어."]],
+      "10-0":[["我想喝咖啡。","Wǒ xiǎng hē kāfēi.","나는 커피를 마시고 싶어."],["你想去哪儿？","Nǐ xiǎng qù nǎr?","너 어디 가고 싶어?"]],
+      "10-1":[["今天我请客！","Jīntiān wǒ qǐngkè!","오늘 내가 쏠게!"],["下次你请客吧。","Xiàcì nǐ qǐngkè ba.","다음엔 네가 쏴."]],
+      "10-2":[["你随便吃。","Nǐ suíbiàn chī.","마음대로 먹어."],["我随便，都可以。","Wǒ suíbiàn, dōu kěyǐ.","나는 아무거나 괜찮아."]]
+    };
+
+    function renderGrammar(points) {
+      const container = document.getElementById('grammarContent');
+      container.innerHTML = '';
+
+      points.forEach((p, pi) => {
+        const examples = GRAMMAR_EX[currentLessonId + '-' + pi] || [];
+        const box = document.createElement('div');
+        box.className = "bg-white p-5 rounded-2xl comic-border space-y-2";
+        box.innerHTML = `
+          <h4 class="text-base font-black text-gray-900 flex items-center gap-2">
+            <span class="w-3 h-3 bg-brand-500 rounded-md border border-gray-900"></span>
+            ${p.title}
+          </h4>
+          <div class="text-gray-800 leading-relaxed text-sm pt-1">
+            ${p.content}
+          </div>
+          ${examples.length ? `
+          <div class="bg-orange-50 rounded-xl p-3 comic-border-sm space-y-2 mt-2">
+            <p class="text-xs font-black text-brand-600">✏️ 예문 (눌러서 듣기)</p>
+            ${examples.map((e, ei) => `
+              <div class="flex items-center gap-3 bg-white rounded-lg p-2.5 border border-gray-300">
+                <button data-speak-key="g:${pi}:${ei}" class="w-9 h-9 rounded-full bg-orange-100 text-brand-600 hover:bg-brand-500 hover:text-white flex items-center justify-center transition border border-gray-900 flex-shrink-0 active:scale-90" title="발음 듣기">
+                  <i class="fa-solid fa-volume-high text-xs"></i>
+                </button>
+                <div class="min-w-0">
+                  <p class="font-cn text-base sm:text-lg font-black text-gray-900">${e[0]}</p>
+                  <p class="text-xs font-bold text-brand-600 pinyin-text">${e[1]}</p>
+                  <p class="text-xs text-gray-700 font-medium">${e[2]}</p>
+                </div>
+              </div>`).join('')}
+          </div>` : ''}
+        `;
+        container.appendChild(box);
+        examples.forEach((e, ei) => {
+          const k = 'g:' + pi + ':' + ei;
+          const b = box.querySelector(`[data-speak-key="${k}"]`);
+          b.onclick = () => speakChinese(e[0], null, k);
+          addRestart(b, () => speakChinese(e[0], null, k, { restart: true }));
+        });
+      });
+    }
+
+    /* 4. PRACTICE / QUIZ */
+    function renderPractice(practiceList) {
+      const container = document.getElementById('practiceContainer');
+      container.innerHTML = '';
+
+      practiceList.forEach((q, idx) => {
+        const item = document.createElement('div');
+        item.className = "bg-white p-5 rounded-2xl comic-border space-y-4";
+        item.dataset.qIndex = idx;
+
+        if (q.type === 'choice' || q.type === 'blank') {
+          item.innerHTML = `
+            <div class="flex items-start justify-between gap-2">
+              <span class="text-xs font-black text-gray-900 bg-amber-300 px-2.5 py-0.5 rounded-md comic-border-sm">문제 ${idx + 1}</span>
+            </div>
+            <p class="font-black text-gray-900 text-sm sm:text-base">${q.question}</p>
+            ${q.sentenceDisplay ? `<div class="p-3 bg-sand-50 rounded-xl font-cn text-base sm:text-lg text-gray-900 comic-border-sm font-bold">${q.sentenceDisplay}</div>` : ''}
+            
+            <div class="grid grid-cols-2 gap-2 sm:gap-3 options-container">
+              ${q.options.map((opt, oIdx) => `
+                <button class="choice-opt-btn p-3 rounded-xl border-2 border-gray-800 text-left font-bold text-xs sm:text-sm hover:bg-orange-100 transition flex items-center justify-between comic-btn bg-white" data-val="${opt}" data-idx="${oIdx}">
+                  <span>${opt}</span>
+                  <span class="circle-check w-4 h-4 rounded-full border-2 border-gray-800 flex items-center justify-center text-[10px]"></span>
+                </button>
+              `).join('')}
+            </div>
+
+            <div class="quiz-feedback hidden p-3 rounded-xl text-xs sm:text-sm leading-relaxed comic-border-sm"></div>
+          `;
+
+          const buttons = item.querySelectorAll('.choice-opt-btn');
+          const feedback = item.querySelector('.quiz-feedback');
+
+          buttons.forEach(btn => {
+            btn.onclick = () => {
+              buttons.forEach(b => {
+                b.classList.remove('bg-green-100', 'bg-red-100', 'text-green-900', 'text-red-900');
+              });
+
+              const val = btn.dataset.val;
+              const oIdx = parseInt(btn.dataset.idx);
+              const isCorrect = q.type === 'choice' ? oIdx === q.correct : val === q.correct;
+
+              if (isCorrect) {
+                playSound('correct');
+                btn.classList.add('bg-green-100', 'text-green-900');
+                feedback.className = "quiz-feedback p-3 rounded-xl text-xs sm:text-sm leading-relaxed bg-green-50 border-2 border-green-700 text-green-900 flex items-start gap-2";
+                feedback.innerHTML = `
+                  <i class="fa-solid fa-circle-check text-green-600 text-base mt-0.5"></i>
+                  <div>
+                    <strong class="font-black">정답입니다! 딩동댕 🔔</strong><br>
+                    ${q.explanation || ''}
+                  </div>
+                `;
+              } else {
+                playSound('wrong');
+                btn.classList.add('bg-red-100', 'text-red-900');
+                feedback.className = "quiz-feedback p-3 rounded-xl text-xs sm:text-sm leading-relaxed bg-red-50 border-2 border-red-700 text-red-900 flex items-start gap-2";
+                feedback.innerHTML = `
+                  <i class="fa-solid fa-circle-xmark text-red-600 text-base mt-0.5"></i>
+                  <div>
+                    <strong class="font-black">땡! 다시 한번 맞춰보세요.</strong><br>
+                    ${q.explanation || ''}
+                  </div>
+                `;
+              }
+              feedback.classList.remove('hidden');
+            };
+          });
+
+        } else if (q.type === 'order') {
+          let currentOrder = [];
+          const scrambled = [...q.actualTokens].sort(() => Math.random() - 0.5);
+
+          item.innerHTML = `
+            <div class="flex items-start justify-between gap-2">
+              <span class="text-xs font-black text-gray-900 bg-brand-200 px-2.5 py-0.5 rounded-md comic-border-sm">단어 순서 맞추기 ${idx + 1}</span>
+            </div>
+            <p class="font-black text-gray-900 text-sm sm:text-base">${q.question}</p>
+            
+            <!-- Target Slot Box -->
+            <div class="min-h-[56px] p-2.5 bg-sand-50 border-2 border-dashed border-gray-600 rounded-xl flex flex-wrap gap-2 items-center target-drop-box">
+              <span class="text-xs text-gray-500 font-cute text-sm select-none placeholder-text">아래 글자를 순서대로 콕콕 눌러보세요!</span>
+            </div>
+
+            <!-- Scrambled Tokens -->
+            <div class="flex flex-wrap gap-2 tokens-pool">
+              ${scrambled.map((tok, tIdx) => `
+                <button class="token-btn px-3.5 py-1.5 bg-white comic-border-sm rounded-xl font-cn font-black text-gray-900 hover:bg-orange-100 comic-btn transition text-base" data-tok="${tok}">
+                  ${tok}
+                </button>
+              `).join('')}
+            </div>
+
+            <div class="flex items-center gap-2">
+              <button class="check-order-btn bg-brand-500 hover:bg-brand-600 text-white text-xs font-black px-4 py-2 rounded-xl comic-border-sm comic-btn transition">
+                정답 확인
+              </button>
+              <button class="clear-order-btn bg-white hover:bg-gray-100 text-gray-800 text-xs font-bold px-3 py-2 rounded-xl comic-border-sm comic-btn transition">
+                다시 담기
+              </button>
+            </div>
+
+            <div class="order-feedback hidden p-3 rounded-xl text-xs sm:text-sm leading-relaxed comic-border-sm"></div>
+          `;
+
+          const dropBox = item.querySelector('.target-drop-box');
+          const tokensPool = item.querySelector('.tokens-pool');
+          const checkBtn = item.querySelector('.check-order-btn');
+          const clearBtn = item.querySelector('.clear-order-btn');
+          const orderFeedback = item.querySelector('.order-feedback');
+
+          const ob = mountOrderBuilder(dropBox, tokensPool);
+          clearBtn.onclick = () => {
+            playSound('pop');
+            ob.clear();
+            orderFeedback.classList.add('hidden');
+          };
+
+          checkBtn.onclick = () => {
+            const userStr = ob.get().join('');
+            const targetStr = q.actualTokens.join('');
+
+            if (userStr === targetStr) {
+              playSound('correct');
+              orderFeedback.className = "order-feedback p-3 rounded-xl text-xs sm:text-sm leading-relaxed bg-green-50 border-2 border-green-700 text-green-900 flex items-start gap-2";
+              orderFeedback.innerHTML = `
+                <i class="fa-solid fa-circle-check text-green-600 text-base mt-0.5"></i>
+                <div>
+                  <strong class="font-black">정답입니다! 완벽해요 🎉</strong><br>
+                  <span class="font-cn text-lg font-black text-gray-900">${q.chineseSentence}</span><br>
+                  <span class="text-gray-700 font-bold">${q.translation}</span>
+                </div>
+              `;
+              speakChinese(q.chineseSentence);
+            } else {
+              playSound('wrong');
+              orderFeedback.className = "order-feedback p-3 rounded-xl text-xs sm:text-sm leading-relaxed bg-red-50 border-2 border-red-700 text-red-900 flex items-start gap-2";
+              orderFeedback.innerHTML = `
+                <i class="fa-solid fa-circle-xmark text-red-600 text-base mt-0.5"></i>
+                <div>
+                  <strong class="font-black">틀렸습니다. 단어 순서를 다시 생각해보세요!</strong>
+                </div>
+              `;
+            }
+            orderFeedback.classList.remove('hidden');
+          };
+        }
+
+        container.appendChild(item);
+
+        // 🔊 문제 문장 듣기 (빈칸 문제는 빈칸을 뺀 문장을 읽어줌)
+        const qText = (q.chineseSentence || (q.sentenceDisplay ? q.sentenceDisplay.replace(/\[\s*_+\s*\]/g, '') : '')).trim();
+        if (/[\u4e00-\u9fff]/.test(qText)) {
+          const qKey = 'q:' + idx;
+          const bar = document.createElement('div');
+          bar.innerHTML = `<button data-speak-key="${qKey}" class="text-xs font-black text-gray-900 bg-amber-300 hover:bg-amber-400 px-3 py-1.5 rounded-xl comic-border-sm comic-btn flex items-center gap-1.5"><i class="fa-solid fa-volume-high text-[10px]"></i><span>문장 듣기</span></button>`;
+          const qb = bar.firstElementChild;
+          qb.onclick = () => speakChinese(qText, null, qKey);
+          item.insertBefore(bar, item.children[1] || null);
+          addRestart(qb, () => speakChinese(qText, null, qKey, { restart: true }));
+        }
+      });
+
+      document.getElementById('resetQuizBtn').onclick = () => {
+        playSound('pop');
+        renderPractice(practiceList);
+        showToast("연습문제를 새로고침했습니다.");
+      };
+    }
+
+    /* 4-2. VOCAB QUIZ (단어장 → 문제) */
+    function renderVocabQuiz(vocabList) {
+      const box = document.getElementById('vocabQuizContainer');
+      const scoreEl = document.getElementById('vocabQuizScore');
+      box.innerHTML = '';
+      const shuffle = a => { a = [...a]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+      const pool = lessonsData.flatMap(l => l.vocab);
+      const items = shuffle(vocabList);
+      let score = 0, answered = 0;
+      const refresh = () => { scoreEl.textContent = `${score} / ${items.length}  (푼 문제 ${answered})`; };
+      refresh();
+
+      items.forEach((v, i) => {
+        const mode = i % 3;   // 0: 한자→뜻, 1: 뜻→한자, 2: 듣고 고르기
+        const text = w => mode === 0 ? w.korean : (mode === 1 ? `${w.hanzi} [${w.pinyin}]` : w.hanzi);
+        const correctText = text(v);
+        const opts = [v];
+        const seen = new Set([correctText]);
+        for (const w of shuffle(pool)) {
+          if (opts.length >= 4) break;
+          const t = text(w);
+          if (!seen.has(t)) { seen.add(t); opts.push(w); }
+        }
+        const choices = shuffle(opts);
+        const key = 'vq:' + i;
+        const listenBtn = `<button data-speak-key="${key}" class="w-9 h-9 rounded-full bg-orange-100 text-brand-600 hover:bg-brand-500 hover:text-white flex items-center justify-center transition border border-gray-900 flex-shrink-0 active:scale-90" title="발음 듣기"><i class="fa-solid fa-volume-high text-xs"></i></button>`;
+        const head = mode === 0
+          ? `<p class="font-black text-gray-900 text-sm sm:text-base">다음 단어의 뜻은?</p>
+             <div class="flex items-center gap-3"><span class="font-cn text-2xl font-black text-gray-900">${v.hanzi}</span><span class="text-xs font-bold text-brand-600 pinyin-text">[${v.pinyin}]</span>${listenBtn}</div>`
+          : mode === 1
+          ? `<p class="font-black text-gray-900 text-sm sm:text-base">'${v.korean}'에 해당하는 중국어는?</p>`
+          : `<p class="font-black text-gray-900 text-sm sm:text-base">소리를 듣고 알맞은 단어를 고르세요</p>
+             <div class="flex items-center gap-2">${listenBtn}<span class="text-xs text-gray-500 font-bold">버튼을 눌러 들어보세요</span></div>`;
+
+        const item = document.createElement('div');
+        item.className = "bg-white p-5 rounded-2xl comic-border space-y-3";
+        item.innerHTML = `
+          <span class="text-xs font-black text-gray-900 bg-amber-300 px-2.5 py-0.5 rounded-md comic-border-sm">문제 ${i + 1}</span>
+          ${head}
+          <div class="grid grid-cols-2 gap-2 sm:gap-3">
+            ${choices.map((w, ci) => `<button data-ci="${ci}" class="vq-opt p-3 rounded-xl border-2 border-gray-800 text-left font-bold text-xs sm:text-sm hover:bg-orange-100 transition comic-btn bg-white ${mode !== 0 ? 'font-cn' : ''}">${text(w)}</button>`).join('')}
+          </div>
+          <div class="vq-feedback hidden p-3 rounded-xl text-xs sm:text-sm leading-relaxed comic-border-sm"></div>
+        `;
+        box.appendChild(item);
+
+        const lb = item.querySelector(`[data-speak-key="${key}"]`);
+        if (lb) {
+          lb.onclick = () => speakChinese(v.hanzi, null, key);
+          addRestart(lb, () => speakChinese(v.hanzi, null, key, { restart: true }));
+        }
+
+        const btns = item.querySelectorAll('.vq-opt');
+        const fb = item.querySelector('.vq-feedback');
+        btns.forEach(b => {
+          b.onclick = () => {
+            const picked = choices[+b.dataset.ci];
+            const ok = picked === v;
+            btns.forEach(x => {
+              x.disabled = true;
+              if (choices[+x.dataset.ci] === v) x.classList.add('bg-green-100', 'text-green-900');
+            });
+            if (!ok) b.classList.add('bg-red-100', 'text-red-900');
+            answered++; if (ok) score++;
+            refresh();
+            playSound(ok ? 'correct' : 'wrong');
+            fb.className = `vq-feedback p-3 rounded-xl text-xs sm:text-sm leading-relaxed comic-border-sm ${ok ? 'bg-green-50 text-green-900' : 'bg-red-50 text-red-900'}`;
+            fb.innerHTML = `<strong>${ok ? '정답! 🎉' : '아쉬워요!'}</strong> <span class="font-cn font-black">${v.hanzi}</span> [${v.pinyin}] = ${v.korean}`;
+            if (ok) speakChinese(v.hanzi);
+            if (answered === items.length) showToast(`단어문제 완료! ${score}/${items.length}점`);
+          };
+        });
+      });
+
+      document.getElementById('resetVocabQuizBtn').onclick = () => {
+        playSound('pop');
+        stopSpeaking();
+        renderVocabQuiz(vocabList);
+        showToast("단어문제를 새로 섞었어요.");
+      };
+    }
+
+    /* 5. TODAY'S SENTENCES (FLASHCARDS) */
+    function renderToday(sentences) {
+      const grid = document.getElementById('flashcardsGrid');
+      grid.innerHTML = '';
+
+      sentences.forEach((s, idx) => {
+        const cardWrapper = document.createElement('div');
+        cardWrapper.className = "flashcard h-48 w-full cursor-pointer";
+        
+        cardWrapper.innerHTML = `
+          <div class="flashcard-inner relative w-full h-full rounded-2xl comic-border bg-white">
+            
+            <!-- FRONT: Hanzi & Pinyin -->
+            <div class="card-front absolute inset-0 w-full h-full p-4 flex flex-col justify-between rounded-2xl bg-sand-50">
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-black text-gray-900 bg-amber-300 px-2 py-0.5 rounded-md comic-border-sm">문장 ${idx + 1}</span>
+                <button class="speaker-btn w-8 h-8 rounded-full bg-white text-brand-600 comic-border-sm hover:bg-brand-500 hover:text-white flex items-center justify-center transition" title="발음 듣기">
+                  <i class="fa-solid fa-volume-high text-xs"></i>
+                </button>
+              </div>
+              <div class="text-center my-auto px-2">
+                <p class="font-cn text-2xl font-black text-gray-900 tracking-wide">${s.hanzi}</p>
+                <p class="text-xs sm:text-sm font-bold text-brand-600 pinyin-text mt-1.5">[${s.pinyin}]</p>
+              </div>
+              <div class="text-center text-[11px] text-gray-500 font-cute font-bold">
+                <i class="fa-solid fa-repeat mr-1"></i> 카드를 누르면 한국어 뜻이 보여요!
+              </div>
+            </div>
+
+            <!-- BACK: Korean Translation -->
+            <div class="card-back absolute inset-0 w-full h-full p-4 flex flex-col justify-between rounded-2xl bg-brand-500 text-white">
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-black bg-white text-brand-600 px-2 py-0.5 rounded-md comic-border-sm">한국어 뜻</span>
+                <i class="fa-solid fa-star text-xs text-amber-300"></i>
+              </div>
+              <div class="text-center my-auto px-2">
+                <p class="text-base sm:text-lg font-black">${s.korean}</p>
+                <p class="text-xs text-orange-100 mt-2 font-cn font-bold">${s.hanzi}</p>
+              </div>
+              <div class="text-center text-[11px] text-orange-100 font-cute font-bold">
+                <i class="fa-solid fa-repeat mr-1"></i> 다시 누르면 중국어로 돌아가요
+              </div>
+            </div>
+
+          </div>
+        `;
+
+        cardWrapper.onclick = () => {
+          playSound('pop');
+          cardWrapper.classList.toggle('flipped');
+        };
+
+        const speakerBtn = cardWrapper.querySelector('.speaker-btn');
+        const fKey = 'fc:' + idx;
+        speakerBtn.dataset.speakKey = fKey;
+        speakerBtn.onclick = (e) => {
+          e.stopPropagation();
+          speakChinese(s.hanzi, null, fKey);
+        };
+
+        grid.appendChild(cardWrapper);
+        addRestart(speakerBtn, () => speakChinese(s.hanzi, null, fKey, { restart: true }));
+      });
+    }
+
+    /* ==========================================================================
+       ORDER BUILDER: 눌러서 담기 / 담긴 글자를 눌러 자리 옮기기 / 드래그(PC)
+       ========================================================================== */
+    function mountOrderBuilder(dropBox, pool, cb) {
+      let order = [], sel = -1, drag = null, ready = false;
+      const lock = (b, on) => { b.disabled = on; b.classList.toggle('opacity-40', on); };
+      const PH = '<span class="text-xs text-gray-500 font-cute text-sm select-none">글자를 눌러 담고, 담긴 글자를 눌러 자리를 옮겨보세요! (PC는 드래그도 가능)</span>';
+      const put = (item, at) => { order.splice(Math.min(at, order.length), 0, item); lock(item.btn, true); };
+      const move = (from, to) => { if (from === to) return; const [m] = order.splice(from, 1); order.splice(to, 0, m); };
+      function dropAt(i) {
+        if (!drag) return;
+        if (drag.t === 'chip') move(drag.i, i);
+        else if (!drag.btn.disabled) put({ tok: drag.btn.dataset.tok, btn: drag.btn }, i);
+        drag = null; sel = -1; render();
+      }
+      function render() { draw(); if (ready && cb) cb(order.map(o => o.tok)); }
+      function draw() {
+        dropBox.innerHTML = '';
+        if (!order.length) { dropBox.innerHTML = PH; return; }
+        order.forEach((o, i) => {
+          const c = document.createElement('div');
+          c.draggable = true;
+          c.className = 'px-3 py-1.5 font-cn font-black rounded-xl text-base flex items-center gap-1.5 comic-border-sm cursor-pointer select-none ' +
+            (i === sel ? 'bg-amber-300 text-gray-900 ring-4 ring-brand-500' : 'bg-brand-500 text-white');
+          c.innerHTML = `<span>${o.tok}</span><span class="rm text-xs opacity-80 px-1" title="빼기">✕</span>`;
+          c.onclick = e => {
+            playSound('pop');
+            if (e.target.classList.contains('rm')) { lock(o.btn, false); order.splice(i, 1); sel = -1; }
+            else if (sel < 0) sel = i;
+            else if (sel === i) sel = -1;
+            else { move(sel, i); sel = -1; }
+            render();
+          };
+          c.ondragstart = e => { drag = { t: 'chip', i }; e.dataTransfer.effectAllowed = 'move'; e.dataTransfer.setData('text/plain', o.tok); };
+          c.ondragover = e => e.preventDefault();
+          c.ondrop = e => { e.preventDefault(); e.stopPropagation(); dropAt(i); };
+          dropBox.appendChild(c);
+        });
+      }
+      dropBox.ondragover = e => e.preventDefault();
+      dropBox.ondrop = e => { e.preventDefault(); dropAt(order.length); };
+      pool.querySelectorAll('.token-btn').forEach(b => {
+        b.draggable = true;
+        b.ondragstart = e => { drag = { t: 'pool', btn: b }; e.dataTransfer.setData('text/plain', b.dataset.tok); };
+        b.onclick = () => {
+          if (b.disabled) return;
+          playSound('pop');
+          put({ tok: b.dataset.tok, btn: b }, sel >= 0 ? sel + 1 : order.length);
+          sel = -1; render();
+        };
+      });
+      render(); ready = true;
+      return {
+        set(list) {
+          list.forEach(t => {
+            const b = [...pool.querySelectorAll('.token-btn')].find(x => !x.disabled && x.dataset.tok === t);
+            if (b) put({ tok: t, btn: b }, order.length);
+          });
+          sel = -1; render();
+        },
+        get: () => order.map(o => o.tok),
+        clear() { order.forEach(o => lock(o.btn, false)); order = []; sel = -1; render(); },
+        freeze() { dropBox.style.pointerEvents = 'none'; pool.style.pointerEvents = 'none'; }
+      };
+    }
+
+    /* ==========================================================================
+       뷰 전환 (강의 ↔ 전체 테스트)
+       ========================================================================== */
+    function setView(v) {
+      viewMode = v;
+      document.getElementById('lessonHero').classList.toggle('hidden', v === 'tests');
+      document.getElementById('testHub').classList.toggle('hidden', v !== 'tests');
+      const act = (document.querySelector('.nav-tab.active-tab') || { dataset: { tab: 'vocab' } }).dataset.tab;
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.toggle('hidden', v === 'tests' || p.id !== 'tab-' + act));
+      renderSidebar();
+    }
+
+    /* ==========================================================================
+       전체 테스트 · 점수판
+       ========================================================================== */
+    const TEST_KEY = 'toon_chinese_tests_v1';
+    const SESS_KEY = 'toon_chinese_test_sessions_v1';
+    let testSessions = {};
+    try { testSessions = JSON.parse(localStorage.getItem(SESS_KEY) || '{}'); } catch (e) { testSessions = {}; }
+    function saveSessions() { try { localStorage.setItem(SESS_KEY, JSON.stringify(testSessions)); } catch (e) {} }
+    function sessStats(sess) { let s = 0, a = 0; sess.qs.forEach((q, k) => { const x = sess.ans[k]; if (x && x.checked) { a++; if (x.ok) s++; } }); return { s, a }; }
+    function confirmTap(btn, label, fn) {
+      const orig = btn.textContent; let armed = false, t;
+      btn.onclick = e => {
+        if (e) e.stopPropagation();
+        if (!armed) { armed = true; btn.textContent = label; btn.classList.add('bg-red-100'); t = setTimeout(() => { armed = false; btn.textContent = orig; btn.classList.remove('bg-red-100'); }, 3000); }
+        else { clearTimeout(t); fn(); }
+      };
+    }
+    let testRecords = {};
+    try { testRecords = JSON.parse(localStorage.getItem(TEST_KEY) || '{}'); } catch (e) { testRecords = {}; }
+    const shuf = a => { a = [...a]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+    const hasCN = t => /[\u4e00-\u9fff]/.test(t || '');
+    const stripBlank = t => (t || '').replace(/\[\s*_+\s*\]/g, '');
+
+    function allVocab() {
+      const m = new Map();
+      lessonsData.forEach(l => l.vocab.forEach(v => { const k = v.hanzi + '|' + v.korean; if (!m.has(k)) m.set(k, v); }));
+      return [...m.values()];
+    }
+    function vocabQ(v, mode, pool) {
+      const text = w => mode === 0 ? w.korean : (mode === 1 ? `${w.hanzi} [${w.pinyin}]` : w.hanzi);
+      const opts = [v], seen = new Set([text(v)]);
+      for (const w of shuf(pool)) { if (opts.length >= 4) break; const t = text(w); if (!seen.has(t)) { seen.add(t); opts.push(w); } }
+      const ch = shuf(opts);
+      const head = mode === 0
+        ? `<p class="font-black text-sm sm:text-base">다음 단어의 뜻은?</p><p class="font-cn text-2xl font-black">${v.hanzi} <span class="text-xs text-brand-600 font-sans pinyin-text">[${v.pinyin}]</span></p>`
+        : mode === 1 ? `<p class="font-black text-sm sm:text-base">'${v.korean}'에 해당하는 중국어는?</p>`
+        : `<p class="font-black text-sm sm:text-base">소리를 듣고 알맞은 단어를 고르세요</p>`;
+      return { kind: 'choice', tag: '단어', head, speak: mode === 1 ? null : v.hanzi, options: ch.map(text), correct: ch.indexOf(v), cn: mode !== 0,
+        review: `${v.hanzi} [${v.pinyin}] = ${v.korean}`, explain: `<span class="font-cn font-black">${v.hanzi}</span> [${v.pinyin}] = ${v.korean}` };
+    }
+    function practiceQ(q) {
+      const sd = q.sentenceDisplay ? `<div class="p-3 bg-sand-50 rounded-xl font-cn text-base sm:text-lg text-gray-900 comic-border-sm font-bold">${q.sentenceDisplay}</div>` : '';
+      const head = `<p class="font-black text-gray-900 text-sm sm:text-base">${q.question}</p>${sd}`;
+      if (q.type === 'order') {
+        return { kind: 'order', tag: '문장 배열', head, speak: q.chineseSentence, tokens: q.actualTokens, answer: q.actualTokens.join(''),
+          review: `${q.chineseSentence} (${q.translation})`, explain: `<span class="font-cn text-lg font-black">${q.chineseSentence}</span><br>${q.translation}` };
+      }
+      const correct = q.type === 'blank' ? q.options.indexOf(q.correct) : q.correct;
+      const sp = stripBlank(q.sentenceDisplay);
+      return { kind: 'choice', tag: q.type === 'blank' ? '빈칸 채우기' : '문장 선택', head, speak: hasCN(sp) ? sp : null, options: q.options, correct, cn: false,
+        review: `${q.question} → ${q.options[correct]}`, explain: q.explanation || `정답: ${q.options[correct]}` };
+    }
+    function buildTests() {
+      const pool = allVocab();
+      const vq = arr => shuf(arr).map((v, i) => vocabQ(v, i % 3, pool));
+      const pq = l => l.practice.map(practiceQ);
+      const T = [
+        { id: 'vocab-all', group: '종합', title: '단어 전체 테스트', desc: '0~10과 모든 단어 (뜻 · 한자 · 듣기 혼합)', build: () => vq(pool) },
+        { id: 'sent-all', group: '종합', title: '문장 전체 테스트', desc: '모든 과의 단어 배열 · 빈칸 · 선택 문제', build: () => shuf(lessonsData.flatMap(pq)) },
+        { id: 'vocab-20', group: '종합', title: '단어 랜덤 20문제', desc: '전체 단어 중 무작위 20개 (연습용)', build: () => vq(shuf(pool).slice(0, 20)) }
+      ];
+      lessonsData.forEach(l => T.push({ id: 'L' + l.id, group: '과별', title: `${l.id}과 테스트`, desc: l.title.replace(/^\d+과\s*/, ''),
+        build: () => shuf([...vq(l.vocab), ...pq(l)]) }));
+      return T;
+    }
+    function saveRec(id, score, total) {
+      const r = testRecords[id] || { best: 0, total, plays: 0 };
+      r.plays++; r.last = score; r.total = total;
+      if (score / total >= r.best / (r.total || total) || !r.best) r.best = Math.max(r.best, score);
+      testRecords[id] = r;
+      try { localStorage.setItem(TEST_KEY, JSON.stringify(testRecords)); } catch (e) {}
+    }
+    const pct = (a, b) => b ? Math.round(a / b * 100) : 0;
+
+    function renderTestHub() {
+      stopSpeaking();
+      const body = document.getElementById('testHubBody');
+      const tests = buildTests();
+      const counts = {}; tests.forEach(t => counts[t.id] = t.build().length);
+      const v = testRecords['vocab-all'], st = testRecords['sent-all'];
+      const vTot = counts['vocab-all'], sTot = counts['sent-all'];
+      const got = (v ? v.best : 0) + (st ? st.best : 0);
+      const total = pct(got, vTot + sTot);
+      const row = t => {
+        const r = testRecords[t.id], se = testSessions[t.id];
+        const n = se ? se.qs.length : counts[t.id];
+        let status = '미응시', btn = '시작';
+        if (se) { const x = sessStats(se); status = se.done ? `완료 · ${x.s}/${n}` : `진행 중 · ${x.a}/${n} 풀이 (${x.s}점)`; btn = se.done ? '결과 보기' : '이어서 풀기'; }
+        return `<div class="flex items-center justify-between gap-3 bg-white p-3.5 rounded-xl comic-border-sm">
+          <div class="min-w-0">
+            <p class="font-black text-gray-900 text-sm">${t.title} <span class="text-[11px] text-gray-500 font-bold">· ${n}문제</span></p>
+            <p class="text-xs text-gray-600 font-medium truncate">${t.desc}</p>
+            <p class="text-[11px] font-black mt-0.5 ${se ? 'text-brand-600' : 'text-gray-400'}">${status}${r ? ` · 최고 ${r.best}/${r.total} (${pct(r.best, r.total)}점)` : ''}</p>
+          </div>
+          <div class="flex items-center gap-1.5 flex-shrink-0">
+            ${se ? `<button data-reset="${t.id}" class="reset-test bg-white hover:bg-gray-100 text-gray-800 text-xs font-bold px-2.5 py-2 rounded-xl comic-border-sm comic-btn">리셋</button>` : ''}
+            <button data-test="${t.id}" class="start-test bg-brand-500 hover:bg-brand-600 text-white text-xs font-black px-3 py-2 rounded-xl comic-border-sm comic-btn">${btn}</button>
+          </div>
+        </div>`;
+      };
+      const grp = g => tests.filter(t => t.group === g).map(row).join('');
+      body.innerHTML = `
+        <div class="bg-white p-5 sm:p-6 rounded-2xl comic-border">
+          <h2 class="text-xl font-black text-gray-900 flex items-center gap-2"><i class="fa-solid fa-trophy text-brand-500"></i> 전체 테스트 · 점수판</h2>
+          <div class="grid grid-cols-3 gap-2 sm:gap-3 mt-4 text-center">
+            <div class="bg-orange-50 rounded-xl p-3 comic-border-sm"><p class="text-[11px] font-black text-gray-600">단어 전체</p><p class="text-lg font-black text-gray-900">${v ? v.best + '/' + vTot : '-'}</p></div>
+            <div class="bg-orange-50 rounded-xl p-3 comic-border-sm"><p class="text-[11px] font-black text-gray-600">문장 전체</p><p class="text-lg font-black text-gray-900">${st ? st.best + '/' + sTot : '-'}</p></div>
+            <div class="bg-amber-300 rounded-xl p-3 comic-border-sm"><p class="text-[11px] font-black text-gray-800">종합 점수</p><p class="text-2xl font-black text-gray-900">${v || st ? total : '-'}<span class="text-xs">점</span></p></div>
+          </div>
+          <p class="text-[11px] text-gray-500 font-bold mt-2">종합 점수 = 단어 전체 + 문장 전체 최고 기록의 합산 정답률(100점 만점). 아직 보지 않은 테스트는 0점으로 계산돼요.</p>
+          <button id="resetRecordsBtn" class="mt-2 text-[11px] font-bold text-gray-500 underline">점수·진행 상황 모두 초기화</button>
+        </div>
+        <div class="space-y-2"><h3 class="text-sm font-black text-gray-900">📚 종합 테스트</h3>${grp('종합')}</div>
+        <div class="space-y-2"><h3 class="text-sm font-black text-gray-900">📖 과별 테스트</h3>${grp('과별')}</div>`;
+      body.querySelectorAll('.start-test').forEach(b => b.onclick = () => { playSound('pop'); runTest(tests.find(t => t.id === b.dataset.test)); });
+      body.querySelectorAll('.reset-test').forEach(b => confirmTap(b, '정말? 한 번 더', () => { delete testSessions[b.dataset.reset]; saveSessions(); renderTestHub(); }));
+      confirmTap(document.getElementById('resetRecordsBtn'), '정말 전부 초기화? (한 번 더)', () => {
+        testRecords = {}; testSessions = {};
+        try { localStorage.removeItem(TEST_KEY); localStorage.removeItem(SESS_KEY); } catch (e) {}
+        renderTestHub();
+      });
+    }
+
+    function runTest(def) {
+      let sess = testSessions[def.id];
+      if (!sess) { sess = { qs: def.build(), i: 0, ans: {}, saved: false, done: false }; testSessions[def.id] = sess; saveSessions(); }
+      const qs = sess.qs, body = document.getElementById('testHubBody');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      function show() {
+        if (sess.done) return finish();
+        stopSpeaking();
+        sess.i = Math.max(0, Math.min(sess.i, qs.length - 1));
+        const i = sess.i, q = qs[i], key = 't:' + i;
+        const st = sess.ans[i] || (sess.ans[i] = { checked: false });
+        const sc0 = sessStats(sess);
+        body.innerHTML = `
+          <div class="bg-white p-4 rounded-2xl comic-border">
+            <div class="flex items-center justify-between gap-2">
+              <button id="tBack" class="text-xs font-bold text-gray-700 bg-gray-100 hover:bg-gray-200 px-3 py-1.5 rounded-xl comic-border-sm comic-btn">← 목록</button>
+              <span class="text-sm font-black text-gray-900 truncate">${def.title}</span>
+              <button id="tReset" class="text-xs font-bold text-gray-700 bg-white hover:bg-gray-100 px-3 py-1.5 rounded-xl comic-border-sm comic-btn">리셋</button>
+            </div>
+            <div class="flex items-center justify-between mt-2 text-xs font-black text-brand-600"><span>${i + 1} / ${qs.length}</span><span id="tScore">${sc0.s}점 (${sc0.a}문제 풀이)</span></div>
+            <div class="h-2 bg-gray-200 rounded-full mt-2 overflow-hidden"><div class="h-full bg-brand-500" style="width:${(sc0.a / qs.length) * 100}%"></div></div>
+          </div>
+          <div class="bg-white p-5 rounded-2xl comic-border space-y-4">
+            <span class="inline-block text-xs font-black text-gray-900 bg-amber-300 px-2.5 py-0.5 rounded-md comic-border-sm">${q.tag}</span>
+            ${q.head}
+            ${q.speak ? `<div><button data-speak-key="${key}" class="text-xs font-black text-gray-900 bg-amber-300 hover:bg-amber-400 px-3 py-1.5 rounded-xl comic-border-sm comic-btn flex items-center gap-1.5"><i class="fa-solid fa-volume-high text-[10px]"></i><span>듣기</span></button></div>` : ''}
+            <div id="tAns"></div>
+            <div id="tFb" class="hidden p-3 rounded-xl text-xs sm:text-sm leading-relaxed comic-border-sm"></div>
+            <div class="flex items-center gap-2">
+              ${i > 0 ? '<button id="tPrev" class="bg-white hover:bg-gray-100 text-gray-800 text-sm font-bold px-4 py-2.5 rounded-xl comic-border-sm comic-btn">← 이전</button>' : ''}
+              <button id="tNext" class="hidden bg-brand-500 hover:bg-brand-600 text-white text-sm font-black px-5 py-2.5 rounded-xl comic-border-sm comic-btn">${i === qs.length - 1 ? '결과 보기' : '다음 문제 →'}</button>
+            </div>
+          </div>`;
+        document.getElementById('tBack').onclick = () => { stopSpeaking(); renderTestHub(); };   // 진행 상황은 자동 저장됨
+        confirmTap(document.getElementById('tReset'), '정말 리셋? (한 번 더)', () => { delete testSessions[def.id]; saveSessions(); runTest(def); });
+        const pv = document.getElementById('tPrev');
+        if (pv) pv.onclick = () => { sess.i--; saveSessions(); show(); };
+        const nx = document.getElementById('tNext');
+        nx.onclick = () => { if (i >= qs.length - 1) { sess.done = true; saveSessions(); finish(); } else { sess.i++; saveSessions(); show(); } };
+        const lb = body.querySelector(`[data-speak-key="${key}"]`);
+        if (lb) { lb.onclick = () => speakChinese(q.speak, null, key); addRestart(lb, () => speakChinese(q.speak, null, key, { restart: true })); }
+
+        const fb = document.getElementById('tFb'), ans = document.getElementById('tAns');
+        const showFb = ok => {
+          fb.className = `p-3 rounded-xl text-xs sm:text-sm leading-relaxed comic-border-sm ${ok ? 'bg-green-50 text-green-900' : 'bg-red-50 text-red-900'}`;
+          fb.innerHTML = `<strong>${ok ? '정답! 🎉' : '아쉬워요!'}</strong> ${q.explain}`;
+          nx.classList.remove('hidden');
+        };
+        const commit = ok => {
+          st.checked = true; st.ok = ok; saveSessions();
+          playSound(ok ? 'correct' : 'wrong');
+          const x = sessStats(sess);
+          document.getElementById('tScore').textContent = `${x.s}점 (${x.a}문제 풀이)`;
+          showFb(ok);
+        };
+
+        if (q.kind === 'choice') {
+          ans.className = 'grid grid-cols-2 gap-2 sm:gap-3';
+          ans.innerHTML = q.options.map((o, oi) => `<button data-oi="${oi}" class="t-opt p-3 rounded-xl border-2 border-gray-800 text-left font-bold text-xs sm:text-sm hover:bg-orange-100 transition comic-btn bg-white ${q.cn ? 'font-cn' : ''}">${o}</button>`).join('');
+          const btns = ans.querySelectorAll('.t-opt');
+          const mark = oi => {
+            btns.forEach(x => { x.disabled = true; if (+x.dataset.oi === q.correct) x.classList.add('bg-green-100', 'text-green-900'); });
+            if (oi !== q.correct) btns[oi].classList.add('bg-red-100', 'text-red-900');
+          };
+          if (st.checked) { mark(st.sel); showFb(st.ok); }
+          btns.forEach(b => b.onclick = () => {
+            if (st.checked) return;
+            const oi = +b.dataset.oi; st.sel = oi; mark(oi); commit(oi === q.correct);
+          });
+        } else {
+          if (!q.scr) { q.scr = shuf(q.tokens); saveSessions(); }
+          ans.className = 'space-y-3';
+          ans.innerHTML = `
+            <div class="min-h-[56px] p-2.5 bg-sand-50 border-2 border-dashed border-gray-600 rounded-xl flex flex-wrap gap-2 items-center t-drop"></div>
+            <div class="flex flex-wrap gap-2 t-pool">${q.scr.map(t => `<button class="token-btn px-3.5 py-1.5 bg-white comic-border-sm rounded-xl font-cn font-black text-gray-900 hover:bg-orange-100 comic-btn transition text-base" data-tok="${t}">${t}</button>`).join('')}</div>
+            <div class="flex items-center gap-2">
+              <button class="t-check bg-brand-500 hover:bg-brand-600 text-white text-xs font-black px-4 py-2 rounded-xl comic-border-sm comic-btn">정답 확인</button>
+              <button class="t-clear bg-white hover:bg-gray-100 text-gray-800 text-xs font-bold px-3 py-2 rounded-xl comic-border-sm comic-btn">다시 담기</button>
+            </div>`;
+          const ob = mountOrderBuilder(ans.querySelector('.t-drop'), ans.querySelector('.t-pool'), list => { if (!st.checked) { st.order = list; saveSessions(); } });
+          const chk = ans.querySelector('.t-check'), clr = ans.querySelector('.t-clear');
+          if (st.order && st.order.length) ob.set(st.order);
+          const lockUI = () => { ob.freeze(); chk.disabled = true; clr.disabled = true; };
+          if (st.checked) { lockUI(); showFb(st.ok); }
+          clr.onclick = () => { playSound('pop'); ob.clear(); };
+          chk.onclick = () => {
+            if (st.checked) return;
+            if (!ob.get().length) { showToast('글자를 먼저 담아주세요!'); return; }
+            st.order = ob.get(); lockUI();
+            commit(st.order.join('') === q.answer);
+          };
+        }
+      }
+
+      function finish() {
+        stopSpeaking();
+        const { s: score } = sessStats(sess);
+        if (!sess.saved) { saveRec(def.id, score, qs.length); sess.saved = true; saveSessions(); }
+        const wrong = qs.filter((q, k) => sess.ans[k] && sess.ans[k].checked && !sess.ans[k].ok).map(q => q.review);
+        const skipped = qs.length - sessStats(sess).a;
+        const p = pct(score, qs.length);
+        const msg = p >= 90 ? '완벽해요! 🏆' : p >= 70 ? '아주 잘했어요! 👍' : p >= 50 ? '좋아요, 조금만 더! 💪' : '복습하고 다시 도전해 봐요! 🌱';
+        body.innerHTML = `
+          <div class="bg-white p-6 rounded-2xl comic-border text-center space-y-2">
+            <p class="text-sm font-black text-gray-600">${def.title} 결과</p>
+            <p class="text-5xl font-black text-brand-600">${p}<span class="text-xl text-gray-900">점</span></p>
+            <p class="text-sm font-black text-gray-900">${score} / ${qs.length} 정답 · ${msg}</p>
+            ${skipped ? `<p class="text-xs text-gray-500 font-bold">풀지 않은 문제 ${skipped}개</p>` : ''}
+            <div class="flex flex-wrap justify-center gap-2 pt-2">
+              <button id="tReview" class="bg-brand-500 hover:bg-brand-600 text-white text-xs font-black px-4 py-2 rounded-xl comic-border-sm comic-btn">내 답 다시 보기</button>
+              <button id="tReset2" class="bg-white hover:bg-gray-100 text-gray-800 text-xs font-bold px-4 py-2 rounded-xl comic-border-sm comic-btn">리셋 (새로 풀기)</button>
+              <button id="tList" class="bg-white hover:bg-gray-100 text-gray-800 text-xs font-bold px-4 py-2 rounded-xl comic-border-sm comic-btn">점수판 · 목록</button>
+            </div>
+          </div>
+          ${wrong.length ? `<div class="bg-white p-5 rounded-2xl comic-border space-y-2"><h3 class="text-sm font-black text-gray-900">❌ 틀린 문제 복습 (${wrong.length})</h3>
+            <ul class="list-disc pl-5 space-y-1 text-xs sm:text-sm text-gray-800 font-medium">${wrong.map(w => `<li>${w}</li>`).join('')}</ul></div>` : ''}`;
+        document.getElementById('tReview').onclick = () => { sess.done = false; sess.i = 0; saveSessions(); show(); };
+        confirmTap(document.getElementById('tReset2'), '정말 리셋? (한 번 더)', () => { delete testSessions[def.id]; saveSessions(); runTest(def); });
+        document.getElementById('tList').onclick = renderTestHub;
+      }
+      show();
+    }
+
+    /* ===== 전체 자동 릴레이 (1~10과 이어서 계속 재생, 0과 제외) ===== */
+    function runRelay(kind) {
+      return cid => {
+        const items = [];
+        lessonsData.filter(l => l.id !== 0).forEach(l => {
+          if (kind === 'dlg') l.dialogue.forEach(d => items.push({ t: d.hanzi, n: `${l.id}과 · ${d.speaker}: ${d.hanzi}` }));
+          else l.vocab.forEach(v => items.push({ t: v.hanzi, n: `${l.id}과 · ${v.hanzi} (${v.korean})` }));
+        });
+        const now = document.getElementById('relayNow');
+        let i = 0;
+        function step() {
+          if (!chainGate(cid, step)) return;
+          if (i >= items.length) {
+            if (document.getElementById('relayLoop').checked) i = 0;
+            else { endChain(cid); showToast('전체 릴레이 재생 완료!'); return; }
+          }
+          const it = items[i];
+          now.textContent = '▶ ' + it.n;
+          now.classList.remove('hidden');
+          speakChinese(it.t, () => { i++; setTimeout(step, kind === 'dlg' ? 800 : 600); }, null, { chain: true });
+        }
+        step();
+        showToast(kind === 'dlg' ? '1~10과 전체 대화를 이어서 들려드려요.' : '1~10과 전체 단어를 이어서 들려드려요.');
+      };
+    }
+    [['relayDlgBtn', 'chain:relay-dlg', 'dlg'], ['relayVocabBtn', 'chain:relay-vocab', 'vocab']].forEach(([id, key, kind]) => {
+      const b = document.getElementById(id), run = runRelay(kind);
+      b.dataset.speakKey = key;
+      addRestart(b, () => restartChain(key, run));
+      b.onclick = () => toggleChain(key, run);
+    });
+
+    document.getElementById('openTestHubBtn').onclick = () => {
+      playSound('pop');
+      setView('tests');
+      renderTestHub();
+      closeMobileSidebar();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    /* ==========================================================================
+       탭 슬라이드바: 화살표 · 마우스 휠 · 드래그 · 선택 탭 자동 중앙 이동
+       ========================================================================== */
+    (function () {
+      const bar = document.getElementById('subTabBar');
+      const prev = document.getElementById('tabPrev'), next = document.getElementById('tabNext');
+      const upd = () => {
+        const max = bar.scrollWidth - bar.clientWidth;
+        prev.classList.toggle('hidden', bar.scrollLeft < 4);
+        next.classList.toggle('hidden', bar.scrollLeft > max - 4);
+      };
+      prev.onclick = () => bar.scrollBy({ left: -180, behavior: 'smooth' });
+      next.onclick = () => bar.scrollBy({ left: 180, behavior: 'smooth' });
+      bar.addEventListener('scroll', upd);
+      window.addEventListener('resize', upd);
+      bar.addEventListener('wheel', e => {
+        if (bar.scrollWidth <= bar.clientWidth) return;
+        if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) { e.preventDefault(); bar.scrollLeft += e.deltaY; }
+      }, { passive: false });
+      let down = false, sx = 0, sl = 0, moved = false;
+      bar.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') return; down = true; moved = false; sx = e.clientX; sl = bar.scrollLeft; });
+      window.addEventListener('pointermove', e => { if (!down) return; const dx = e.clientX - sx; if (Math.abs(dx) > 5) moved = true; if (moved) bar.scrollLeft = sl - dx; });
+      window.addEventListener('pointerup', () => { down = false; });
+      bar.addEventListener('click', e => { if (moved) { e.stopPropagation(); e.preventDefault(); moved = false; } }, true);
+      document.querySelectorAll('.nav-tab').forEach(b => b.addEventListener('click', () => {
+        setTimeout(() => { b.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' }); upd(); }, 30);
+      }));
+      setTimeout(upd, 100); setTimeout(upd, 800);
+    })();
+
+    /* ==========================================================================
+       TAB SWITCHING
+       ========================================================================== */
+    const tabButtons = document.querySelectorAll('.nav-tab');
+    const tabPanes = document.querySelectorAll('.tab-pane');
+
+    tabButtons.forEach(btn => {
+      btn.onclick = () => {
+        playSound('pop');
+        tabButtons.forEach(b => {
+          b.classList.remove('active-tab', 'font-black', 'border-brand-500', 'text-brand-600');
+          b.classList.add('font-bold', 'text-gray-500', 'border-transparent');
+        });
+        btn.classList.add('active-tab', 'font-black', 'border-brand-500', 'text-brand-600');
+        btn.classList.remove('font-bold', 'text-gray-500', 'border-transparent');
+
+        const target = btn.dataset.tab;
+        tabPanes.forEach(p => {
+          p.classList.toggle('hidden', p.id !== `tab-${target}`);
+        });
+      };
+    });
+
+    /* ==========================================================================
+       EVENT LISTENERS & MOBILE SIDEBAR
+       ========================================================================== */
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const closeMobileMenuBtn = document.getElementById('closeMobileMenuBtn');
+    const sidebar = document.getElementById('sidebar');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+    function openMobileSidebar() {
+      sidebar.classList.remove('-translate-x-full');
+      sidebarOverlay.classList.remove('hidden');
+    }
+    function closeMobileSidebar() {
+      sidebar.classList.add('-translate-x-full');
+      sidebarOverlay.classList.add('hidden');
+    }
+
+    mobileMenuBtn.onclick = openMobileSidebar;
+    closeMobileMenuBtn.onclick = closeMobileSidebar;
+    sidebarOverlay.onclick = closeMobileSidebar;
+
+    document.getElementById('lessonCompleteCheckbox').onchange = (e) => {
+      toggleLessonCompletion(currentLessonId);
+    };
+
+    document.getElementById('resetStorageBtn').onclick = () => {
+      const confirmReset = window.confirm("모든 단원의 학습 기록을 초기화하시겠습니까?");
+      if (confirmReset) {
+        completedLessons = [];
+        localStorage.removeItem(STORAGE_KEY);
+        renderSidebar();
+        showToast("학습 기록이 초기화되었습니다.");
+      }
+    };
+
+    /* INITIAL BOOTSTRAP */
     window.addEventListener('DOMContentLoaded', () => {
       renderSidebar();
       selectLesson(0);
-      setTimeout(setupAuthSync, 300);
     });
   </script>
+  <script>
+  /* ===== 로그인 & 클라우드 동기화 (Firebase) ===== */
+  (function () {
+    const ID_DOMAIN = 'somong.app'; // 아이디만 입력하면 아이디@somong.app 으로 로그인
+    const KEYS = ['toon_chinese_progress_v1', 'toon_chinese_tests_v1', 'toon_chinese_test_sessions_v1'];
+    const $ = id => document.getElementById(id);
+    const toast = m => { try { showToast(m); } catch (e) { alert(m); } };
+    let user = null, timer = null, loaded = false;
+
+    const modal = $('authModal');
+    const open = () => modal.classList.remove('hidden');
+    const close = () => modal.classList.add('hidden');
+    $('authBtn').onclick = open;
+    $('closeAuthModal').onclick = close;
+    modal.addEventListener('click', e => { if (e.target === modal) close(); });
+
+    const toEmail = v => { v = v.trim(); return v.includes('@') ? v : v + '@' + ID_DOMAIN; };
+    const errMsg = e => {
+      const c = (e && e.code) || '';
+      if (/invalid-credential|wrong-password|user-not-found/.test(c)) return '아이디 또는 비밀번호가 맞지 않아요.';
+      if (/email-already/.test(c)) return '이미 등록된 계정이에요. 로그인해 주세요.';
+      if (/weak-password/.test(c)) return '비밀번호는 6자리 이상이어야 해요.';
+      if (/invalid-email/.test(c)) return '아이디 또는 이메일 형식을 확인해 주세요.';
+      if (/popup-closed|cancelled/.test(c)) return '로그인 창이 닫혔어요.';
+      if (/network/.test(c)) return '네트워크 연결을 확인해 주세요.';
+      return '로그인 중 문제가 생겼어요. (' + (c || 'error') + ')';
+    };
+    const bridge = () => window.FB_BRIDGE && window.FB_BRIDGE.isReady ? window.FB_BRIDGE : null;
+    const need = () => { const b = bridge(); if (!b) toast('클라우드 연결을 불러오지 못했어요. 인터넷 연결을 확인해 주세요.'); return b; };
+
+    $('googleLoginBtn').onclick = async () => { const b = need(); if (!b) return; try { await b.signInGoogle(); close(); } catch (e) { toast(errMsg(e)); } };
+    $('emailLoginSubmit').onclick = async () => {
+      const b = need(); if (!b) return;
+      try { await b.signInEmail(toEmail($('authEmail').value), $('authPw').value); close(); } catch (e) { toast(errMsg(e)); }
+    };
+    $('emailSignUpSubmit').onclick = async () => {
+      const b = need(); if (!b) return;
+      if (!$('authEmail').value.trim() || $('authPw').value.length < 6) return toast('아이디와 6자리 이상의 비밀번호를 입력해 주세요.');
+      try { await b.signUpEmail(toEmail($('authEmail').value), $('authPw').value); close(); } catch (e) { toast(errMsg(e)); }
+    };
+    $('emailAuthForm').onsubmit = e => { e.preventDefault(); $('emailLoginSubmit').click(); };
+    $('doSignOutBtn').onclick = async () => { const b = bridge(); if (b) { await b.logOut(); close(); toast('로그아웃되었어요.'); } };
+
+    function snapshot() { return { completedLessons, testRecords, testSessions }; }
+    function scheduleSave() {
+      if (!user || !loaded || !bridge()) return;
+      clearTimeout(timer);
+      timer = setTimeout(async () => {
+        try {
+          await bridge().saveCloud(user.uid, snapshot());
+          $('cloudStatusMsg').textContent = '클라우드 동기화 완료 (' + new Date().toLocaleTimeString() + ')';
+        } catch (e) { console.error('클라우드 저장 실패:', e); $('cloudStatusMsg').textContent = '클라우드 저장에 실패했어요. 잠시 후 다시 시도됩니다.'; }
+      }, 800);
+    }
+    // 기존 저장 코드를 건드리지 않고, localStorage 저장 시점에 클라우드 저장을 예약
+    const _set = Storage.prototype.setItem, _rem = Storage.prototype.removeItem;
+    Storage.prototype.setItem = function (k, v) { _set.call(this, k, v); if (this === localStorage && KEYS.includes(k)) scheduleSave(); };
+    Storage.prototype.removeItem = function (k) { _rem.call(this, k); if (this === localStorage && KEYS.includes(k)) scheduleSave(); };
+
+    function merge(cloud) {
+      const c = cloud || {};
+      const done = Array.from(new Set([...(completedLessons || []), ...(c.completedLessons || [])]));
+      const rec = Object.assign({}, c.testRecords || {});
+      Object.entries(testRecords || {}).forEach(([k, v]) => {
+        const o = rec[k];
+        if (!o) rec[k] = v;
+        else rec[k] = Object.assign({}, v, o, { best: Math.max(o.best || 0, v.best || 0), plays: Math.max(o.plays || 0, v.plays || 0) });
+      });
+      const sess = Object.assign({}, testSessions || {}, c.testSessions || {});
+      return { done, rec, sess };
+    }
+
+    function setUI(u) {
+      $('authBtnLabel').textContent = u ? (u.displayName || (u.email || '').split('@')[0] || '내 계정') : '로그인';
+      $('authLoggedInView').classList.toggle('hidden', !u);
+      $('authLoggedOutView').classList.toggle('hidden', !!u);
+      $('cloudStatusBar').classList.toggle('hidden', !u);
+      if (u) {
+        const name = u.displayName || (u.email || '').split('@')[0] || '학습자';
+        $('userNameLabel').textContent = name + '님';
+        $('userEmailLabel').textContent = (u.email || '').endsWith('@' + ID_DOMAIN) ? u.email.split('@')[0] : (u.email || '');
+        $('userAvatar').textContent = (name[0] || '🌱').toUpperCase();
+      }
+    }
+
+    async function onUser(u) {
+      user = u; loaded = false; setUI(u);
+      if (!u) return;
+      try {
+        const cloud = await bridge().loadCloud(u.uid);
+        const m = merge(cloud);
+        completedLessons = m.done; testRecords = m.rec; testSessions = m.sess;
+        _set.call(localStorage, KEYS[0], JSON.stringify(completedLessons));
+        _set.call(localStorage, KEYS[1], JSON.stringify(testRecords));
+        _set.call(localStorage, KEYS[2], JSON.stringify(testSessions));
+        loaded = true;
+        await bridge().saveCloud(u.uid, snapshot());
+        try { renderSidebar(); } catch (e) {}
+        $('cloudStatusMsg').textContent = '클라우드 동기화 완료 (' + new Date().toLocaleTimeString() + ')';
+        toast('로그인되었어요. 학습 기록을 불러왔어요!');
+      } catch (e) {
+        console.error(e);
+        $('cloudStatusMsg').textContent = '클라우드 기록을 불러오지 못했어요.';
+        toast('클라우드 기록을 불러오지 못했어요.');
+      }
+    }
+
+    // Firebase 모듈이 늦게 로드될 수 있어 준비될 때까지 확인
+    let tries = 0;
+    const wait = setInterval(() => {
+      if (bridge()) { clearInterval(wait); bridge().onAuthStateChanged(onUser); }
+      else if (++tries > 100) { clearInterval(wait); console.warn('Firebase 로드 실패'); }
+    }, 150);
+  })();
+  </script>
+
 </body>
 </html>
