@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" class="locked">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -251,7 +251,7 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
           <div>
             <h1 class="text-sm sm:text-base font-extrabold text-gray-900 tracking-tight flex items-center gap-1.5">
               <span>봄쌤 중국어 -쏘몽</span>
-              <span class="text-sm bg-brand-500 text-white font-bold px-2 py-0.5 rounded-md comic-badge">회화 1권</span>
+              <span class="text-sm bg-brand-500 text-white font-bold px-2 py-0.5 rounded-md comic-badge">꾸준중1</span>
             </h1>
             <p class="text-sm sm:text-base text-gray-700 font-sans font-bold hidden sm:block">만화로 재밌게! 소리내어 말하는 스마트 공부방</p>
           </div>
@@ -340,8 +340,8 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
 
         <form id="emailAuthForm" class="space-y-3">
           <div>
-            <label class="block text-sm font-black text-gray-700 mb-1">아이디</label>
-            <input id="authEmail" type="text" required autocomplete="username" placeholder="부여받은 아이디" class="w-full px-3 py-2 rounded-xl text-sm border border-gray-300 focus:outline-none focus:border-brand-500">
+            <label class="block text-sm font-black text-gray-700 mb-1">아이디 (메일주소)</label>
+            <input id="authEmail" type="text" required autocomplete="username" placeholder="부여받은 아이디 (메일주소)" class="w-full px-3 py-2 rounded-xl text-sm border border-gray-300 focus:outline-none focus:border-brand-500">
           </div>
           <div>
             <label class="block text-sm font-black text-gray-700 mb-1">비밀번호</label>
@@ -1961,12 +1961,19 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
       if (cur && cur.key === k) return cur.state;
       return 'idle';
     }
+    let lastScrolled = null;
     function updateSpeakUI() {
+      if (!chainKey) lastScrolled = null;
       const rn = document.getElementById('relayNow');
       if (rn && !(chainKey && chainKey.startsWith('chain:relay'))) rn.classList.add('hidden');
       document.querySelectorAll('[data-speak-key]').forEach(el => {
         const st = stateOf(el.dataset.speakKey);
         el.classList.toggle('is-speaking', st !== 'idle');
+        /* 전체 연속 듣기 중에는 지금 읽는 대화문/단어 카드가 보이도록 자동 스크롤 */
+        if (st === 'playing' && el.tagName !== 'BUTTON' && /^chain:(dialogue|vocab)$/.test(chainKey || '') && /^[dv]:/.test(el.dataset.speakKey) && el !== lastScrolled) {
+          lastScrolled = el;
+          try { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch (e) { el.scrollIntoView(); }
+        }
         if (el.tagName !== 'BUTTON') return;
         if (el._orig === undefined) el._orig = el.innerHTML;
         if (st === 'idle') { el.innerHTML = el._orig; return; }
@@ -2242,7 +2249,7 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
               <span class="text-sm font-bold text-brand-600 font-sans pinyin-text">[${v.pinyin}]</span>
             </div>
             <p class="text-sm text-gray-800 font-bold">${v.korean}</p>
-            ${v.desc ? `<p class="text-sm sm:text-base text-gray-600 font-sans font-bold mt-0.5">${v.desc}</p>` : ''}
+            ${v.desc ? `<p class="text-xs text-gray-400 font-sans font-normal mt-0.5">${v.desc}</p>` : ''}
           </div>
           <button class="w-8 h-8 rounded-full bg-orange-100 text-brand-600 hover:bg-brand-500 hover:text-white flex items-center justify-center transition border border-gray-900 shadow-2xs active:scale-90" title="발음 듣기">
             <i class="fa-solid fa-volume-high text-sm"></i>
@@ -2576,7 +2583,9 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
         if (/[\u4e00-\u9fff]/.test(qText)) {
           const qKey = 'q:' + idx;
           const bar = document.createElement('div');
-          bar.innerHTML = `<button data-speak-key="${qKey}" class="text-sm font-black text-gray-900 bg-amber-300 hover:bg-amber-400 px-3 py-1.5 rounded-xl comic-border-sm comic-btn flex items-center gap-1.5"><i class="fa-solid fa-volume-high text-xs"></i><span>문장 듣기</span></button>`;
+          bar.innerHTML = `<button data-speak-key="${qKey}" class="text-sm font-black text-gray-900 bg-amber-300 hover:bg-amber-400 px-3 py-1.5 rounded-xl comic-border-sm comic-btn flex items-center gap-1.5"><i class="fa-solid fa-volume-high text-xs"></i><span>문장 듣기</span></button>${q.translation ? meaningHtml(q.translation) : ''}`;
+          bar.className = 'flex flex-wrap items-center gap-2';
+          wireMeaning(bar);
           const qb = bar.firstElementChild;
           qb.onclick = () => speakChinese(qText, null, qKey);
           item.insertBefore(bar, item.children[1] || null);
@@ -2623,7 +2632,7 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
           : mode === 1
           ? `<p class="font-black text-gray-900 text-sm sm:text-base">'${v.korean}'에 해당하는 중국어는?</p>`
           : `<p class="font-black text-gray-900 text-sm sm:text-base">소리를 듣고 알맞은 단어를 고르세요</p>
-             <div class="flex items-center gap-2">${listenBtn}<span class="text-sm text-gray-500 font-bold">버튼을 눌러 들어보세요</span></div>`;
+             <div class="flex flex-wrap items-center gap-2">${listenBtn}${meaningHtml(v.korean)}</div>`;
 
         const item = document.createElement('div');
         item.className = "bg-white p-5 rounded-2xl comic-border space-y-3";
@@ -2636,6 +2645,7 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
           <div class="vq-feedback hidden p-3 rounded-xl text-sm sm:text-sm leading-relaxed comic-border-sm"></div>
         `;
         box.appendChild(item);
+        wireMeaning(item);
 
         const lb = item.querySelector(`[data-speak-key="${key}"]`);
         if (lb) {
@@ -2853,14 +2863,22 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
         ? `<p class="font-black text-sm sm:text-base">다음 단어의 뜻은?</p><p class="font-cn text-2xl font-black">${v.hanzi} <span class="text-sm text-brand-600 font-sans pinyin-text">[${v.pinyin}]</span></p>`
         : mode === 1 ? `<p class="font-black text-sm sm:text-base">'${v.korean}'에 해당하는 중국어는?</p>`
         : `<p class="font-black text-sm sm:text-base">소리를 듣고 알맞은 단어를 고르세요</p>`;
-      return { kind: 'choice', tag: '단어', head, speak: mode === 1 ? null : v.hanzi, options: ch.map(text), correct: ch.indexOf(v), cn: mode !== 0,
+      return { kind: 'choice', tag: '단어', head, speak: mode === 1 ? null : v.hanzi, meaning: mode === 2 ? v.korean : null, options: ch.map(text), correct: ch.indexOf(v), cn: mode !== 0,
         review: `${v.hanzi} [${v.pinyin}] = ${v.korean}`, explain: `<span class="font-cn font-black">${v.hanzi}</span> [${v.pinyin}] = ${v.korean}` };
+    }
+    function meaningHtml(t) {
+      return `<button type="button" class="meaning-btn text-sm font-black text-gray-900 bg-white hover:bg-orange-50 px-3 py-1.5 rounded-xl comic-border-sm comic-btn">뜻 보기</button><span class="meaning-txt hidden text-base font-black text-brand-600">뜻: ${t}</span>`;
+    }
+    function wireMeaning(root) {
+      const b = root.querySelector('.meaning-btn'), t = root.querySelector('.meaning-txt');
+      if (!b || !t) return;
+      b.onclick = () => { const hid = t.classList.toggle('hidden'); b.textContent = hid ? '뜻 보기' : '뜻 숨기기'; };
     }
     function practiceQ(q) {
       const sd = q.sentenceDisplay ? `<div class="p-3 bg-sand-50 rounded-xl font-cn text-base sm:text-lg text-gray-900 comic-border-sm font-bold">${q.sentenceDisplay}</div>` : '';
       const head = `<p class="font-black text-gray-900 text-sm sm:text-base">${q.question}</p>${sd}`;
       if (q.type === 'order') {
-        return { kind: 'order', tag: '문장 배열', head, speak: q.chineseSentence, tokens: q.actualTokens, answer: q.actualTokens.join(''),
+        return { kind: 'order', tag: '문장 배열', head, speak: q.chineseSentence, tokens: q.actualTokens, answer: q.actualTokens.join(''), meaning: q.translation,
           review: `${q.chineseSentence} (${q.translation})`, explain: `<span class="font-cn text-lg font-black">${q.chineseSentence}</span><br>${q.translation}` };
       }
       const correct = q.type === 'blank' ? q.options.indexOf(q.correct) : q.correct;
@@ -2965,7 +2983,7 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
           <div class="bg-white p-5 rounded-2xl comic-border space-y-4">
             <span class="inline-block text-sm font-black text-gray-900 bg-amber-300 px-2.5 py-0.5 rounded-md comic-border-sm">${q.tag}</span>
             ${q.head}
-            ${q.speak ? `<div><button data-speak-key="${key}" class="text-sm font-black text-gray-900 bg-amber-300 hover:bg-amber-400 px-3 py-1.5 rounded-xl comic-border-sm comic-btn flex items-center gap-1.5"><i class="fa-solid fa-volume-high text-xs"></i><span>듣기</span></button></div>` : ''}
+            ${q.speak ? `<div class="flex flex-wrap items-center gap-2"><button data-speak-key="${key}" class="text-sm font-black text-gray-900 bg-amber-300 hover:bg-amber-400 px-3 py-1.5 rounded-xl comic-border-sm comic-btn flex items-center gap-1.5"><i class="fa-solid fa-volume-high text-xs"></i><span>듣기</span></button>${q.meaning ? meaningHtml(q.meaning) : ''}</div>` : ''}
             <div id="tAns"></div>
             <div id="tFb" class="hidden p-3 rounded-xl text-sm sm:text-sm leading-relaxed comic-border-sm"></div>
             <div class="flex items-center gap-2">
@@ -2979,6 +2997,7 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
         if (pv) pv.onclick = () => { sess.i--; saveSessions(); show(); };
         const nx = document.getElementById('tNext');
         nx.onclick = () => { if (i >= qs.length - 1) { sess.done = true; saveSessions(); finish(); } else { sess.i++; saveSessions(); show(); } };
+        wireMeaning(body);
         const lb = body.querySelector(`[data-speak-key="${key}"]`);
         if (lb) { lb.onclick = () => speakChinese(q.speak, null, key); addRestart(lb, () => speakChinese(q.speak, null, key, { restart: true })); }
 
@@ -3287,7 +3306,7 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
 
     async function onUser(u) {
       user = u; loaded = false; setUI(u);
-      if (!u) return;
+      if (!u) { lock(); return; }
       try {
         const cloud = await bridge().loadCloud(u.uid);
         const m = merge(cloud);
@@ -3311,7 +3330,7 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
     let tries = 0;
     const wait = setInterval(() => {
       if (bridge()) { clearInterval(wait); bridge().onAuthStateChanged(onUser); }
-      else if (++tries > 100) { clearInterval(wait); console.warn('Firebase 로드 실패'); }
+      else if (++tries > 100) { clearInterval(wait); console.warn('Firebase 로드 실패'); toast('로그인 서버에 연결하지 못했어요. 인터넷 연결을 확인하고 새로고침해 주세요.'); }
     }, 150);
   })();
   </script>
