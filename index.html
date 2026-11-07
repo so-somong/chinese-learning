@@ -3217,10 +3217,70 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
     });
   </script>
   <script>
+  /* ===== 마지막으로 본 위치에서 이어서 시작 ===== */
+  (function () {
+    const POS_KEY = 'somong_last_pos_v1';
+    const SC_KEY = 'somong_scroll_v1';   // 스크롤 위치는 기기마다 달라서 이 기기에만 저장
+    let restoring = true, restoringScroll = false, scrollDone = false, scTimer = null;
+    const readPos = () => { try { return JSON.parse(localStorage.getItem(POS_KEY) || 'null'); } catch (e) { return null; } };
+    const curTab = () => { const b = document.querySelector('.nav-tab.active-tab'); return b ? b.dataset.tab : 'vocab'; };
+    const initialPos = readPos();   // 페이지가 처음 열릴 때 저장돼 있던 위치
+    let initialSc = null; try { initialSc = JSON.parse(localStorage.getItem(SC_KEY) || 'null'); } catch (e) {}
+    function savePos() {
+      if (restoring) return;
+      try { localStorage.setItem(POS_KEY, JSON.stringify({ lesson: currentLessonId, tab: curTab(), t: Date.now() })); } catch (e) {}
+      try { localStorage.setItem(SC_KEY, JSON.stringify({ lesson: currentLessonId, tab: curTab(), y: 0 })); } catch (e) {}
+    }
+    function saveScroll() {
+      if (restoring || restoringScroll || !currentLessonId && currentLessonId !== 0) return;
+      if (document.documentElement.classList.contains('locked')) return;
+      try { localStorage.setItem(SC_KEY, JSON.stringify({ lesson: currentLessonId, tab: curTab(), y: Math.round(window.scrollY) })); } catch (e) {}
+    }
+    window.addEventListener('scroll', () => { clearTimeout(scTimer); scTimer = setTimeout(saveScroll, 300); }, { passive: true });
+    document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') saveScroll(); });
+    window.addEventListener('pagehide', saveScroll);
+    window.__somongRestoreScroll = function () {
+      if (scrollDone) return; scrollDone = true;
+      const sc = initialSc;
+      if (!sc || sc.lesson !== currentLessonId || sc.tab !== curTab() || !(sc.y > 0)) return;
+      restoringScroll = true;
+      [100, 500, 1200].forEach(d => setTimeout(() => window.scrollTo(0, sc.y), d));
+      setTimeout(() => { restoringScroll = false; }, 1500);
+    };
+    const _sel = selectLesson;
+    selectLesson = function (id) { _sel(id); savePos(); };
+    const _sv = setView;
+    setView = function (v) { _sv(v); savePos(); };
+    tabButtons.forEach(b => b.addEventListener('click', () => setTimeout(savePos, 0)));
+
+    function applyPos(pos, quiet) {
+      if (!pos || !lessonsData.some(l => l.id === pos.lesson)) return;
+      restoring = true;
+      try {
+        _sel(pos.lesson);
+        const btn = Array.from(tabButtons).find(b => b.dataset.tab === pos.tab);
+        if (btn) {
+          tabButtons.forEach(b => {
+            b.classList.remove('active-tab', 'font-black', 'border-brand-500', 'text-brand-600');
+            b.classList.add('font-bold', 'text-gray-500', 'border-transparent');
+          });
+          btn.classList.add('active-tab', 'font-black', 'border-brand-500', 'text-brand-600');
+          btn.classList.remove('font-bold', 'text-gray-500', 'border-transparent');
+          tabPanes.forEach(p => p.classList.toggle('hidden', p.id !== 'tab-' + pos.tab));
+          setTimeout(() => { try { btn.scrollIntoView({ inline: 'center', block: 'nearest' }); } catch (e) {} }, 60);
+        }
+        if (!quiet && (pos.lesson !== 0 || (pos.tab && pos.tab !== 'vocab'))) showToast('마지막으로 보던 ' + pos.lesson + '과에서 이어서 시작해요!');
+      } finally { restoring = false; }
+    }
+    window.__somongApplyPos = applyPos;
+    window.addEventListener('DOMContentLoaded', () => { applyPos(initialPos, false); restoring = false; });
+  })();
+  </script>
+  <script>
   /* ===== 로그인 & 클라우드 동기화 (Firebase) ===== */
   (function () {
     const ID_DOMAIN = 'somong.app'; // 아이디만 입력하면 아이디@somong.app 으로 로그인
-    const KEYS = ['toon_chinese_progress_v1', 'toon_chinese_tests_v1', 'toon_chinese_test_sessions_v1'];
+    const KEYS = ['toon_chinese_progress_v1', 'toon_chinese_tests_v1', 'toon_chinese_test_sessions_v1', 'somong_last_pos_v1'];
     const $ = id => document.getElementById(id);
     const toast = m => { try { showToast(m); } catch (e) { alert(m); } };
     let user = null, timer = null, loaded = false;
@@ -3229,7 +3289,7 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
     const root = document.documentElement;
     const isLocked = () => root.classList.contains('locked');
     const lock = () => root.classList.add('locked');
-    const unlock = () => { root.classList.remove('locked'); modal.classList.add('hidden'); };
+    const unlock = () => { root.classList.remove('locked'); modal.classList.add('hidden'); setTimeout(() => { if (window.__somongRestoreScroll) window.__somongRestoreScroll(); }, 50); };
     const open = () => modal.classList.remove('hidden');
     const close = () => modal.classList.add('hidden');
     $('authBtn').onclick = open;
@@ -3262,7 +3322,8 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
     $('emailAuthForm').onsubmit = e => { e.preventDefault(); $('emailLoginSubmit').click(); };
     $('doSignOutBtn').onclick = async () => { const b = bridge(); if (b) { await b.logOut(); close(); toast('로그아웃되었어요.'); } };
 
-    function snapshot() { return { completedLessons, testRecords, testSessions }; }
+    function localPos() { try { return JSON.parse(localStorage.getItem(KEYS[3]) || 'null'); } catch (e) { return null; } }
+    function snapshot() { const o = { completedLessons, testRecords, testSessions }; const lp = localPos(); if (lp) o.lastPos = lp; return o; }
     function scheduleSave() {
       if (!user || !loaded || !bridge()) return;
       clearTimeout(timer);
@@ -3314,6 +3375,8 @@ i.fa-wand-magic-sparkles{--ic:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3
         _set.call(localStorage, KEYS[0], JSON.stringify(completedLessons));
         _set.call(localStorage, KEYS[1], JSON.stringify(testRecords));
         _set.call(localStorage, KEYS[2], JSON.stringify(testSessions));
+        const cp = cloud && cloud.lastPos, lp0 = localPos();
+        if (cp && (!lp0 || (cp.t || 0) > (lp0.t || 0))) { _set.call(localStorage, KEYS[3], JSON.stringify(cp)); if (window.__somongApplyPos) window.__somongApplyPos(cp, true); }
         loaded = true;
         await bridge().saveCloud(u.uid, snapshot());
         try { renderSidebar(); } catch (e) {}
